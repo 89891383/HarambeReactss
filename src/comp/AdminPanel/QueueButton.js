@@ -10,24 +10,24 @@ const useStyles = makeStyles((theme) => ({
 			color: "white",
 			transition: "0.3s",
 			"&:hover": {
-				borderColor: "#277da1",
-				color: "#277da1",
+				borderColor: "#f9c74f",
+				color: "#f9c74f",
 			},
 		},
 	},
 }));
 
-export default function OutlinedButtons({ text, onClick, style }) {
+export default function OutlinedButtons({ onClick, style, children, title }) {
 	const classes = useStyles();
 
 	return (
-		<div className={classes.root}>
+		<div className={classes.root} title={title}>
 			<Button
 				onClick={onClick && onClick}
 				style={style && style}
 				variant="outlined"
 			>
-				{text ? text : "Enter text"}
+				{children}
 			</Button>
 		</div>
 	);

@@ -19,25 +19,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CustomizedSnackbars() {
-	const { isSuccess, setIsSuccess, successMessage } = useContext(DataContext);
+	const { isWarning, setIsWarning, warningMessage } = useContext(DataContext);
 	const classes = useStyles();
 
 	const handleClose = (event, reason) => {
 		if (reason === "clickaway") {
 			return;
 		}
-		setIsSuccess(false);
+		setIsWarning(false);
 	};
 
 	return (
 		<div className={classes.root}>
-			<Snackbar open={isSuccess} autoHideDuration={2000} onClose={handleClose}>
-				<Alert onClose={handleClose} severity="success">
-					{successMessage}
+			<Snackbar open={isWarning} autoHideDuration={2000} onClose={handleClose}>
+				<Alert onClose={handleClose} severity="warning">
+					{warningMessage}
 				</Alert>
 			</Snackbar>
-
-			{/* <Alert severity="success">This is a success message!</Alert> */}
 		</div>
 	);
 }

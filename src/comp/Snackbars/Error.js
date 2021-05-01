@@ -6,38 +6,38 @@ import { DataContext } from "../../App";
 import { useContext } from "react";
 
 function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
+	return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-    "& > * + *": {
-      marginTop: theme.spacing(2),
-    },
-  },
+	root: {
+		width: "100%",
+		"& > * + *": {
+			marginTop: theme.spacing(2),
+		},
+	},
 }));
 
 export default function CustomizedSnackbars() {
-  const { isError, setIsError, errorMessage } = useContext(DataContext);
-  const classes = useStyles();
+	const { isError, setIsError, errorMessage } = useContext(DataContext);
+	const classes = useStyles();
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setIsError(false);
-  };
+	const handleClose = (event, reason) => {
+		if (reason === "clickaway") {
+			return;
+		}
+		setIsError(false);
+	};
 
-  return (
-    <div className={classes.root}>
-      <Snackbar open={isError} autoHideDuration={1000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error">
-          {errorMessage}
-        </Alert>
-      </Snackbar>
+	return (
+		<div className={classes.root}>
+			<Snackbar open={isError} autoHideDuration={2000} onClose={handleClose}>
+				<Alert onClose={handleClose} severity="error">
+					{errorMessage}
+				</Alert>
+			</Snackbar>
 
-      {/* <Alert severity="success">This is a success message!</Alert> */}
-    </div>
-  );
+			{/* <Alert severity="success">This is a success message!</Alert> */}
+		</div>
+	);
 }

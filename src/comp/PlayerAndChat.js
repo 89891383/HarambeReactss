@@ -3,26 +3,9 @@ import { useEffect, useState, useRef } from "react";
 import ReactPlayer from "react-player/lazy";
 import { DataContext } from "../App";
 import "./PlayerAndChat.css";
-import { useParams, useLocation } from "react-router-dom";
 
 const PlayerAndChat = () => {
-	let location = useLocation();
-	let { twitchStreamer } = useParams();
-	// DEFAULT VALUE IS MY CHANNEL
-	if (twitchStreamer === undefined) {
-		twitchStreamer = "victorowsky_";
-	}
-
-	twitchStreamer = twitchStreamer.toLowerCase();
-
-	let chatUsername = twitchStreamer;
-
-	if (chatUsername === "szkajpur") {
-		chatUsername = "demonzz1";
-	}
-
-	const [onlineUsers, setOnlineUsers] = useState(null);
-	const [currentRoom, setCurrentRoom] = useState(twitchStreamer);
+	const currentRoom = "main";
 	const {
 		admin,
 		setCurrentVideoLink,
@@ -32,7 +15,12 @@ const PlayerAndChat = () => {
 		videoQueue,
 		setVideoQueue,
 		maxDelay,
-		chatRef,
+		timeAdmin,
+		nickname,
+		setNicknameOfTimeAdmin,
+		setIsWarning,
+		setWarningMessage,
+		setOnlineUsers,
 	} = useContext(DataContext);
 
 	const [isPlaying, setIsPlaying] = useState(false);
@@ -74,51 +62,22 @@ const PlayerAndChat = () => {
 	// ADMIN EMITS HIS DATA TO SHARE WITH OTHERS
 	useEffect(() => {
 		let interval;
-		if (admin) {
+		if (timeAdmin) {
 			interval = setInterval(() => {
-				socket.emit(`adminData`, {
-					currentRoom,
+				socket.emit(`timeAdmin`, {
 					currentSeconds: player.current.getCurrentTime(),
-					videoQueue,
 				});
 			}, 3000);
 		}
 		return () => {
 			clearInterval(interval);
 		};
-	}, [admin, socket, currentRoom, videoQueue]);
-
-	// EMIT CHANGE VIDEO IF ADMIN CHANGES
-	useEffect(() => {
-		if (admin) {
-			socket.emit(`videoChange`, {
-				currentVideoLink,
-				currentRoom,
-			});
-		}
-		// HERE CANT BE CURRENTROOM, CUZ IT WILL SEND ANOTHER ADMIN DATA
-		// eslint-disable-next-line
-	}, [currentVideoLink, socket]);
-
-	// DELETING ADMIN IF SWITCHING BETWEEN CHANNELS
-	useEffect(() => {
-		window.addEventListener("beforeunload", (ev) => {
-			ev.preventDefault();
-			socket.emit("leaveRoom", { currentRoom });
-		});
-		setCurrentRoom(twitchStreamer);
-		// eslint-disable-next-line
-	}, [location.pathname]);
+	}, [timeAdmin, socket, currentRoom, videoQueue, nickname]);
 
 	// JOINING TO ROOM
 	useEffect(() => {
-		socket.emit(`joinRoom`, { currentRoom });
-		return () => {
-			socket.emit("leaveRoom", { currentRoom });
-			setAdmin(false);
-		};
-		// eslint-disable-next-line
-	}, [currentRoom]);
+		socket.emit(`joinRoom`, { currentRoom, nickname });
+	}, [currentRoom, nickname, socket]);
 
 	// SOCKETS LISTENERS FOR USERS ONLY
 	useEffect(() => {
@@ -126,69 +85,96 @@ const PlayerAndChat = () => {
 			setOnlineUsers(onlineUsers);
 		});
 
-		socket.on("joinRoomAnswer", ({ docs }) => {
-			setCurrentVideoLink(docs.currentVideoLink);
-			setVideoQueue(docs.queue);
-		});
+		socket.on(
+			"joinRoomAnswer",
+			({ currentVideo, queue, timeAdmin, title, isAdmin }) => {
+				if (isAdmin) {
+					setAdmin(isAdmin);
+				}
+				setCurrentVideoLink(currentVideo);
+				setVideoQueue(queue);
+				setNicknameOfTimeAdmin(timeAdmin);
 
-		if (!admin) {
-			socket.on("videoChangeAnswer", ({ currentVideoLink }) => {
-				// TURNED OFF FOR ADMIN TO NOT LOOP PAGE
-				setCurrentVideoLink(currentVideoLink);
-			});
-			socket.on("isPlayingSocketAnswer", ({ isPlaying }) => {
-				setIsPlaying(isPlaying);
-			});
+				if (title) {
+					document.title = title;
+				} else {
+					document.title = "Harambe Films";
+				}
+			}
+		);
 
-			// SYNC SECONDS WITH ADMIN
-			socket.on(`adminDataAnswer`, ({ currentSeconds, videoQueue }) => {
-				setVideoQueue(videoQueue);
+		if (!timeAdmin) {
+			socket.on("serverTimeAnswer", ({ currentSeconds }) => {
 				synchronizeVideo(player, currentSeconds);
 			});
-
-			socket.on("adminQueueUpdateAnswer", ({ videoQueue }) => {
-				setVideoQueue(videoQueue);
+			socket.on("isPlayingAnswer", ({ isPlaying }) => {
+				setIsPlaying(isPlaying);
 			});
 		}
+
+		socket.on("timeAdminIsEmpty", ({ message }) => {
+			setIsWarning(true);
+			setWarningMessage(message);
+			setNicknameOfTimeAdmin(null);
+			setIsPlaying(false);
+		});
+
+		// socket.on("warningAlert", ({ message }) => {
+		// 	setIsWarning(true);
+		// 	setWarningMessage(message);
+		// });
+
+		socket.on("videoChangeAnswer", ({ currentVideoLink, queue, title }) => {
+			// TURNED OFF FOR ADMIN TO NOT LOOP PAGE
+			setCurrentVideoLink(currentVideoLink);
+			setVideoQueue(queue);
+			if (title) {
+				document.title = title;
+			} else {
+				document.title = "Harambe Films";
+			}
+		});
+
+		socket.on("queueUpdateAnswer", (serverQueue) => {
+			setVideoQueue(serverQueue);
+		});
+
 		return () => {
 			socket.removeAllListeners(`adminDataAnswer`);
 			socket.removeAllListeners(`joinRoomAnswer`);
-			socket.removeAllListeners(`isPlayingSocketAnswer`);
 			socket.removeAllListeners(`videoChangeAnswer`);
-			socket.removeAllListeners("adminQueueUpdateAnswer");
+			socket.removeAllListeners("queueUpdateAnswer");
 			socket.removeAllListeners("onlineUsersAnswer");
+			socket.removeAllListeners("isPlayingAnswer");
+			socket.removeAllListeners("serverTimeAnswer");
+			socket.removeAllListeners("timeAdminLeftAnnounce");
 		};
 		// eslint-disable-next-line
-	}, [currentRoom, admin, socket, maxDelay]);
+	}, [currentRoom, admin, socket, maxDelay, nickname, timeAdmin]);
 
 	const startSendingTimeToSocket = () => {
 		// AVAILABLE ONLY FOR ADMIN
-		if (admin) {
+		if (timeAdmin) {
 			setIsPlaying(true);
 			socket.emit("isPlaying", {
 				isPlaying: true,
-				currentRoom,
 			});
 		}
 	};
 
 	const stopSendingTimeToSocket = () => {
 		// AVAILABLE ONLY FOR ADMIN
-		if (admin) {
+		if (timeAdmin) {
 			setIsPlaying(false);
 			socket.emit("isPlaying", {
 				isPlaying: false,
-				currentRoom,
 			});
 		}
 	};
 
-	const handleAdminCheckQueue = () => {
+	const nextVideo = () => {
 		if (admin) {
-			if (videoQueue) {
-				setCurrentVideoLink(videoQueue[0]);
-				setVideoQueue((prev) => prev.slice(1));
-			}
+			socket.emit("skipVideo");
 		}
 	};
 
@@ -201,7 +187,7 @@ const PlayerAndChat = () => {
 						onPlay={startSendingTimeToSocket}
 						onPause={stopSendingTimeToSocket}
 						playing={isPlaying}
-						onEnded={handleAdminCheckQueue}
+						onEnded={nextVideo}
 						className="react-player"
 						url={currentVideoLink}
 						width="100%"
@@ -209,19 +195,6 @@ const PlayerAndChat = () => {
 						controls={true}
 						volume={0.1}
 					/>
-				</div>
-				<div className="twitchChat" ref={chatRef}>
-					<span className="onlineUsers">
-						{onlineUsers ? `${onlineUsers} ONLINE` : "CONNECTING"}
-					</span>
-					<iframe
-						style={{ border: "2px solid #121212" }}
-						title="TwitchChat"
-						id="chat_embed"
-						src={`https://www.twitch.tv/embed/${chatUsername}/chat?darkpopout&parent=${websiteURL}`}
-						height="100%"
-						width="100%"
-					></iframe>
 				</div>
 			</div>
 		</div>

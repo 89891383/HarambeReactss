@@ -11,10 +11,10 @@ body {
 }
 .app {
 	display: flex;
-	flex-direction: column;
 	text-align: center;
 	justify-items: center;
 	width: 100%;
+	height: 100vh;
 }
 
 input {
@@ -28,7 +28,19 @@ input:focus {
 	border: 2px solid blue;
 }
 .twitchChat {
-	width: 400px;
+	width: 450px;
+	height: 100vh;
+}
+.playerAndControls {
+	width: 100%;
+	min-height: 100vh;
+	overflow: scroll;
+}
+.bottomDiv {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
 @media (max-width: 720px) {

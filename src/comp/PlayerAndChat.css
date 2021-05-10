@@ -1,11 +1,17 @@
 .playerAndChat {
 	display: flex;
-	height: 100%;
+	flex-direction: column;
 	background-color: #121212;
-}
-.videoAndChat {
 	height: 100vh;
 }
+.videoTitle {
+	background-color: black;
+	font-size: 40px;
+	width: 100%;
+	text-align: start;
+	padding: 20px;
+}
+
 .player-wrapper {
 	height: 100%;
 	width: 100%;
@@ -52,4 +58,10 @@
 }
 .delayManageOptionIncrement:hover {
 	background-color: #90be6d;
+}
+
+@media (max-width: 720px) {
+	.playerAndChat {
+		height: 300px;
+	}
 }

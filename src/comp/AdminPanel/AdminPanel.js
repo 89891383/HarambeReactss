@@ -1,17 +1,12 @@
 import React, { useContext } from "react";
 import { useState } from "react";
-import QueueButton from "./QueueButton";
-import PlayButton from "./PlayButton";
-import SkipButton from "./SkipButton";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import SkipNextIcon from "@material-ui/icons/SkipNext";
-import QueueIcon from "@material-ui/icons/Queue";
 import Button2 from "../Button";
-import Delay from "./Delay";
+// import Delay from "./Delay";
 import { DataContext } from "../../App";
 import "./AdminPanel.css";
 import Queue from "./Queue";
 import { useEffect } from "react";
+import AddVideo from "./AddVideo";
 
 const AdminPanel = () => {
 	const {
@@ -24,52 +19,14 @@ const AdminPanel = () => {
 		setErrorMessage,
 		setIsSuccess,
 		setSuccessMessage,
-		nicknameOfTimeAdmin,
+		// nicknameOfTimeAdmin,
 		setNicknameOfTimeAdmin,
 		setTimeAdmin,
-		timeAdmin,
+		// timeAdmin,
+		setIsServerTime,
 	} = useContext(DataContext);
-	const [editVideoLink, setEditVideoLink] = useState("");
-	const [videoTitle, setVideoTitle] = useState("");
 
-	const handleAddVideoToQueue = () => {
-		if (editVideoLink) {
-			socket.emit("queueUpdate", {
-				videoLink: editVideoLink,
-				nickname,
-				videoTitle,
-			});
-			setEditVideoLink("");
-			setVideoTitle("");
-		}
-	};
-
-	const handleAddVideo = () => {
-		if (editVideoLink) {
-			socket.emit("videoChange", {
-				currentVideoLink: editVideoLink,
-				videoTitle,
-			});
-			setVideoTitle("");
-			setEditVideoLink("");
-		}
-	};
-
-	const handleSkipVideo = () => {
-		if (admin) {
-			socket.emit("skipVideo");
-		}
-	};
-
-	const handleGetTimeAdmin = () => {
-		if (admin) {
-			if (timeAdmin) {
-				socket.emit("timeAdminLeaveRequest", { nickname });
-			} else {
-				socket.emit("timeAdminRequest", { nickname });
-			}
-		}
-	};
+	const [isAddVideo, setIsAddVideo] = useState(false);
 
 	useEffect(() => {
 		socket.on("timeAdminRequestAnswer", ({ success, message }) => {
@@ -81,8 +38,12 @@ const AdminPanel = () => {
 			}
 		});
 
-		socket.on("timeAdminChange", ({ nickname, message }) => {
+		socket.on("timeAdminChange", ({ nickname, message, isServerTime }) => {
+			if (isServerTime) {
+				setTimeAdmin(false);
+			}
 			setIsSuccess(true);
+			setIsServerTime(isServerTime);
 			setNicknameOfTimeAdmin(nickname);
 			setSuccessMessage(message);
 		});
@@ -94,7 +55,6 @@ const AdminPanel = () => {
 		return () => {
 			socket.off("timeAdminRequestAnswer");
 			socket.off("timeAdminChange");
-			socket.off("successMessage");
 			socket.off("timeAdminLeaveAnswer");
 		};
 	}, [
@@ -105,7 +65,12 @@ const AdminPanel = () => {
 		socket,
 		setNicknameOfTimeAdmin,
 		setTimeAdmin,
+		setIsServerTime,
 	]);
+
+	const handleTwitchLogin = () => {
+		window.location.href = `${websiteURL}/auth/twitch`; //DECLARED IN APP
+	};
 
 	const handleLogout = () => {
 		window.location.href = `${websiteURL}/twitch/logout`;
@@ -113,73 +78,25 @@ const AdminPanel = () => {
 
 	return (
 		<>
+			<AddVideo isAddVideo={isAddVideo} setIsAddVideo={setIsAddVideo} />
 			{admin ? (
 				// ADMIN PANEL
 				<>
 					{/* ADDING VIDEO PANEL */}
 					<div className="adminPanel">
-						<form>
-							<div className="inputsDiv">
-								<input
-									type="text"
-									value={editVideoLink}
-									placeholder={"URL"}
-									onChange={(e) => {
-										if (admin) {
-											setEditVideoLink(e.target.value);
-										}
-									}}
-								/>
-								<input
-									type="text"
-									value={videoTitle}
-									placeholder={"TITLE"}
-									onChange={(e) => {
-										if (admin) {
-											setVideoTitle(e.target.value);
-										}
-									}}
-								/>
-							</div>
+						<div className="adminButtons">
+							<Button2 onClick={() => setIsAddVideo((prev) => !prev)}>
+								Add Video
+							</Button2>
 
-							<button
-								style={{ display: "none" }}
-								onClick={(e) => {
-									e.preventDefault();
-									handleAddVideoToQueue();
-								}}
-								type="submit"
-							></button>
-							<div className="optionButtons">
-								<div className="controlButtons">
-									<PlayButton onClick={handleAddVideo} title="Play">
-										<PlayArrowIcon />
-									</PlayButton>
-									<QueueButton
-										onClick={handleAddVideoToQueue}
-										title={"Add to queue"}
-									>
-										<QueueIcon />
-									</QueueButton>
-									<SkipButton onClick={handleSkipVideo} title={"Skip video"}>
-										<SkipNextIcon />
-									</SkipButton>
-								</div>
-								<div className="controlButtons">
-									<PlayButton onClick={handleGetTimeAdmin}>
-										{nicknameOfTimeAdmin
-											? `${nicknameOfTimeAdmin} HAS CONTROL`
-											: "TAKE CONTROL"}
-									</PlayButton>
-									<Button2 text={"LOGOUT"} onClick={handleLogout} />
-								</div>
-							</div>
-						</form>
+							<Button2 onClick={handleLogout}>LOGOUT</Button2>
+						</div>
+
 						{twitchUserData && (
 							<div className="accountInfo">
-								{/* <div className="img">
+								<div className="img">
 									<img src={twitchUserData.image} alt="twitchImage" srcSet="" />
-								</div> */}
+								</div>
 								{twitchUserData.login}
 							</div>
 						)}
@@ -189,6 +106,33 @@ const AdminPanel = () => {
 			) : (
 				// IS NOT ADMIN
 				<div className="delayInfoContainer">
+					<div className="twitchLoginButton">
+						{!nickname ? (
+							<Button2 onClick={handleTwitchLogin}> LOGIN WITH TWITCH</Button2>
+						) : (
+							<>
+								<div className="adminButtons">
+									<Button2 onClick={() => setIsAddVideo((prev) => !prev)}>
+										Add Video
+									</Button2>
+
+									<Button2 onClick={handleLogout}>LOGOUT</Button2>
+								</div>
+								{twitchUserData && (
+									<div className="accountInfo">
+										<div className="img">
+											<img
+												src={twitchUserData.image}
+												alt="twitchImage"
+												srcSet=""
+											/>
+										</div>
+										{twitchUserData.login}
+									</div>
+								)}
+							</>
+						)}
+					</div>
 					<Queue />
 					{/* <Delay /> */}
 				</div>

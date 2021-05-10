@@ -21,13 +21,15 @@ const PlayerAndChat = () => {
 		setIsWarning,
 		setWarningMessage,
 		setOnlineUsers,
+		setIsServerTime,
+		videoTitle,
+		setVideoTitle,
 	} = useContext(DataContext);
 
 	const [isPlaying, setIsPlaying] = useState(false);
-	const player = useRef();
+	const player = useRef(null);
 	const maxDelayLive = 6;
 	// CHAT LINK
-	const websiteURL = window.location.host; // HEROKU HOSTING
 
 	const synchronizeVideo = (player, currentSeconds) => {
 		if (player.current) {
@@ -87,17 +89,20 @@ const PlayerAndChat = () => {
 
 		socket.on(
 			"joinRoomAnswer",
-			({ currentVideo, queue, timeAdmin, title, isAdmin }) => {
+			({ currentVideo, queue, timeAdmin, title, isAdmin, isServerTime }) => {
 				if (isAdmin) {
 					setAdmin(isAdmin);
 				}
 				setCurrentVideoLink(currentVideo);
 				setVideoQueue(queue);
 				setNicknameOfTimeAdmin(timeAdmin);
+				setIsServerTime(isServerTime);
 
 				if (title) {
+					setVideoTitle(title);
 					document.title = title;
 				} else {
+					setVideoTitle(null);
 					document.title = "Harambe Films";
 				}
 			}
@@ -119,24 +124,33 @@ const PlayerAndChat = () => {
 			setIsPlaying(false);
 		});
 
-		// socket.on("warningAlert", ({ message }) => {
-		// 	setIsWarning(true);
-		// 	setWarningMessage(message);
-		// });
-
 		socket.on("videoChangeAnswer", ({ currentVideoLink, queue, title }) => {
 			// TURNED OFF FOR ADMIN TO NOT LOOP PAGE
 			setCurrentVideoLink(currentVideoLink);
 			setVideoQueue(queue);
 			if (title) {
+				setVideoTitle(title);
 				document.title = title;
 			} else {
+				setVideoTitle(null);
 				document.title = "Harambe Films";
 			}
 		});
 
-		socket.on("queueUpdateAnswer", (serverQueue) => {
-			setVideoQueue(serverQueue);
+		socket.on("queueUpdateAnswer", (serverQueueUpdate) => {
+			setVideoQueue((prev) => [...prev, serverQueueUpdate]);
+		});
+		socket.on("queueDeleteAnswer", (URLToDelete) => {
+			setVideoQueue((prev) => {
+				let newQueue = prev.filter((video) => video.URL !== URLToDelete);
+				return newQueue;
+			});
+		});
+
+		socket.on("getVideoDuration", () => {
+			if (player) {
+				console.log(player.current.getDuration());
+			}
 		});
 
 		return () => {
@@ -148,6 +162,8 @@ const PlayerAndChat = () => {
 			socket.removeAllListeners("isPlayingAnswer");
 			socket.removeAllListeners("serverTimeAnswer");
 			socket.removeAllListeners("timeAdminLeftAnnounce");
+			socket.removeAllListeners("getVideoDuration");
+			socket.removeAllListeners("queueDeleteAnswer");
 		};
 		// eslint-disable-next-line
 	}, [currentRoom, admin, socket, maxDelay, nickname, timeAdmin]);
@@ -172,22 +188,29 @@ const PlayerAndChat = () => {
 		}
 	};
 
-	const nextVideo = () => {
-		if (admin) {
-			socket.emit("skipVideo");
-		}
+	// const nextVideo = () => {
+	// 	if (admin) {
+	// 		socket.emit("skipVideo");
+	// 	} else {
+	// 		socket.emit("skipVideoUsers");
+	// 	}
+	// };
+
+	const videoDuration = (duration) => {
+		socket.emit("videoDuration", { duration });
 	};
 
 	return (
-		<div className="videoAndChat">
+		<>
 			<div className="playerAndChat">
 				<div className="player-wrapper">
 					<ReactPlayer
 						ref={player}
 						onPlay={startSendingTimeToSocket}
 						onPause={stopSendingTimeToSocket}
+						onDuration={videoDuration}
 						playing={isPlaying}
-						onEnded={nextVideo}
+						// onEnded={nextVideo}
 						className="react-player"
 						url={currentVideoLink}
 						width="100%"
@@ -197,7 +220,8 @@ const PlayerAndChat = () => {
 					/>
 				</div>
 			</div>
-		</div>
+			{videoTitle && <div className="videoTitle">{videoTitle}</div>}
+		</>
 	);
 };
 

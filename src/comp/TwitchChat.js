@@ -2,7 +2,8 @@ import { useContext } from "react";
 import { DataContext } from "../App";
 import React from "react";
 const TwitchChat = () => {
-	const { chatRef, websiteURL, onlineUsers } = useContext(DataContext);
+	const { chatRef, onlineUsers } = useContext(DataContext);
+	const websiteURL = window.location.host; // HEROKU HOSTING
 
 	return (
 		<div className="twitchChat" ref={chatRef}>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Switch, Route, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import io from "socket.io-client";
 import "./App.css";
 import AdminPanel from "./comp/AdminPanel/AdminPanel";
@@ -11,6 +11,8 @@ import Warning from "./comp/Snackbars/Warning";
 import { useRef } from "react";
 import { useMemo } from "react";
 import TwitchChat from "./comp/TwitchChat";
+import Options from "./comp/AdminPanel/Options/Options";
+import OptionsDialog from "./comp/AdminPanel/Options/OptionsDialog";
 export const DataContext = React.createContext();
 
 const socket = io(`/`);
@@ -31,6 +33,10 @@ const App = () => {
 	const [warningMessage, setWarningMessage] = useState("");
 	const [nicknameOfTimeAdmin, setNicknameOfTimeAdmin] = useState(null);
 	const [onlineUsers, setOnlineUsers] = useState(null);
+	const [isDialogOpen, setIsDialogOpen] = useState(false);
+	const [isServerTime, setIsServerTime] = useState(false);
+	const [videoTitle, setVideoTitle] = useState(null);
+
 	const twitchStreamer = "main";
 	const websiteURL = window.location.origin;
 
@@ -89,23 +95,24 @@ const App = () => {
 					twitchStreamer,
 					onlineUsers,
 					setOnlineUsers,
+					isDialogOpen,
+					setIsDialogOpen,
+					isServerTime,
+					setIsServerTime,
+					videoTitle,
+					setVideoTitle,
 				}}
 			>
 				<div className="app">
-					<Switch>
-						{/* <Route path="/" exact>
-							<Home />
-						</Route> */}
-						<Route path="/">
-							<div className="playerAndControls">
-								<PlayerAndChat />
-								<div className="bottomDiv">
-									<AdminPanel />
-								</div>
-							</div>
-							<TwitchChat />
-						</Route>
-					</Switch>
+					<div className="playerAndControls">
+						<PlayerAndChat />
+						<div className="bottomDiv">
+							<AdminPanel />
+							{admin && <Options />}
+						</div>
+					</div>
+					<TwitchChat />
+					<OptionsDialog />
 				</div>
 				<Success />
 				<Error />

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { DataContext } from "../../App";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
-import { IconButton, makeStyles } from "@material-ui/core";
+import { IconButton, makeStyles, Tooltip } from "@material-ui/core";
 
 const useStyles = makeStyles({
 	iconButton: {
@@ -15,7 +15,7 @@ const useStyles = makeStyles({
 
 const QueueItem = ({ item }) => {
 	const classes = useStyles();
-	const { URL, title } = item;
+	const { URL, title, addedBy } = item;
 	const [videoTitle, setVideoTitle] = useState(null);
 
 	const { admin, socket } = useContext(DataContext);
@@ -26,6 +26,10 @@ const QueueItem = ({ item }) => {
 			.then((res) => {
 				setVideoTitle(res.title);
 			});
+
+		return () => {
+			setVideoTitle(null);
+		};
 	}, [item, URL]);
 
 	const handleDeleteItemFromQueue = () => {
@@ -37,12 +41,14 @@ const QueueItem = ({ item }) => {
 	return (
 		<>
 			<div className="queueItem">
-				<div>
-					{/* {videoDuraton()} */}
-					<a href={URL} target="_blank" rel="noopener noreferrer">
-						{title ? title : videoTitle ? videoTitle : URL}
-					</a>
-				</div>
+				<Tooltip title={`Added by: ${addedBy}`} placement="bottom">
+					<div className={"queueItemInfo"}>
+						<a href={URL} target="_blank" rel="noopener noreferrer">
+							{title ? title : videoTitle ? videoTitle : URL}
+						</a>
+					</div>
+				</Tooltip>
+
 				{admin && (
 					<IconButton
 						className={classes.iconButton}

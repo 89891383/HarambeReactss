@@ -15,6 +15,7 @@ body {
 	justify-items: center;
 	width: 100%;
 	height: 100vh;
+	color: white;
 }
 
 input {
@@ -33,29 +34,51 @@ input:focus {
 }
 .playerAndControls {
 	width: 100%;
-	min-height: 100vh;
+	max-height: 100vh;
+	height: fit-content;
 	overflow: scroll;
+	position: relative;
 }
 .bottomDiv {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	position: relative;
 }
 
 @media (max-width: 720px) {
 	.app {
-		height: 100vh;
-	}
-	.videoAndChat {
-		height: fit-content;
-	}
-	.playerAndChat {
+		display: flex;
 		flex-direction: column;
 		height: fit-content;
 	}
+	.videoAndChat {
+		height: 100%;
+	}
 	.twitchChat {
-		height: 200%;
+		height: 550px;
 		width: 100%;
 	}
+	.playerAndControls {
+		overflow: visible;
+	}
+}
+
+.transition-enter {
+	opacity: 0;
+	transform: scale(0.9);
+}
+.transition-enter-active {
+	opacity: 1;
+	transform: translateX(0);
+	transition: opacity 300ms, transform 300ms;
+}
+.transition-exit {
+	opacity: 1;
+}
+.transition-exit-active {
+	opacity: 0;
+	transform: scale(0.9);
+	transition: opacity 300ms, transform 300ms;
 }

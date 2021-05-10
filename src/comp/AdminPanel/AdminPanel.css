@@ -2,15 +2,26 @@
 	color: white;
 	margin-top: 5px;
 	align-items: center;
+	margin-top: 20px;
+	width: 100%;
 }
 .accountInfo {
 	color: white;
 	display: flex;
-	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	gap: 10px;
-	padding: 5px 0;
+	padding: 5px 10px;
+	border-radius: 5px;
+	background-color: #161616;
+	width: fit-content;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0 auto;
+	/* margin-left: 5%; */
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 .accountInfo a {
 	text-decoration: none;
@@ -41,26 +52,60 @@
 	flex-direction: column;
 	width: 100%;
 	height: fit-content;
+	gap: 5px;
+	padding: 0 0 20px 0;
 }
-.queueItem {
+.queueItem,
+.emptyQueueText {
 	padding: 20px 20px;
 	display: flex;
-
+	width: 90%;
+	border-radius: 10px;
+	align-self: center;
 	align-items: center;
 	justify-content: space-between;
 	font-weight: bold;
 	background-color: #0f0f0f;
 	font-size: 20px;
 }
+.queueItem a {
+	text-decoration: none;
+	color: inherit;
+	text-align: start;
+}
+.emptyQueueText {
+	font-size: 40px;
+	display: flex;
+	justify-content: center;
+	color: #242424;
+	pointer-events: none;
+	user-select: none;
+}
 .queueItem:nth-child(2) {
 	border-top: 2px solid #121212;
 	background-color: #121212;
 }
-
-.queueItem a {
-	text-decoration: none;
-	color: inherit;
+.queueItemInfo {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	word-break: break-word;
+	gap: 10px;
 }
+.queueItem .addedBy {
+	display: flex;
+	align-items: center;
+	padding: 5px;
+	background-color: #161616;
+	border-radius: 10px;
+	font-size: 13px;
+	font-weight: 500;
+}
+.addedBy {
+	width: fit-content;
+}
+
 .delayInfoContainer {
 	display: flex;
 	width: 100%;
@@ -77,12 +122,43 @@
 .twitchLoginButton {
 	padding: 10px 0;
 }
+.addVideo_Form {
+	width: 90vw;
+	max-width: 500px;
+	padding: 30px;
+	background-color: #1f1f1f;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
 
 .inputsDiv {
 	display: flex;
+	flex-direction: column;
 	gap: 10px;
 	justify-content: center;
 	flex-wrap: wrap;
+}
+.queue_h3 {
+	text-align: start;
+	/* align-self: flex-start; */
+	padding: 15px 0;
+	width: 90%;
+	margin: 0 auto;
+}
+.queueCounter {
+	padding: 10px 15px;
+	align-self: flex-start;
+	background-color: #121212;
+	border-radius: 10px;
+}
+
+.adminButtons {
+	display: flex;
+	gap: 10px;
+	margin: 0 auto;
+	width: fit-content;
 }
 
 @media (max-width: 720px) {
@@ -93,5 +169,8 @@
 		width: 100%;
 		border-left: none;
 		padding: 10px 0;
+	}
+	.queueItem .addedBy {
+		display: none;
 	}
 }

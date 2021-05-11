@@ -56,13 +56,20 @@ const App = () => {
 			});
 	}, []);
 
-	const chatRef = useRef(null);
+	useEffect(() => {
+		socket.on("success", ({ message, success }) => {
+			setSuccessMessage(message);
+			setIsSuccess(success);
+		});
+		return () => {
+			socket.off("success");
+		};
+	}, []);
 
 	return (
 		<>
 			<DataContext.Provider
 				value={{
-					chatRef,
 					websiteURL,
 					twitchUserData,
 					admin,

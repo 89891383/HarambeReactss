@@ -1,5 +1,5 @@
 import React from "react";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useContext } from "react";
 import { DataContext } from "../../../App";
 import CloseIcon from "@material-ui/icons/Close";
@@ -8,7 +8,7 @@ import PlayButton from "../PlayButton";
 
 import OneOption from "./OneOption";
 import "./Options.css";
-import { IconButton, makeStyles } from "@material-ui/core";
+import { Button, IconButton, makeStyles } from "@material-ui/core";
 import Popout from "../../Popout";
 
 const useStyles = makeStyles({
@@ -17,14 +17,26 @@ const useStyles = makeStyles({
 		alignSelf: "flex-end",
 		color: "white",
 	},
+	addAdminBtn: {
+		width: "fit-content",
+		color: "white",
+		alignSelf: "center",
+		borderColor: "white",
+		transition: "0.3s",
+		"&:hover": {
+			color: "#90be6d",
+			borderColor: "#90be6d",
+		},
+	},
 });
 
 const OptionsDialog = () => {
 	const classes = useStyles();
 
-	const { nicknameOfTimeAdmin, admin, timeAdmin } = useContext(DataContext);
-
 	const {
+		nicknameOfTimeAdmin,
+		admin,
+		timeAdmin,
 		setIsDialogOpen,
 		isServerTime,
 		isDialogOpen,
@@ -48,6 +60,13 @@ const OptionsDialog = () => {
 		}
 	};
 
+	const handleAddAdmin = () => {
+		const newAdmin = prompt("NEW ADMIN USERNAME: ");
+		if (newAdmin && nickname) {
+			socket.emit("newAdminAdd", { newAdmin, nickname });
+		}
+	};
+
 	const serverTimeToggle = () => {
 		setIsServerTime((prev) => {
 			socket.emit("serverTimeToggle", { isServerTime: !prev, nickname });
@@ -67,10 +86,13 @@ const OptionsDialog = () => {
 				<OneOption checked={isServerTime} onChange={serverTimeToggle}>
 					<span>Server time </span>
 				</OneOption>
-				<OneOption>
-					<span>Are you idiot</span>
-				</OneOption>
-
+				<Button
+					variant="outlined"
+					onClick={handleAddAdmin}
+					className={classes.addAdminBtn}
+				>
+					ADD ADMIN
+				</Button>
 				<PlayButton onClick={handleGetTimeAdmin} title="Take time admin">
 					{nicknameOfTimeAdmin
 						? `${nicknameOfTimeAdmin} HAS CONTROL`

@@ -5,9 +5,7 @@ import Button from "@material-ui/core/Button";
 const useStyles = makeStyles((theme) => ({
 	root: {
 		"& > *": {
-			// margin: theme.spacing(1),
 			backgroundColor: "#6441a5",
-			// borderColor: "white",
 			color: "white",
 			transition: "0.3s ease-in-out",
 			"&:hover": {
@@ -16,14 +14,31 @@ const useStyles = makeStyles((theme) => ({
 			},
 		},
 	},
+	disabledBtn: {
+		backgroundColor: "#121212",
+		color: "grey",
+		borderRadius: "5px",
+		transition: "0.3s ease-in-out",
+		"&:hover": {
+			color: "white",
+			borderColor: "#6441a5",
+		},
+	},
 }));
 
-export default function OutlinedButtons({ text, onClick, style, children }) {
+export default function OutlinedButtons({
+	text,
+	onClick,
+	style,
+	children,
+	disabled,
+}) {
 	const classes = useStyles();
 
 	return (
-		<div className={classes.root}>
+		<div className={!disabled ? classes.root : classes.disabledBtn}>
 			<Button
+				disabled={disabled}
 				onClick={onClick && onClick}
 				style={style && style}
 				variant="outlined"

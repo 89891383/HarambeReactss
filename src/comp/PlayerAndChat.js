@@ -24,6 +24,7 @@ const PlayerAndChat = () => {
 		setIsServerTime,
 		videoTitle,
 		setVideoTitle,
+		setIsPlaylistOpen,
 	} = useContext(DataContext);
 
 	const [isPlaying, setIsPlaying] = useState(false);
@@ -89,7 +90,15 @@ const PlayerAndChat = () => {
 
 		socket.on(
 			"joinRoomAnswer",
-			({ currentVideo, queue, timeAdmin, title, isAdmin, isServerTime }) => {
+			({
+				currentVideo,
+				queue,
+				timeAdmin,
+				title,
+				isAdmin,
+				isServerTime,
+				isPlaylistOpen,
+			}) => {
 				if (isAdmin) {
 					setAdmin(isAdmin);
 				}
@@ -97,7 +106,7 @@ const PlayerAndChat = () => {
 				setVideoQueue(queue);
 				setNicknameOfTimeAdmin(timeAdmin);
 				setIsServerTime(isServerTime);
-
+				setIsPlaylistOpen(isPlaylistOpen);
 				if (title) {
 					setVideoTitle(title);
 					document.title = title;
@@ -153,6 +162,10 @@ const PlayerAndChat = () => {
 			}
 		});
 
+		socket.on("playlistToggleAnswer", ({ isOpen }) => {
+			setIsPlaylistOpen(isOpen);
+		});
+
 		return () => {
 			socket.removeAllListeners(`adminDataAnswer`);
 			socket.removeAllListeners(`joinRoomAnswer`);
@@ -164,6 +177,7 @@ const PlayerAndChat = () => {
 			socket.removeAllListeners("timeAdminLeftAnnounce");
 			socket.removeAllListeners("getVideoDuration");
 			socket.removeAllListeners("queueDeleteAnswer");
+			socket.removeAllListeners("playlistToggleAnswer");
 		};
 		// eslint-disable-next-line
 	}, [currentRoom, admin, socket, maxDelay, nickname, timeAdmin]);
@@ -187,14 +201,6 @@ const PlayerAndChat = () => {
 			});
 		}
 	};
-
-	// const nextVideo = () => {
-	// 	if (admin) {
-	// 		socket.emit("skipVideo");
-	// 	} else {
-	// 		socket.emit("skipVideoUsers");
-	// 	}
-	// };
 
 	const videoDuration = (duration) => {
 		socket.emit("videoDuration", { duration });

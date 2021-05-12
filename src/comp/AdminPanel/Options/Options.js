@@ -28,7 +28,7 @@ const Options = () => {
 			>
 				<Tooltip
 					title="Settings"
-					placement="left"
+					placement="bottom"
 					className={classes.toolTip}
 					enterDelay={0}
 				>

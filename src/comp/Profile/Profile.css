@@ -1,0 +1,26 @@
+.accountInfo {
+	position: relative;
+	color: white;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 5px 10px;
+	border-radius: 5px;
+	background-color: #161616;
+	width: fit-content;
+	margin-bottom: 10px;
+	transform: translate(-110%, -75%);
+}
+.accountInfo a {
+	text-decoration: none;
+	color: white;
+}
+.accountInfo img {
+	width: 50px;
+	border-radius: 50%;
+}
+.profileIcon {
+	padding: 12px;
+	width: 48px;
+	height: 48px;
+}

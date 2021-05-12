@@ -45,6 +45,14 @@ input:focus {
 	justify-content: center;
 	align-items: center;
 	position: relative;
+	gap: 10px;
+}
+.sideOptions {
+	position: absolute;
+	display: flex;
+	top: 0;
+	left: 100%;
+	transform: translateX(-100%);
 }
 
 @media (max-width: 720px) {

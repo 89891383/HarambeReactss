@@ -1,5 +1,5 @@
 import React from "react";
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { useContext } from "react";
 import { DataContext } from "../../../App";
 import CloseIcon from "@material-ui/icons/Close";
@@ -8,7 +8,7 @@ import PlayButton from "../PlayButton";
 
 import OneOption from "./OneOption";
 import "./Options.css";
-import { Button, IconButton, makeStyles } from "@material-ui/core";
+import { IconButton, makeStyles } from "@material-ui/core";
 import Popout from "../../Popout";
 
 const useStyles = makeStyles({
@@ -43,6 +43,8 @@ const OptionsDialog = () => {
 		setIsServerTime,
 		socket,
 		nickname,
+		isPlaylistOpen,
+		setIsPlaylistOpen,
 	} = useContext(DataContext);
 
 	const optionsRef = useRef(null);
@@ -60,16 +62,16 @@ const OptionsDialog = () => {
 		}
 	};
 
-	const handleAddAdmin = () => {
-		const newAdmin = prompt("NEW ADMIN USERNAME: ");
-		if (newAdmin && nickname) {
-			socket.emit("newAdminAdd", { newAdmin, nickname });
-		}
-	};
-
 	const serverTimeToggle = () => {
 		setIsServerTime((prev) => {
 			socket.emit("serverTimeToggle", { isServerTime: !prev, nickname });
+			return !prev;
+		});
+	};
+
+	const serverPlaylistToggle = () => {
+		setIsPlaylistOpen((prev) => {
+			socket.emit("playlistToggle", { isOpen: !prev, nickname });
 			return !prev;
 		});
 	};
@@ -86,13 +88,9 @@ const OptionsDialog = () => {
 				<OneOption checked={isServerTime} onChange={serverTimeToggle}>
 					<span>Server time </span>
 				</OneOption>
-				<Button
-					variant="outlined"
-					onClick={handleAddAdmin}
-					className={classes.addAdminBtn}
-				>
-					ADD ADMIN
-				</Button>
+				<OneOption checked={isPlaylistOpen} onChange={serverPlaylistToggle}>
+					<span>Playlist open</span>
+				</OneOption>
 				<PlayButton onClick={handleGetTimeAdmin} title="Take time admin">
 					{nicknameOfTimeAdmin
 						? `${nicknameOfTimeAdmin} HAS CONTROL`

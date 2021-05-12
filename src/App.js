@@ -7,12 +7,12 @@ import PlayerAndChat from "./comp/PlayerAndChat";
 import Success from "./comp/Snackbars/Success";
 import Error from "./comp/Snackbars/Error";
 import Warning from "./comp/Snackbars/Warning";
-// import Home from "./comp/MainPage/Home.js";
-import { useRef } from "react";
+// import { useRef } from "react";
 import { useMemo } from "react";
 import TwitchChat from "./comp/TwitchChat";
 import Options from "./comp/AdminPanel/Options/Options";
 import OptionsDialog from "./comp/AdminPanel/Options/OptionsDialog";
+import Profile from "./comp/Profile/Profile";
 export const DataContext = React.createContext();
 
 const socket = io(`/`);
@@ -36,6 +36,7 @@ const App = () => {
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 	const [isServerTime, setIsServerTime] = useState(false);
 	const [videoTitle, setVideoTitle] = useState(null);
+	const [isPlaylistOpen, setIsPlaylistOpen] = useState(false);
 
 	const twitchStreamer = "main";
 	const websiteURL = window.location.origin;
@@ -61,8 +62,13 @@ const App = () => {
 			setSuccessMessage(message);
 			setIsSuccess(success);
 		});
+		socket.on("error", ({ message }) => {
+			setIsError(true);
+			setErrorMessage(message);
+		});
 		return () => {
 			socket.off("success");
+			socket.off("error");
 		};
 	}, []);
 
@@ -108,6 +114,8 @@ const App = () => {
 					setIsServerTime,
 					videoTitle,
 					setVideoTitle,
+					isPlaylistOpen,
+					setIsPlaylistOpen,
 				}}
 			>
 				<div className="app">
@@ -115,7 +123,10 @@ const App = () => {
 						<PlayerAndChat />
 						<div className="bottomDiv">
 							<AdminPanel />
-							{admin && <Options />}
+							<div className="sideOptions">
+								{twitchUserData && <Profile />}
+								{admin && <Options />}
+							</div>
 						</div>
 					</div>
 					<TwitchChat />

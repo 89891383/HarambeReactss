@@ -10,7 +10,7 @@ import AddVideo from "./AddVideo";
 
 const AdminPanel = () => {
 	const {
-		twitchUserData,
+		// twitchUserData,
 		websiteURL,
 		admin,
 		socket,
@@ -24,6 +24,7 @@ const AdminPanel = () => {
 		setTimeAdmin,
 		// timeAdmin,
 		setIsServerTime,
+		isPlaylistOpen,
 	} = useContext(DataContext);
 
 	const [isAddVideo, setIsAddVideo] = useState(false);
@@ -76,6 +77,8 @@ const AdminPanel = () => {
 		window.location.href = `${websiteURL}/twitch/logout`;
 	};
 
+	const isDisabled = admin ? false : !isPlaylistOpen;
+
 	return (
 		<>
 			<AddVideo isAddVideo={isAddVideo} setIsAddVideo={setIsAddVideo} />
@@ -85,21 +88,15 @@ const AdminPanel = () => {
 					{/* ADDING VIDEO PANEL */}
 					<div className="adminPanel">
 						<div className="adminButtons">
-							<Button2 onClick={() => setIsAddVideo((prev) => !prev)}>
+							<Button2
+								disabled={isDisabled}
+								onClick={() => setIsAddVideo((prev) => !prev)}
+							>
 								Add Video
 							</Button2>
 
 							<Button2 onClick={handleLogout}>LOGOUT</Button2>
 						</div>
-
-						{twitchUserData && (
-							<div className="accountInfo">
-								<div className="img">
-									<img src={twitchUserData.image} alt="twitchImage" srcSet="" />
-								</div>
-								{twitchUserData.login}
-							</div>
-						)}
 					</div>
 					<Queue />
 				</>
@@ -112,24 +109,15 @@ const AdminPanel = () => {
 						) : (
 							<>
 								<div className="adminButtons">
-									<Button2 onClick={() => setIsAddVideo((prev) => !prev)}>
+									<Button2
+										disabled={isDisabled}
+										onClick={() => setIsAddVideo((prev) => !prev)}
+									>
 										Add Video
 									</Button2>
 
 									<Button2 onClick={handleLogout}>LOGOUT</Button2>
 								</div>
-								{twitchUserData && (
-									<div className="accountInfo">
-										<div className="img">
-											<img
-												src={twitchUserData.image}
-												alt="twitchImage"
-												srcSet=""
-											/>
-										</div>
-										{twitchUserData.login}
-									</div>
-								)}
 							</>
 						)}
 					</div>
@@ -137,6 +125,7 @@ const AdminPanel = () => {
 					{/* <Delay /> */}
 				</div>
 			)}
+			{/* {nickname && <Profile />} */}
 		</>
 	);
 };

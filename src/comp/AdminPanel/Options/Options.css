@@ -1,9 +1,9 @@
 .options {
 	color: white;
-	position: absolute;
+	/* position: absolute;
 	top: 0;
 	left: 100%;
-	transform: translateX(-100%);
+	transform: translateX(-100%); */
 }
 
 .optionsDialog_Window {

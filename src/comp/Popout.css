@@ -11,8 +11,8 @@
 }
 
 .popoutContainer {
-	max-height: fit-content;
-	max-width: fit-content;
+	height: fit-content;
+	width: fit-content;
 	border-radius: 10px;
 	background-color: rgba(0, 0, 0, 0.5);
 	box-shadow: 0 0 1px 6000px rgba(0, 0, 0, 0.5);

@@ -26,15 +26,13 @@
 	flex-direction: column;
 	background-color: #121212;
 	border-radius: 5px;
-	gap: 5px;
+	gap: 10px;
 }
 .oneOption {
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
 	padding: 20px;
-}
-.oneOption:nth-child(2n) {
 	background-color: #0f0f0f;
 	border-radius: 5px;
 }

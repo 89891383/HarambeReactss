@@ -79,12 +79,12 @@ const OptionsDialog = () => {
 	return (
 		<Popout state={isDialogOpen} setState={setIsDialogOpen}>
 			<div className="optionsDialog" ref={optionsRef}>
-				<IconButton
+				{/* <IconButton
 					className={classes.closeButton}
 					onClick={handleCloseOptionsDialog}
 				>
 					<CloseIcon />
-				</IconButton>
+				</IconButton> */}
 				<OneOption checked={isServerTime} onChange={serverTimeToggle}>
 					<span>Server time </span>
 				</OneOption>

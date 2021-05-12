@@ -73,9 +73,9 @@ const AdminPanel = () => {
 		window.location.href = `${websiteURL}/auth/twitch`; //DECLARED IN APP
 	};
 
-	const handleLogout = () => {
-		window.location.href = `${websiteURL}/twitch/logout`;
-	};
+	// const handleLogout = () => {
+	// 	window.location.href = `${websiteURL}/twitch/logout`;
+	// };
 
 	const isDisabled = admin ? false : !isPlaylistOpen;
 
@@ -95,7 +95,7 @@ const AdminPanel = () => {
 								Add Video
 							</Button2>
 
-							<Button2 onClick={handleLogout}>LOGOUT</Button2>
+							{/* <Button2 onClick={handleLogout}>LOGOUT</Button2> */}
 						</div>
 					</div>
 					<Queue />
@@ -116,7 +116,7 @@ const AdminPanel = () => {
 										Add Video
 									</Button2>
 
-									<Button2 onClick={handleLogout}>LOGOUT</Button2>
+									{/* <Button2 onClick={handleLogout}>LOGOUT</Button2> */}
 								</div>
 							</>
 						)}

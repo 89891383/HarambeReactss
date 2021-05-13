@@ -2,37 +2,13 @@ import React from "react";
 import { useRef } from "react";
 import { useContext } from "react";
 import { DataContext } from "../../../App";
-import CloseIcon from "@material-ui/icons/Close";
-
 import PlayButton from "../PlayButton";
-
 import OneOption from "./OneOption";
 import "./Options.css";
-import { IconButton, makeStyles } from "@material-ui/core";
 import Popout from "../../Popout";
-
-const useStyles = makeStyles({
-	closeButton: {
-		boxSizing: "content-box",
-		alignSelf: "flex-end",
-		color: "white",
-	},
-	addAdminBtn: {
-		width: "fit-content",
-		color: "white",
-		alignSelf: "center",
-		borderColor: "white",
-		transition: "0.3s",
-		"&:hover": {
-			color: "#90be6d",
-			borderColor: "#90be6d",
-		},
-	},
-});
+import AdminList from "./AdminList";
 
 const OptionsDialog = () => {
-	const classes = useStyles();
-
 	const {
 		nicknameOfTimeAdmin,
 		admin,
@@ -49,9 +25,6 @@ const OptionsDialog = () => {
 
 	const optionsRef = useRef(null);
 
-	const handleCloseOptionsDialog = () => {
-		setIsDialogOpen(false);
-	};
 	const handleGetTimeAdmin = () => {
 		if (admin) {
 			if (timeAdmin) {
@@ -79,18 +52,13 @@ const OptionsDialog = () => {
 	return (
 		<Popout state={isDialogOpen} setState={setIsDialogOpen}>
 			<div className="optionsDialog" ref={optionsRef}>
-				{/* <IconButton
-					className={classes.closeButton}
-					onClick={handleCloseOptionsDialog}
-				>
-					<CloseIcon />
-				</IconButton> */}
 				<OneOption checked={isServerTime} onChange={serverTimeToggle}>
 					<span>Server time </span>
 				</OneOption>
 				<OneOption checked={isPlaylistOpen} onChange={serverPlaylistToggle}>
 					<span>Playlist open</span>
 				</OneOption>
+				<AdminList />
 				<PlayButton onClick={handleGetTimeAdmin} title="Take time admin">
 					{nicknameOfTimeAdmin
 						? `${nicknameOfTimeAdmin} HAS CONTROL`

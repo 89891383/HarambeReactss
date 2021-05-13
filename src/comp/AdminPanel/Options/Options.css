@@ -1,11 +1,3 @@
-.options {
-	color: white;
-	/* position: absolute;
-	top: 0;
-	left: 100%;
-	transform: translateX(-100%); */
-}
-
 .optionsDialog_Window {
 	position: absolute;
 	top: 0;
@@ -27,6 +19,7 @@
 	background-color: #121212;
 	border-radius: 5px;
 	gap: 10px;
+	box-shadow: 0 0 5px black;
 }
 .oneOption {
 	display: flex;

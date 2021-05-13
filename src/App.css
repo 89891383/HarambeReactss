@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap");
 * {
 	margin: 0;
 	padding: 0;
@@ -16,6 +17,7 @@ body {
 	width: 100%;
 	height: 100vh;
 	color: white;
+	font-family: "Ubuntu", sans-serif;
 }
 
 input {
@@ -26,7 +28,7 @@ input {
 	transition: 0.3s;
 }
 input:focus {
-	border: 2px solid blue;
+	border: 2px solid #6441a5;
 }
 .twitchChat {
 	width: 450px;

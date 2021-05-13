@@ -58,6 +58,7 @@ const AddVideo = ({ isAddVideo, setIsAddVideo }) => {
 						type="text"
 						value={editVideoLink}
 						placeholder={"URL"}
+						autoComplete="off"
 						onChange={(e) => {
 							setEditVideoLink(e.target.value);
 						}}
@@ -68,6 +69,7 @@ const AddVideo = ({ isAddVideo, setIsAddVideo }) => {
 					<input
 						type="text"
 						value={videoTitle}
+						autoComplete="off"
 						placeholder={"TITLE"}
 						onChange={(e) => {
 							setVideoTitle(e.target.value);

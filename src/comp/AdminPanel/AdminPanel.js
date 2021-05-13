@@ -25,6 +25,8 @@ const AdminPanel = () => {
 		// timeAdmin,
 		setIsServerTime,
 		isPlaylistOpen,
+		setIsWarning,
+		setWarningMessage,
 	} = useContext(DataContext);
 
 	const [isAddVideo, setIsAddVideo] = useState(false);
@@ -42,11 +44,14 @@ const AdminPanel = () => {
 		socket.on("timeAdminChange", ({ nickname, message, isServerTime }) => {
 			if (isServerTime) {
 				setTimeAdmin(false);
+				setIsSuccess(true);
+				setIsServerTime(isServerTime);
+				setNicknameOfTimeAdmin(nickname);
+				setSuccessMessage(message);
+			} else {
+				setIsWarning(true);
+				setWarningMessage(message);
 			}
-			setIsSuccess(true);
-			setIsServerTime(isServerTime);
-			setNicknameOfTimeAdmin(nickname);
-			setSuccessMessage(message);
 		});
 
 		socket.on("timeAdminLeaveAnswer", () => {
@@ -67,15 +72,13 @@ const AdminPanel = () => {
 		setNicknameOfTimeAdmin,
 		setTimeAdmin,
 		setIsServerTime,
+		setIsWarning,
+		setWarningMessage,
 	]);
 
 	const handleTwitchLogin = () => {
 		window.location.href = `${websiteURL}/auth/twitch`; //DECLARED IN APP
 	};
-
-	// const handleLogout = () => {
-	// 	window.location.href = `${websiteURL}/twitch/logout`;
-	// };
 
 	const isDisabled = admin ? false : !isPlaylistOpen;
 
@@ -94,8 +97,6 @@ const AdminPanel = () => {
 							>
 								Add Video
 							</Button2>
-
-							{/* <Button2 onClick={handleLogout}>LOGOUT</Button2> */}
 						</div>
 					</div>
 					<Queue />
@@ -115,17 +116,13 @@ const AdminPanel = () => {
 									>
 										Add Video
 									</Button2>
-
-									{/* <Button2 onClick={handleLogout}>LOGOUT</Button2> */}
 								</div>
 							</>
 						)}
 					</div>
 					<Queue />
-					{/* <Delay /> */}
 				</div>
 			)}
-			{/* {nickname && <Profile />} */}
 		</>
 	);
 };

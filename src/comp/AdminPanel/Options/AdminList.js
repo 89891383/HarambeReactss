@@ -32,7 +32,11 @@ const AdminList = () => {
 	}, [socket]);
 
 	const createAdminList = adminList.map((admin) => {
-		return <div key={admin}>{admin}</div>;
+		return (
+			<div className="adminList_Item" key={admin}>
+				{admin}
+			</div>
+		);
 	});
 
 	const [isAdminList, setIsAdminList] = useState(false);
@@ -47,7 +51,12 @@ const AdminList = () => {
 				<Button variant="outlined" className={classes.adminListBtn}>
 					ADMIN LIST
 				</Button>
-				{isAdminList && <div className="adminListArray">{createAdminList}</div>}
+				{isAdminList && (
+					<div className="adminListArray">
+						<h3 className="h3_adminListArray">Admins:</h3>
+						{createAdminList}
+					</div>
+				)}
 			</div>
 		</>
 	);

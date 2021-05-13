@@ -25,6 +25,8 @@ const PlayerAndChat = () => {
 		videoTitle,
 		setVideoTitle,
 		setIsPlaylistOpen,
+		setIsSuccess,
+		setSuccessMessage,
 	} = useContext(DataContext);
 
 	const [isPlaying, setIsPlaying] = useState(false);
@@ -156,14 +158,15 @@ const PlayerAndChat = () => {
 			});
 		});
 
-		socket.on("getVideoDuration", () => {
-			if (player) {
-				console.log(player.current.getDuration());
-			}
-		});
-
 		socket.on("playlistToggleAnswer", ({ isOpen }) => {
 			setIsPlaylistOpen(isOpen);
+			if (isOpen) {
+				setIsSuccess(true);
+				setSuccessMessage("PLAYLIST IS NOW OPEN");
+			} else {
+				setIsWarning(true);
+				setWarningMessage("PLAYLIST IS NOW CLOSED");
+			}
 		});
 
 		return () => {

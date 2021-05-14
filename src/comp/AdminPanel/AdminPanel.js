@@ -51,7 +51,6 @@ const AdminPanel = () => {
 				setWarningMessage(message);
 			}
 			setNicknameOfTimeAdmin(nickname);
-
 			setIsServerTime(isServerTime);
 		});
 

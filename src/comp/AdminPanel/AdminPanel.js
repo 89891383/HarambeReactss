@@ -45,12 +45,13 @@ const AdminPanel = () => {
 			if (isServerTime) {
 				setTimeAdmin(false);
 				setIsSuccess(true);
-				setNicknameOfTimeAdmin(nickname);
 				setSuccessMessage(message);
 			} else {
 				setIsWarning(true);
 				setWarningMessage(message);
 			}
+			setNicknameOfTimeAdmin(nickname);
+
 			setIsServerTime(isServerTime);
 		});
 

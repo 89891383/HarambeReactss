@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
 import { DataContext } from "../../App";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import { IconButton, makeStyles, Tooltip } from "@material-ui/core";
 
 const useStyles = makeStyles({
 	iconButton: {
 		color: "white",
 		transition: "0.3s",
-		"&:hover": {
-			color: "red",
-		},
+		// "&:hover": {
+		// 	color: "red",
+		// },
 	},
 });
 
@@ -38,6 +39,12 @@ const QueueItem = ({ item }) => {
 		}
 	};
 
+	const handlePlayNow = () => {
+		if (admin) {
+			socket.emit("playVideoNow", { URL, title });
+		}
+	};
+
 	return (
 		<>
 			<div className="queueItem">
@@ -50,12 +57,21 @@ const QueueItem = ({ item }) => {
 				</Tooltip>
 
 				{admin && (
-					<IconButton
-						className={classes.iconButton}
-						onClick={handleDeleteItemFromQueue}
-					>
-						<DeleteForeverIcon />
-					</IconButton>
+					<div className="manageIcons">
+						<IconButton className={classes.iconButton}>
+							<Tooltip title="Play now" onClick={handlePlayNow} enterDelay={0}>
+								<PlayArrowIcon />
+							</Tooltip>
+						</IconButton>
+						<IconButton
+							className={classes.iconButton}
+							onClick={handleDeleteItemFromQueue}
+						>
+							<Tooltip enterDelay={0} title="Delete from queue">
+								<DeleteForeverIcon />
+							</Tooltip>
+						</IconButton>
+					</div>
 				)}
 			</div>
 		</>

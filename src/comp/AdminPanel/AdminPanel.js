@@ -19,10 +19,8 @@ const AdminPanel = () => {
 		setErrorMessage,
 		setIsSuccess,
 		setSuccessMessage,
-		// nicknameOfTimeAdmin,
 		setNicknameOfTimeAdmin,
 		setTimeAdmin,
-		// timeAdmin,
 		setIsServerTime,
 		isPlaylistOpen,
 		setIsWarning,
@@ -44,13 +42,15 @@ const AdminPanel = () => {
 		socket.on("timeAdminChange", ({ nickname, message, isServerTime }) => {
 			if (isServerTime) {
 				setTimeAdmin(false);
+			}
+			if (!nickname) {
+				setWarningMessage(message);
+				setIsWarning(true);
+			} else {
 				setIsSuccess(true);
 				setSuccessMessage(message);
-			} else {
-				setIsWarning(true);
-				setWarningMessage(message);
+				setNicknameOfTimeAdmin(nickname);
 			}
-			setNicknameOfTimeAdmin(nickname);
 			setIsServerTime(isServerTime);
 		});
 

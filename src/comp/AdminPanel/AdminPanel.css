@@ -136,6 +136,10 @@
 	width: fit-content;
 }
 
+.manageIcons {
+	display: flex;
+}
+
 @media (max-width: 720px) {
 	.delayInfoContainer {
 		flex-direction: column;

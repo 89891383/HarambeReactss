@@ -206,7 +206,12 @@ const PlayerAndChat = () => {
 	};
 
 	const videoDuration = (duration) => {
-		socket.emit("videoDuration", { duration });
+		if (duration === Infinity) {
+			// LIVESTREAMS
+			socket.emit("videoDuration", { duration: 99 ** 5 });
+		} else {
+			socket.emit("videoDuration", { duration });
+		}
 	};
 
 	return (
@@ -219,7 +224,6 @@ const PlayerAndChat = () => {
 						onPause={stopSendingTimeToSocket}
 						onDuration={videoDuration}
 						playing={isPlaying}
-						// onEnded={nextVideo}
 						className="react-player"
 						url={currentVideoLink}
 						width="100%"

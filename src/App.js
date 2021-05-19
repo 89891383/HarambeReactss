@@ -13,6 +13,8 @@ import TwitchChat from "./comp/TwitchChat";
 import Options from "./comp/AdminPanel/Options/Options";
 import OptionsDialog from "./comp/AdminPanel/Options/OptionsDialog";
 import Profile from "./comp/Profile/Profile";
+import History from "./comp/History/History";
+import HistoryDialog from "./comp/History/HistoryDialog";
 export const DataContext = React.createContext();
 
 const socket = io(`/`);
@@ -37,6 +39,7 @@ const App = () => {
 	const [isServerTime, setIsServerTime] = useState(false);
 	const [videoTitle, setVideoTitle] = useState(null);
 	const [isPlaylistOpen, setIsPlaylistOpen] = useState(false);
+	const [isHistoryOpen, setIsHistoryOpen] = useState(false);
 
 	const twitchStreamer = "main";
 	const websiteURL = window.location.origin;
@@ -116,6 +119,8 @@ const App = () => {
 					setVideoTitle,
 					isPlaylistOpen,
 					setIsPlaylistOpen,
+					isHistoryOpen,
+					setIsHistoryOpen,
 				}}
 			>
 				<div className="app">
@@ -125,10 +130,12 @@ const App = () => {
 							<AdminPanel />
 							<div className="sideOptions">
 								{twitchUserData && <Profile />}
+								<History />
 								{admin && <Options />}
 							</div>
 						</div>
 					</div>
+					<HistoryDialog />
 					<TwitchChat />
 					<OptionsDialog />
 				</div>

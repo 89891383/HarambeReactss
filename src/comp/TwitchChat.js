@@ -18,7 +18,6 @@ const TwitchChat = () => {
 				title="TwitchChat"
 				id="chat_embed"
 				src={`https://www.twitch.tv/embed/demonzz1/chat?darkpopout&parent=${websiteURL}`}
-				// src={`https://www.twitch.tv/embed/demonzz1/chat?darkpopout&parent=localhost`}
 				height="100%"
 				width="100%"
 			></iframe>

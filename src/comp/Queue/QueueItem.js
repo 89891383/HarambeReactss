@@ -3,21 +3,20 @@ import { DataContext } from "../../App";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import { IconButton, makeStyles, Tooltip } from "@material-ui/core";
+import "./Queue.css";
+import noImg from "./noImg.jpg";
 
 const useStyles = makeStyles({
 	iconButton: {
 		color: "white",
 		transition: "0.3s",
-		// "&:hover": {
-		// 	color: "red",
-		// },
 	},
 });
 
 const QueueItem = ({ item }) => {
 	const classes = useStyles();
 	const { URL, title, addedBy } = item;
-	const [videoTitle, setVideoTitle] = useState(null);
+	const [videoData, setVideoData] = useState(null);
 
 	const { admin, socket } = useContext(DataContext);
 
@@ -25,11 +24,11 @@ const QueueItem = ({ item }) => {
 		fetch(`https://noembed.com/embed?url=${URL}`)
 			.then((res) => res.json())
 			.then((res) => {
-				setVideoTitle(res.title);
+				setVideoData(res);
 			});
 
 		return () => {
-			setVideoTitle(null);
+			setVideoData(null);
 		};
 	}, [item, URL]);
 
@@ -48,13 +47,22 @@ const QueueItem = ({ item }) => {
 	return (
 		<>
 			<div className="queueItem">
-				<Tooltip title={`Added by: ${addedBy}`} placement="bottom">
-					<div className={"queueItemInfo"}>
-						<a href={URL} target="_blank" rel="noopener noreferrer">
-							{title ? title : videoTitle ? videoTitle : URL}
-						</a>
+				<div className="videoImgAndInfo_Container">
+					<div className="videoImg">
+						<img
+							src={videoData?.thumbnail_url ? videoData?.thumbnail_url : noImg}
+							alt=""
+							srcset=""
+						/>
 					</div>
-				</Tooltip>
+					<Tooltip title={`Added by: ${addedBy}`} placement="bottom">
+						<div className="queueItemInfo">
+							<a href={URL} target="_blank" rel="noopener noreferrer">
+								{title ? title : videoData?.title ? videoData?.title : URL}
+							</a>
+						</div>
+					</Tooltip>
+				</div>
 
 				{admin && (
 					<div className="manageIcons">

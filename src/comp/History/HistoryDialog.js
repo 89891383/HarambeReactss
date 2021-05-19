@@ -36,7 +36,7 @@ const HistoryDialog = () => {
 		<Popout state={isHistoryOpen} setState={setIsHistoryOpen}>
 			<div className="historyContainer">
 				<h2>Last played:</h2>
-				{createHistory ? createHistory : <CircularProgress />}
+				{createHistory.length ? createHistory : <CircularProgress />}
 			</div>
 		</Popout>
 	);

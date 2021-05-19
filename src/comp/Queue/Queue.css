@@ -1,0 +1,82 @@
+.queue {
+	display: flex;
+	color: white;
+	flex-direction: column;
+	width: 100%;
+	height: fit-content;
+	gap: 5px;
+	padding: 0 0 20px 0;
+}
+
+.queueItem,
+.emptyQueueText {
+	padding: 5px;
+	display: flex;
+	width: 90%;
+	border-radius: 10px;
+	align-self: center;
+	align-items: center;
+	justify-content: space-between;
+	font-weight: bold;
+	background-color: #0f0f0f;
+	font-size: 20px;
+}
+.emptyQueueText {
+	padding: 20px;
+}
+.queueItem a {
+	text-decoration: none;
+	color: inherit;
+	text-align: start;
+}
+.emptyQueueText {
+	font-size: 40px;
+	display: flex;
+	justify-content: center;
+	color: #242424;
+	pointer-events: none;
+	user-select: none;
+}
+.queueItem:nth-child(2) {
+	border-top: 2px solid #121212;
+	background-color: #121212;
+}
+.queueItemInfo {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	word-break: break-word;
+	gap: 10px;
+}
+.queueItem .addedBy {
+	display: flex;
+	align-items: center;
+	padding: 5px;
+	background-color: #161616;
+	border-radius: 10px;
+	font-size: 13px;
+	font-weight: 500;
+}
+.addedBy {
+	width: fit-content;
+}
+.queueItem .videoImg img {
+	display: flex;
+	width: 150px;
+	height: auto;
+	border-radius: 10px;
+}
+.videoImgAndInfo_Container {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+}
+@media (max-width: 500px) {
+	.videoImg {
+		display: none;
+	}
+	.queueItem {
+		padding: 20px;
+	}
+}

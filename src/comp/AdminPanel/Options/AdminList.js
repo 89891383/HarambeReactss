@@ -1,6 +1,7 @@
 import { Button, makeStyles } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useContext } from "react";
+import { CSSTransition } from "react-transition-group";
 import { DataContext } from "../../../App";
 // import { CSSTransition } from "react-transition-group";
 import "./AdminList.css";
@@ -51,12 +52,18 @@ const AdminList = () => {
 				<Button variant="outlined" className={classes.adminListBtn}>
 					ADMIN LIST
 				</Button>
-				{isAdminList && (
+
+				<CSSTransition
+					in={isAdminList}
+					unmountOnExit
+					timeout={300}
+					classNames="transition"
+				>
 					<div className="adminListArray">
 						<h3 className="h3_adminListArray">Admins:</h3>
 						{createAdminList}
 					</div>
-				)}
+				</CSSTransition>
 			</div>
 		</>
 	);

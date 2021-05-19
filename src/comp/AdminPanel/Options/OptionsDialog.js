@@ -58,12 +58,20 @@ const OptionsDialog = () => {
 				<OneOption checked={isPlaylistOpen} onChange={serverPlaylistToggle}>
 					<span>Playlist open</span>
 				</OneOption>
-				<AdminList />
-				<PlayButton onClick={handleGetTimeAdmin} title="Take time admin">
-					{nicknameOfTimeAdmin
-						? `${nicknameOfTimeAdmin} HAS CONTROL`
-						: "TAKE CONTROL"}
-				</PlayButton>
+				<div
+					style={{
+						display: "flex",
+						alignItems: "center",
+						justifyContent: "center",
+					}}
+				>
+					<AdminList />
+					<PlayButton onClick={handleGetTimeAdmin} title="Take time admin">
+						{nicknameOfTimeAdmin
+							? `${nicknameOfTimeAdmin} HAS CONTROL`
+							: "TAKE CONTROL"}
+					</PlayButton>
+				</div>
 			</div>
 		</Popout>
 	);

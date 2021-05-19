@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useEffect, useState, useRef } from "react";
 import ReactPlayer from "react-player/lazy";
-import { DataContext } from "../App";
+import { DataContext } from "../../App";
 import "./PlayerAndChat.css";
 
 const PlayerAndChat = () => {

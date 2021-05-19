@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import io from "socket.io-client";
 import "./App.css";
 import AdminPanel from "./comp/AdminPanel/AdminPanel";
-import PlayerAndChat from "./comp/PlayerAndChat";
+import PlayerAndChat from "./comp/Player/PlayerAndChat";
 import Success from "./comp/Snackbars/Success";
 import Error from "./comp/Snackbars/Error";
 import Warning from "./comp/Snackbars/Warning";

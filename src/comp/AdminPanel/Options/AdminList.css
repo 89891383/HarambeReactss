@@ -1,8 +1,7 @@
 .adminList {
 	width: fit-content;
-	margin: 0 auto;
 	position: relative;
-	padding: 0 15px;
+	padding: 15px;
 }
 
 .adminListArray {
@@ -15,12 +14,13 @@
 	overflow: scroll;
 	position: absolute;
 	left: 0;
-	top: 0;
-	transform: translate(-100%, -50%);
+	top: 90%;
+	/* transform: translate(0%, 70%); */
 	padding: 15px;
 	background-color: black;
 	border-radius: 5px;
 	box-shadow: 0 0 5px black;
+	transform-origin: center;
 }
 
 .adminList_Item {

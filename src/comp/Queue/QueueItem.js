@@ -52,7 +52,7 @@ const QueueItem = ({ item }) => {
 						<img
 							src={videoData?.thumbnail_url ? videoData?.thumbnail_url : noImg}
 							alt=""
-							srcset=""
+							srcSet=""
 						/>
 					</div>
 					<Tooltip title={`Added by: ${addedBy}`} placement="bottom">

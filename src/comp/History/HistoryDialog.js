@@ -6,7 +6,7 @@ import HistoryItem from "./HistoryItem";
 import { CircularProgress } from "@material-ui/core";
 const HistoryDialog = () => {
 	const { isHistoryOpen, setIsHistoryOpen, socket } = useContext(DataContext);
-	const [history, setHistory] = useState([]);
+	const [history, setHistory] = useState(null);
 	useEffect(() => {
 		if (isHistoryOpen) {
 			socket.emit("getPlaylistHistory");
@@ -21,7 +21,7 @@ const HistoryDialog = () => {
 		};
 	}, [socket, isHistoryOpen]);
 
-	const createHistory = history.map((video, index) => {
+	const createHistory = history?.map((video, index) => {
 		const { URL, title } = video;
 		return (
 			<HistoryItem key={index} URL={URL} index={index}>
@@ -32,11 +32,17 @@ const HistoryDialog = () => {
 		);
 	});
 
+	const checkIsEmpty = createHistory?.length ? (
+		createHistory
+	) : (
+		<span className="emptyHistoryText">HISTORY IS EMPTY</span>
+	);
+
 	return (
 		<Popout state={isHistoryOpen} setState={setIsHistoryOpen}>
 			<div className="historyContainer">
 				<h2>Last played:</h2>
-				{createHistory.length ? createHistory : <CircularProgress />}
+				{createHistory ? checkIsEmpty : <CircularProgress />}
 			</div>
 		</Popout>
 	);

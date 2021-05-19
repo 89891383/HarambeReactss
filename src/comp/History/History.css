@@ -12,6 +12,7 @@
 	gap: 10px;
 	overflow: scroll;
 	border-radius: 5px;
+	position: relative;
 }
 .historyAbsolute {
 	position: fixed;
@@ -29,6 +30,26 @@
 .historyItem a {
 	text-decoration: none;
 	color: inherit;
+}
+.emptyHistoryText {
+	position: absolute;
+	display: flex;
+	width: 90%;
+	border-radius: 10px;
+	align-self: center;
+	align-items: center;
+	font-weight: bold;
+	background-color: #0f0f0f;
+	padding: 20px;
+	justify-self: center;
+	font-size: 40px;
+	justify-content: center;
+	color: #242424;
+	pointer-events: none;
+	user-select: none;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 
 @media (max-width: 520px) {

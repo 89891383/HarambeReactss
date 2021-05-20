@@ -26,10 +26,14 @@
 	width: 100%;
 	border-radius: 5px;
 	font-weight: 500;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 .historyItem a {
 	text-decoration: none;
 	color: inherit;
+	word-break: break-all;
 }
 .emptyHistoryText {
 	position: absolute;

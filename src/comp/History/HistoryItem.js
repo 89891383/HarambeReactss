@@ -16,7 +16,7 @@ const HistoryItem = ({ children, URL, index }) => {
 
 	return (
 		<div className="historyItem">
-			{index + 1}. {videoTitle ? <a href={URL}>{videoTitle}</a> : children}
+			{videoTitle ? <a href={URL}>{videoTitle}</a> : children}
 		</div>
 	);
 };

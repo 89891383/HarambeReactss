@@ -1,20 +1,24 @@
-.queue {
+.queue,
+.queueList {
 	display: flex;
 	color: white;
 	flex-direction: column;
-	width: 100%;
+	width: 95%;
 	height: fit-content;
 	gap: 5px;
 	padding: 0 0 20px 0;
+	align-self: center;
+}
+.queueList {
+	width: 100%;
 }
 
 .queueItem,
 .emptyQueueText {
 	padding: 5px;
 	display: flex;
-	width: 90%;
+	width: 100%;
 	border-radius: 10px;
-	align-self: center;
 	align-items: center;
 	justify-content: space-between;
 	font-weight: bold;
@@ -71,6 +75,21 @@
 	align-items: center;
 	gap: 15px;
 }
+
+.queue_h3 {
+	text-align: start;
+	align-self: flex-start;
+	padding: 15px 0;
+	width: 100%;
+	margin: 0 auto;
+}
+.queueCounter {
+	padding: 10px 15px;
+	align-self: flex-start;
+	background-color: #121212;
+	border-radius: 10px;
+}
+
 @media (max-width: 500px) {
 	.videoImg {
 		display: none;

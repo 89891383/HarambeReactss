@@ -56,19 +56,6 @@
 	justify-content: center;
 	flex-wrap: wrap;
 }
-.queue_h3 {
-	text-align: start;
-	/* align-self: flex-start; */
-	padding: 15px 0;
-	width: 90%;
-	margin: 0 auto;
-}
-.queueCounter {
-	padding: 10px 15px;
-	align-self: flex-start;
-	background-color: #121212;
-	border-radius: 10px;
-}
 
 .adminButtons {
 	display: flex;

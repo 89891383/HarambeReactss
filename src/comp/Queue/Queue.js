@@ -20,7 +20,7 @@ const Queue = () => {
 						<span className="queueCounter">{videoQueue.length}</span> Current
 						queue:
 					</h3>
-					<TransitionGroup className="queue">{queueList}</TransitionGroup>
+					<TransitionGroup className="queue_List">{queueList}</TransitionGroup>
 				</div>
 			) : (
 				<div className="queue">

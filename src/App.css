@@ -31,7 +31,7 @@ input:focus {
 	border: 2px solid #6441a5;
 }
 .twitchChat {
-	width: 450px;
+	width: 400px;
 	height: 100vh;
 }
 .playerAndControls {

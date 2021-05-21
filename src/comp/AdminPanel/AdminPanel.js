@@ -10,8 +10,6 @@ import AddVideo from "./AddVideo";
 
 const AdminPanel = () => {
 	const {
-		// twitchUserData,
-		websiteURL,
 		admin,
 		socket,
 		nickname,
@@ -77,7 +75,7 @@ const AdminPanel = () => {
 	]);
 
 	const handleTwitchLogin = () => {
-		window.location.href = `${websiteURL}/auth/twitch`; //DECLARED IN APP
+		window.location.href = `/auth/twitch`; //DECLARED IN APP
 	};
 
 	const isDisabled = admin ? false : !isPlaylistOpen;

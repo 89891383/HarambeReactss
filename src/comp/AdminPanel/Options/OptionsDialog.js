@@ -7,6 +7,7 @@ import OneOption from "./OneOption";
 import "./Options.css";
 import Popout from "../../Popout";
 import AdminList from "./AdminList";
+import ChangeChat from "./ChangeChat";
 
 const OptionsDialog = () => {
 	const {
@@ -58,6 +59,7 @@ const OptionsDialog = () => {
 				<OneOption checked={isPlaylistOpen} onChange={serverPlaylistToggle}>
 					<span>Playlist open</span>
 				</OneOption>
+				<ChangeChat/>
 				<div
 					style={{
 						display: "flex",

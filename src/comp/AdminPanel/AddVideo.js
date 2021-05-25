@@ -9,12 +9,24 @@ import SkipButton from "./SkipButton";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
 import QueueIcon from "@material-ui/icons/Queue";
+import { Checkbox, makeStyles } from "@material-ui/core";
+
+
+const useStyles = makeStyles({
+	checkbox:{
+		width:'fit-content',
+	}
+})
 
 const AddVideo = ({ isAddVideo, setIsAddVideo }) => {
+
+	const classes = useStyles()
+
 	const { admin, socket, nickname } = useContext(DataContext);
 
 	const [editVideoLink, setEditVideoLink] = useState("");
 	const [videoTitle, setVideoTitle] = useState("");
+	const [isLive, setIsLive] = useState(false);
 
 	const handleSkipVideo = () => {
 		if (admin) {
@@ -27,10 +39,12 @@ const AddVideo = ({ isAddVideo, setIsAddVideo }) => {
 			socket.emit("videoChange", {
 				currentVideoLink: editVideoLink,
 				videoTitle,
+				isLive,
 			});
 			setVideoTitle("");
 			setEditVideoLink("");
 			setIsAddVideo(false);
+			setIsLive(false)
 		}
 	};
 
@@ -40,10 +54,12 @@ const AddVideo = ({ isAddVideo, setIsAddVideo }) => {
 				videoLink: editVideoLink,
 				nickname,
 				videoTitle,
+				isLive,
 			});
 			setEditVideoLink("");
 			setVideoTitle("");
 			setIsAddVideo(false);
+			setIsLive(false)
 		}
 	};
 
@@ -75,6 +91,13 @@ const AddVideo = ({ isAddVideo, setIsAddVideo }) => {
 							setVideoTitle(e.target.value);
 						}}
 					/>
+					{admin && <div className="isLive">
+						<Checkbox color="primary" className={classes.checkbox} checked={isLive} onChange={()=>setIsLive(prev=> !prev)}/>
+						<span>LIVE</span>
+					</div>}
+					
+					
+					
 				</div>
 
 				<button

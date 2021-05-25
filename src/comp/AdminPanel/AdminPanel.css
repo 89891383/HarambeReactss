@@ -67,6 +67,11 @@
 .manageIcons {
 	display: flex;
 }
+.isLive{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 
 @media (max-width: 720px) {
 	.delayInfoContainer {

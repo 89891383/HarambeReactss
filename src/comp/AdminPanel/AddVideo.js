@@ -9,19 +9,19 @@ import SkipButton from "./SkipButton";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
 import QueueIcon from "@material-ui/icons/Queue";
-import { Checkbox, makeStyles } from "@material-ui/core";
+// import {  makeStyles } from "@material-ui/core";
 
 
-const useStyles = makeStyles({
-	checkbox:{
-		width:'fit-content',
-		color:'white'
-	}
-})
+// const useStyles = makeStyles({
+// 	checkbox:{
+// 		width:'fit-content',
+// 		color:'white'
+// 	}
+// })
 
 const AddVideo = ({ isAddVideo, setIsAddVideo }) => {
 
-	const classes = useStyles()
+	// const classes = useStyles()
 
 	const { admin, socket, nickname } = useContext(DataContext);
 
@@ -92,10 +92,10 @@ const AddVideo = ({ isAddVideo, setIsAddVideo }) => {
 							setVideoTitle(e.target.value);
 						}}
 					/>
-					{admin && <div className="isLive">
+					{/* {admin && <div className="isLive">
 						<Checkbox color="primary" className={classes.checkbox} checked={isLive} onChange={()=>setIsLive(prev=> !prev)}/>
 						<span>LIVE</span>
-					</div>}
+					</div>} */}
 					
 					
 					

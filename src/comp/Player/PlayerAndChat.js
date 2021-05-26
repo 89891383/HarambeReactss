@@ -217,12 +217,7 @@ const PlayerAndChat = () => {
 	};
 
 	const videoDuration = (duration) => {
-		if (duration === Infinity) {
-			// LIVESTREAMS
-			socket.emit("videoDuration", { duration: 99 ** 5 });
-		} else {
 			socket.emit("videoDuration", { duration });
-		}
 		setDuration(duration)
 	};
 

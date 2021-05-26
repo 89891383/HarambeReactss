@@ -42,7 +42,7 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
     const convertSeconds = (time) =>{
         let minutes = Math.floor(time / 60)
         const hours = Math.floor(minutes/60)
-        const seconds  = time - (60 * minutes)
+        const seconds  = Math.floor(time - (60 * minutes))
         minutes = minutes%60
 
         return {seconds, minutes, hours}

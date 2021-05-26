@@ -15,6 +15,7 @@ import { Checkbox, makeStyles } from "@material-ui/core";
 const useStyles = makeStyles({
 	checkbox:{
 		width:'fit-content',
+		color:'white'
 	}
 })
 

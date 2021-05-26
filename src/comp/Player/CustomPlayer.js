@@ -39,8 +39,23 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
         setIsPlaying(prev=> !prev)
     }
 
-    // const minutes = Math.floor(duration / 60)
-    // const seconds  = duration - (60*minutes)
+    const convertSeconds = (time) =>{
+        let minutes = Math.floor(time / 60)
+        const hours = Math.floor(minutes/60)
+        const seconds  = time - (60 * minutes)
+        minutes = minutes%60
+
+        return {seconds, minutes, hours}
+    }
+
+    const {seconds,minutes, hours} = convertSeconds(duration)
+
+
+    const currentTime =  convertSeconds(Math.floor(progress))
+
+    const formatTime = (time) =>{
+     return time < 10 ? `0${time}` : time
+    }
 
     const controlsRef = useRef(null)
 
@@ -91,10 +106,12 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
                     
                    
                 </div>
-                {/* <div className="durationBar">
-                   {`${minutes}:${seconds}`}
+                <div className="durationBar">
+                    {`${formatTime(currentTime.hours)}:${formatTime(currentTime.minutes)}:${formatTime(currentTime.seconds)}`}
+                            /
+                   {`${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`}
 
-                </div> */}
+                </div>
                 <div className="volumeBar">
                     <IconButton onClick={handleMute} className={classes.volumeBtn} >
                         {volume ? <VolumeUpIcon /> : <VolumeOffIcon/> }
@@ -103,6 +120,8 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
                         <Slider min={0} max={1} step={0.01} value={volume} onChange={handleVolume} />
             
                 </div>
+                
+
                 
                 <div className="fullScreen">
                     <IconButton className={classes.playButton} onClick={handleFullScreen}>

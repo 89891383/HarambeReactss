@@ -31,7 +31,7 @@
 }
 .volumeBar{
     width: 150px;
-    padding: 0 20px;
+    padding-left: 15px;
     display: flex;
     gap: 10px;
     display: flex;
@@ -41,6 +41,17 @@
 .MuiLinearProgress-bar{
     pointer-events: none;
 }
+
+.durationBar{
+    padding-left: 15px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+
+
+
 
 .controls-enter {
     opacity: 0;

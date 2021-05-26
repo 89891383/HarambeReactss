@@ -1,5 +1,5 @@
 .queue,
-.queueList {
+.queue_List {
 	display: flex;
 	color: white;
 	flex-direction: column;
@@ -9,8 +9,9 @@
 	padding: 0 0 20px 0;
 	align-self: center;
 }
-.queueList {
+.queue_List {
 	width: 100%;
+
 }
 
 .queueItem,

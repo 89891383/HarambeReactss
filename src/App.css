@@ -72,7 +72,13 @@ input:focus {
 	}
 	.playerAndControls {
 		overflow: visible;
-	}
+	}	
+}
+
+@media screen and (orientation:landscape) and (max-width:1000px){
+.twitchChat{
+	width:300px
+}
 }
 
 .transition-enter {

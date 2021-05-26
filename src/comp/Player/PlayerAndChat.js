@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
 import { useEffect, useState, useRef } from "react";
 import ReactPlayer from "react-player/lazy";
+import { CSSTransition } from "react-transition-group";
 import { DataContext } from "../../App";
+import CustomPlayer from "./CustomPlayer";
 import "./PlayerAndChat.css";
 
 const PlayerAndChat = () => {
@@ -30,6 +32,10 @@ const PlayerAndChat = () => {
 	} = useContext(DataContext);
 
 	const [isPlaying, setIsPlaying] = useState(false);
+	const [progress, setProgress] = useState(0);
+	const [duration, setDuration] = useState(0);
+	const [volume, setVolume] = useState(0.1);
+	const [areControls, setAreControls] = useState(false);
 	const player = useRef(null);
 	const maxDelayLive = 6;
 	// CHAT LINK
@@ -128,6 +134,10 @@ const PlayerAndChat = () => {
 			});
 		}
 
+		socket.on('changeTimeAnswer', currentSeconds=>{
+			synchronizeVideo(player,currentSeconds)
+		})
+
 		socket.on("timeAdminIsEmpty", ({ message }) => {
 			setIsWarning(true);
 			setWarningMessage(message);
@@ -181,6 +191,7 @@ const PlayerAndChat = () => {
 			socket.removeAllListeners("getVideoDuration");
 			socket.removeAllListeners("queueDeleteAnswer");
 			socket.removeAllListeners("playlistToggleAnswer");
+			socket.off('changeTimeAnswer')		
 		};
 		// eslint-disable-next-line
 	}, [currentRoom, admin, socket, maxDelay, nickname, timeAdmin]);
@@ -212,25 +223,39 @@ const PlayerAndChat = () => {
 		} else {
 			socket.emit("videoDuration", { duration });
 		}
+		setDuration(duration)
 	};
+
+
+	const handleShowControls = () =>{
+		setAreControls(true)
+	}
+	const handleHideControls = () =>{
+		setAreControls(false)
+	}
 
 	return (
 		<>
 			<div className="playerAndChat">
-				<div className="player-wrapper">
+				<div className="player-wrapper" onMouseEnter={handleShowControls} onMouseLeave={handleHideControls} >
 					<ReactPlayer
 						ref={player}
 						onPlay={startSendingTimeToSocket}
 						onPause={stopSendingTimeToSocket}
 						onDuration={videoDuration}
+						onProgress={(e)=> setProgress(e.playedSeconds)}
 						playing={isPlaying}
 						className="react-player"
 						url={currentVideoLink}
 						width="100%"
 						height="100%"
-						controls={true}
-						volume={0.1}
+						controls={false}
+						volume={volume}
 					/>
+					<CSSTransition unmountOnExit in={areControls}  timeout={200} classNames='controls'>
+							<CustomPlayer player={player} setIsPlaying={setIsPlaying} isPlaying={isPlaying} progress={progress} duration={duration} setVolume={setVolume} volume={volume} />
+					</CSSTransition>
+				
 				</div>
 			</div>
 			{videoTitle && <div className="videoTitle">{videoTitle}</div>}

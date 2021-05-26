@@ -77,6 +77,12 @@
 	border-radius: 5px;
 }
 
+.player-wrapper{
+	position: relative;
+	overflow: hidden;
+}
+
+
 @media (max-width: 720px) {
 	.delayInfoContainer {
 		flex-direction: column;

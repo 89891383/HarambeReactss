@@ -27,8 +27,11 @@ const useStyles = makeStyles({
         height:'30px',
     },
     progress:{
-        height:'10px',
-        borderRadius:'5px'
+        height:'20px',
+        borderRadius:'5px',
+        backgroundColor:'transparent',
+        width:'100%',
+        overflow:'visible'
     }
 })
 
@@ -104,11 +107,11 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
         socket.emit('changeTime', {procents, nickname})
     }
 
-    useEffect(()=>{
-        const barWidth = progressRef.current.getBoundingClientRect().width
-        const procents = (progress/duration)*barWidth
-        progressDotRef.current.style.transform = `translate(${procents-10}px,-75%)`
-    },[progress,duration])
+    // useEffect(()=>{
+    //     const barWidth = progressRef.current.getBoundingClientRect().width
+    //     const procents = (progress/duration)*barWidth
+    //     progressDotRef.current.style.transform = `translate(${procents-10}px,-75%)`
+    // },[progress,duration])
 
     const handleFullScreen = () =>{
         const playerWrapper = document.querySelector('player-wrapper')
@@ -171,7 +174,7 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
                         </div>
                         </CSSTransition> */}
                      
-
+                        <div className="progressBackground"></div>
                         <LinearProgress 
                         ref={progressRef} 
                         className={classes.progress} 
@@ -179,7 +182,7 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
                         onClick={handleProgressChange} 
                         value={progress/duration *100} 
                         />
-                        <div className="progressDot" ref={progressDotRef}></div>
+                        {/* <div className="progressDot" ref={progressDotRef}></div> */}
                     
                    
                 </div>

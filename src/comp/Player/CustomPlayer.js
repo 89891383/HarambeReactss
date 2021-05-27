@@ -182,7 +182,7 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
                         onClick={handleProgressChange} 
                         value={progress/duration *100} 
                         />
-                        {/* <div className="progressDot" ref={progressDotRef}></div> */}
+                       
                     
                    
                 </div>

@@ -55,6 +55,15 @@
 .MuiLinearProgress-bar{
     pointer-events: none;
 }
+.progressDot{
+    width: 20px;
+    height: 20px;
+    background-color: rgb(63,81,181);
+    box-shadow: 0 0 2px black;
+    position: absolute;
+    border-radius: 50%;
+    transform:translate(0%, -75%)
+}
 
 .durationBar{
     padding-left: 15px;

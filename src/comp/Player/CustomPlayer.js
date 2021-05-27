@@ -10,6 +10,7 @@ import { DataContext } from '../../App';
 import { useRef } from 'react';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
+import { useEffect } from 'react';
 // import { useState } from 'react';
 // import { CSSTransition } from 'react-transition-group';
 const screenfull = require('screenfull');
@@ -93,6 +94,7 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
         }
     }
 
+    const progressDotRef = useRef(null)
 
     const handleProgressChange = (e) =>{
         if(!admin) return false
@@ -101,6 +103,12 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
         // WARTOSC W PROCENTACH 
         socket.emit('changeTime', {procents, nickname})
     }
+
+    useEffect(()=>{
+        const barWidth = progressRef.current.getBoundingClientRect().width
+        const procents = (progress/duration)*barWidth
+        progressDotRef.current.style.transform = `translate(${procents-10}px,-75%)`
+    },[progress,duration])
 
     const handleFullScreen = () =>{
         const playerWrapper = document.querySelector('player-wrapper')
@@ -171,6 +179,7 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
                         onClick={handleProgressChange} 
                         value={progress/duration *100} 
                         />
+                        <div className="progressDot" ref={progressDotRef}></div>
                     
                    
                 </div>

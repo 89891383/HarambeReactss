@@ -30,7 +30,7 @@
     width: 100%;
 }
 .volumeBar{
-    width: 150px;
+    width: 200px;
     padding-left: 15px;
     display: flex;
     gap: 10px;

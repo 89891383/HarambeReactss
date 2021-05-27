@@ -100,7 +100,7 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
     const handleTogglePlayServer = () =>{
         if(!admin) return false
 
-        socket.emit('togglePlay', nickname)
+        socket.emit('togglePlay', {isPlaying: !isPlaying,nickname})
 
     }
 

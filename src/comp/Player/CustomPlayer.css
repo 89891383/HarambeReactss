@@ -28,7 +28,19 @@
 }
 .progressBar{
     width: 100%;
+    position: relative;
 }
+
+.showTimer{
+    width: fit-content;
+    height: auto;
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, 0.493);
+    position: absolute;
+    transform: translate(0%, -160%);
+    border-radius: 5px;
+}
+
 .volumeBar{
     width: 200px;
     padding-left: 15px;
@@ -38,6 +50,7 @@
     align-items: center;
     margin-right: 10px;
 }
+
 
 .MuiLinearProgress-bar{
     pointer-events: none;

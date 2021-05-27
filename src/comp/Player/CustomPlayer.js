@@ -10,6 +10,8 @@ import { DataContext } from '../../App';
 import { useRef } from 'react';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
+// import { useState } from 'react';
+// import { CSSTransition } from 'react-transition-group';
 const screenfull = require('screenfull');
 
 const useStyles = makeStyles({
@@ -29,21 +31,32 @@ const useStyles = makeStyles({
     }
 })
 
+let beforeMute;
+
 const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volume}) => {
 
     const { admin,socket,nickname } = useContext(DataContext)
 
     const classes = useStyles()
 
+    // const [isTimeShow, setIsTimeShow] = useState(false)
+
+
     const playVideo = () =>{
         setIsPlaying(prev=> !prev)
     }
 
+    const formatTime = (time) =>{
+        return time < 10 ? `0${time}` : time
+    }
+
     const convertSeconds = (time) =>{
         let minutes = Math.floor(time / 60)
-        const hours = Math.floor(minutes/60)
-        const seconds  = Math.floor(time - (60 * minutes))
-        minutes = minutes%60
+        let hours = Math.floor(minutes/60)
+        let seconds  = Math.floor(time - (60 * minutes))
+        minutes = formatTime(minutes%60)
+        hours = formatTime(hours)
+        seconds = formatTime(seconds) 
 
         return {seconds, minutes, hours}
     }
@@ -53,9 +66,7 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
 
     const currentTime =  convertSeconds(Math.floor(progress))
 
-    const formatTime = (time) =>{
-     return time < 10 ? `0${time}` : time
-    }
+
 
     const controlsRef = useRef(null)
 
@@ -70,8 +81,16 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
         setVolume(value)
     }
 
-    const handleMute = () =>{ 
-        setVolume(0)
+
+
+    const handleMute = () =>{
+ 
+        if(volume){
+            beforeMute = volume 
+            setVolume(0)
+        }else{
+            setVolume(beforeMute)
+        }
     }
 
 
@@ -88,14 +107,30 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
         screenfull.toggle(playerWrapper)
     }
 
-    const handleShowTimeAbove = (e) =>{
-        // if(!admin) return false
-        // const position = e.target.getBoundingClientRect();
-        // const procents =  (e.pageX - position.x)/position.width
-        // const prettyDuration = convertSeconds(Math.floor(duration * procents))
-        // const {seconds, minutes, hours} = prettyDuration
-        // console.log(hours, minutes, seconds);
-    }
+    const progressRef = useRef(null)
+    // const showTimerRef = useRef(null)
+
+    // const handleToggleShowTimeAbove = () =>{
+    //     setIsTimeShow(prev=> !prev)
+    // }
+
+    // const handleShowTimeAbove = (e) =>{
+    //     // if(!admin) return false
+    //     if(!progressRef.current) return false
+    //     const position = progressRef.current.getBoundingClientRect();
+    //     const procents =  (e.pageX - position.x)/position.width
+    //     const prettyDuration = convertSeconds(Math.floor(duration * procents))
+    //     let {seconds, minutes, hours} = prettyDuration
+    //     seconds = formatTime(seconds)
+    //     minutes = formatTime(minutes)
+    //     hours = formatTime(hours)
+    //     // console.log(hours, minutes, seconds);
+    //     showTimerRef.current.style.transform = `translate(${e.pageX-position.x}px, -160%)`
+    //     console.log(showTimerRef.current);
+    //     return `${hours}:${minutes}:${seconds}`
+    // }
+
+
 
     const handleTogglePlayServer = () =>{
         if(!admin) return false
@@ -118,14 +153,31 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
 
                 <div className="progressBar">
                         
-                        <LinearProgress className={classes.progress} variant="determinate" onMouseMove={handleShowTimeAbove} onClick={handleProgressChange} value={progress/duration *100} />
+                        {/* <CSSTransition 
+                        in={isTimeShow} 
+                        timeout={200}
+                        classNames="transition"
+                        unmountOnExit>
+                        <div className="showTimer" ref={showTimerRef} >
+                            {handleShowTimeAbove}
+                        </div>
+                        </CSSTransition> */}
+                     
+
+                        <LinearProgress 
+                        ref={progressRef} 
+                        className={classes.progress} 
+                        variant="determinate" 
+                        onClick={handleProgressChange} 
+                        value={progress/duration *100} 
+                        />
                     
                    
                 </div>
                 <div className="durationBar">
-                    {`${formatTime(currentTime.hours)}:${formatTime(currentTime.minutes)}:${formatTime(currentTime.seconds)}`}
+                    {`${currentTime.hours}:${currentTime.minutes}:${currentTime.seconds}`}
                             /
-                   {`${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`}
+                   {`${hours}:${minutes}:${seconds}`}
 
                 </div>
                 <div className="volumeBar">

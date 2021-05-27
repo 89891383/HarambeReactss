@@ -106,6 +106,7 @@ const PlayerAndChat = () => {
 				isAdmin,
 				isServerTime,
 				isPlaylistOpen,
+				isPlaying
 			}) => {
 				if (isAdmin) {
 					setAdmin(isAdmin);
@@ -115,6 +116,7 @@ const PlayerAndChat = () => {
 				setNicknameOfTimeAdmin(timeAdmin);
 				setIsServerTime(isServerTime);
 				setIsPlaylistOpen(isPlaylistOpen);
+				setIsPlaying(isPlaying)
 				if (title) {
 					setVideoTitle(title);
 					document.title = title;
@@ -232,7 +234,7 @@ const PlayerAndChat = () => {
 	return (
 		<>
 			<div className="playerAndChat">
-				<div className="player-wrapper" onMouseEnter={handleShowControls} onMouseLeave={handleHideControls} >
+				<div className="player-wrapper" onMouseOver={handleShowControls} onMouseLeave={handleHideControls} >
 					<ReactPlayer
 						ref={player}
 						onPlay={startSendingTimeToSocket}

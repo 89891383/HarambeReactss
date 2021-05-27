@@ -88,11 +88,27 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
         screenfull.toggle(playerWrapper)
     }
 
+    const handleShowTimeAbove = (e) =>{
+        // if(!admin) return false
+        // const position = e.target.getBoundingClientRect();
+        // const procents =  (e.pageX - position.x)/position.width
+        // const prettyDuration = convertSeconds(Math.floor(duration * procents))
+        // const {seconds, minutes, hours} = prettyDuration
+        // console.log(hours, minutes, seconds);
+    }
+
+    const handleTogglePlayServer = () =>{
+        if(!admin) return false
+
+        socket.emit('togglePlay', nickname)
+
+    }
+
     return ( 
         <div className="customPlayer" onClick={handlePlayScreen}>
             <div className="controls" ref={controlsRef}>
                 <div className="playButton" onClick={playVideo}>
-                    <IconButton className={classes.playButton}>
+                    <IconButton className={classes.playButton} onClick={handleTogglePlayServer}>
                           {isPlaying ?
                             <PauseIcon  /> : 
                             <PlayArrowIcon />}
@@ -101,8 +117,8 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
                 </div>
 
                 <div className="progressBar">
-                    
-                        <LinearProgress className={classes.progress} variant="determinate" onClick={handleProgressChange} value={progress/duration *100} />
+                        
+                        <LinearProgress className={classes.progress} variant="determinate" onMouseMove={handleShowTimeAbove} onClick={handleProgressChange} value={progress/duration *100} />
                     
                    
                 </div>

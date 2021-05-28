@@ -12,7 +12,7 @@ import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 import { useEffect } from 'react';
 import { useState } from 'react';
-// import { CSSTransition } from 'react-transition-group';
+import ShowTime from './ShowTime';
 const screenfull = require('screenfull');
 
 const useStyles = makeStyles({
@@ -41,8 +41,10 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
 
     const classes = useStyles()
 
-    // const [isTimeShow, setIsTimeShow] = useState(false)
     const [currentProgress, setCurrentProgress] = useState(0);
+    const [isTimeShow, setIsTimeShow] = useState(false);
+    const [timeToShow, setTimeToShow] = useState(null)
+
 
     const playVideo = () =>{
         setIsPlaying(prev=> !prev)
@@ -59,7 +61,6 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
         minutes = formatTime(minutes%60)
         hours = formatTime(hours)
         seconds = formatTime(seconds) 
-
         return {seconds, minutes, hours}
     }
 
@@ -115,27 +116,12 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
     }
 
     const progressRef = useRef(null)
-    // const showTimerRef = useRef(null)
+    const showTimerRef = useRef(null)
 
-    // const handleToggleShowTimeAbove = () =>{
-    //     setIsTimeShow(prev=> !prev)
-    // }
+    const handleToggleShowTimeAbove = () =>{
+        setIsTimeShow(prev=> !prev)
+    }
 
-    // const handleShowTimeAbove = (e) =>{
-    //     // if(!admin) return false
-    //     if(!progressRef.current) return false
-    //     const position = progressRef.current.getBoundingClientRect();
-    //     const procents =  (e.pageX - position.x)/position.width
-    //     const prettyDuration = convertSeconds(Math.floor(duration * procents))
-    //     let {seconds, minutes, hours} = prettyDuration
-    //     seconds = formatTime(seconds)
-    //     minutes = formatTime(minutes)
-    //     hours = formatTime(hours)
-    //     // console.log(hours, minutes, seconds);
-    //     showTimerRef.current.style.transform = `translate(${e.pageX-position.x}px, -160%)`
-    //     console.log(showTimerRef.current);
-    //     return `${hours}:${minutes}:${seconds}`
-    // }
 
 
 
@@ -145,6 +131,14 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
         socket.emit('togglePlay', {isPlaying: !isPlaying,nickname})
 
     }
+
+    const handleTimeToShow = (e) =>{
+        if(!admin) return false
+        const position = progressRef.current.getBoundingClientRect();
+        const procents =  ((e.pageX - position.x)/position.width)
+        setTimeToShow(convertSeconds(Math.floor(procents*duration)));
+    }
+
 
     return ( 
         <div className="customPlayer" onClick={handlePlayScreen}>
@@ -158,25 +152,23 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
                   
                 </div>
 
-                <div className="progressBar">
                         
-                        {/* <CSSTransition 
-                        in={isTimeShow} 
-                        timeout={200}
-                        classNames="transition"
-                        unmountOnExit>
-                        <div className="showTimer" ref={showTimerRef} >
-                            {handleShowTimeAbove}
-                        </div>
-                        </CSSTransition> */}
+                <div className="progressBar" ref={progressRef} >
+                        
+                       
+                        {isTimeShow && <ShowTime ref={showTimerRef} time={timeToShow} />}
+                        
                      
                         <div className="currentProgress" 
-                        ref={progressRef} 
                         style={{width:`${currentProgress}%`}} >
 
                         </div>
-                        <div className="progressBackground" 
-                        onClick={handleProgressChange}  
+                        <div 
+                        className="progressBackground" 
+                        onClick={handleProgressChange}
+                        onMouseOver={handleToggleShowTimeAbove}
+                        onMouseLeave={handleToggleShowTimeAbove}
+                        onMouseMove={handleTimeToShow}
                         ></div>
 
                        

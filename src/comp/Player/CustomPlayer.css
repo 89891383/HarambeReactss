@@ -15,7 +15,7 @@
     height: 40px;
     display: flex;
     align-items: center;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 .playButton{
     width: fit-content;
@@ -64,14 +64,15 @@
     border-radius: 5px;
 }
 
-.showTimer{
-    width: fit-content;
+.showTime{
+    width: 100px;
     height: auto;
     padding: 10px 20px;
     background-color: rgba(0, 0, 0, 0.5);
     position: absolute;
-    transform: translate(0%, -160%);
+    transform: translate(100%, -150%);
     border-radius: 5px;
+    transition: none;
 }
 
 .volumeBar{

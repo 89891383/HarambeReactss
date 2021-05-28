@@ -57,8 +57,8 @@
 
 .progressBackground{
     width: 100%;
-    background-color: rgba(255, 255, 255, 1);
-    height: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    height: 15px;
     border-radius: 5px;
 }
 

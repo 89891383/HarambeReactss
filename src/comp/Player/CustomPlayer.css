@@ -10,7 +10,7 @@
     align-items: flex-end;
 }
 .controls{
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.75);
     width: 100%;
     height: 40px;
     display: flex;
@@ -25,26 +25,48 @@
 }
 .progressBar{
     width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
     position: relative;
     border-radius: 5px;
-    overflow: hidden;
+    margin: 0 10px;
 }
+.currentProgress{
+    width: 50%;
+    background-color: rgb(63,81,181);
+    height: 15px;
+    position: absolute;
+    pointer-events: none;
+    left: 0;
+    transition: width 1000ms;
+    border-radius: 5px;
+}
+.currentProgress::after{
+    content: ' ';
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    border-radius: 50%;
+    top: -5px;
+    left: 100%;
+    background-color: rgb(63,81,181);
+    transform: translateX(-50%);
+    box-shadow: 0 0 2px black;
+}
+
 .progressBackground{
     width: 100%;
-    pointer-events: none;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 1);
     height: 10px;
-    position: absolute;
-    transform: translateY(50%);
-    /* border-radius: 5px; */
-
+    border-radius: 5px;
 }
 
 .showTimer{
     width: fit-content;
     height: auto;
     padding: 10px 20px;
-    background-color: rgba(0, 0, 0, 0.493);
+    background-color: rgba(0, 0, 0, 0.5);
     position: absolute;
     transform: translate(0%, -160%);
     border-radius: 5px;
@@ -59,29 +81,6 @@
     align-items: center;
     margin-right: 10px;
 }
-
-
-.MuiLinearProgress-bar{
-    pointer-events: none;
-    position: relative;
-    height: 10px;
-    margin: auto 0;
-}
-
-.MuiLinearProgress-bar::after{
-    content: " ";
-    top: -50%;
-    left: 100%;
-    width: 20px;
-    height: 20px;
-    display: block;
-    background-color: rgb(63,81,181);
-    box-shadow: 0 0 2px black;
-    position: absolute;
-    border-radius: 50%;
-    transform: translate(-50%,0px);
-}
-
 
 
 .durationBar{

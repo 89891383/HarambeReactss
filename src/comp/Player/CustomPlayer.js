@@ -2,7 +2,7 @@ import React from 'react';
 import "./CustomPlayer.css"
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
-import { IconButton, LinearProgress, makeStyles, Slider } from '@material-ui/core';
+import { IconButton, makeStyles, Slider } from '@material-ui/core';
 
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import { useContext } from 'react';
@@ -11,7 +11,7 @@ import { useRef } from 'react';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 import { useEffect } from 'react';
-// import { useState } from 'react';
+import { useState } from 'react';
 // import { CSSTransition } from 'react-transition-group';
 const screenfull = require('screenfull');
 
@@ -26,13 +26,6 @@ const useStyles = makeStyles({
         width:'30px',
         height:'30px',
     },
-    progress:{
-        height:'20px',
-        borderRadius:'5px',
-        backgroundColor:'transparent',
-        width:'100%',
-        overflow:'visible'
-    }
 })
 
 let beforeMute;
@@ -44,7 +37,7 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
     const classes = useStyles()
 
     // const [isTimeShow, setIsTimeShow] = useState(false)
-
+    const [currentProgress, setCurrentProgress] = useState(0);
 
     const playVideo = () =>{
         setIsPlaying(prev=> !prev)
@@ -97,7 +90,6 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
         }
     }
 
-    const progressDotRef = useRef(null)
 
     const handleProgressChange = (e) =>{
         if(!admin) return false
@@ -107,11 +99,10 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
         socket.emit('changeTime', {procents, nickname})
     }
 
-    // useEffect(()=>{
-    //     const barWidth = progressRef.current.getBoundingClientRect().width
-    //     const procents = (progress/duration)*barWidth
-    //     progressDotRef.current.style.transform = `translate(${procents-10}px,-75%)`
-    // },[progress,duration])
+    useEffect(()=>{
+        // PROGRESS BAR ANIMATION
+        setCurrentProgress(progress/duration*100)
+    },[duration,progress,currentProgress])
 
     const handleFullScreen = () =>{
         const playerWrapper = document.querySelector('player-wrapper')
@@ -174,14 +165,15 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
                         </div>
                         </CSSTransition> */}
                      
-                        <div className="progressBackground"></div>
-                        <LinearProgress 
+                        <div className="currentProgress" 
                         ref={progressRef} 
-                        className={classes.progress} 
-                        variant="determinate" 
-                        onClick={handleProgressChange} 
-                        value={progress/duration *100} 
-                        />
+                        style={{width:`${currentProgress}%`}} >
+
+                        </div>
+                        <div className="progressBackground" 
+                        onClick={handleProgressChange}  
+                        ></div>
+
                        
                     
                    

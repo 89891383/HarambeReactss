@@ -20,7 +20,10 @@ const useStyles = makeStyles({
         height:'100%',
         width:'auto',
         color:'white',
-
+        transition:'300ms color ease',
+        '&:hover':{
+            color:'rgb(63,81,181)'
+        }
     },
     volumeBtn:{
         color:'white',

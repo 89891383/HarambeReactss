@@ -65,6 +65,8 @@
 }
 
 .showTime{
+    display: flex;
+    justify-content: center;
     width: 100px;
     height: auto;
     padding: 10px 20px;

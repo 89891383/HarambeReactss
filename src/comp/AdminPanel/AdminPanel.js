@@ -1,78 +1,20 @@
 import React, { useContext } from "react";
 import { useState } from "react";
 import Button2 from "../Button";
-
 import { DataContext } from "../../App";
 import "./AdminPanel.css";
 import Queue from "../Queue/Queue";
-import { useEffect } from "react";
 import AddVideo from "./AddVideo";
 
 const AdminPanel = () => {
 	const {
 		admin,
-		socket,
 		nickname,
-		setIsError,
-		setErrorMessage,
-		setIsSuccess,
-		setSuccessMessage,
-		setNicknameOfTimeAdmin,
-		setTimeAdmin,
-		setIsServerTime,
 		isPlaylistOpen,
-		setIsWarning,
-		setWarningMessage,
 	} = useContext(DataContext);
 
 	const [isAddVideo, setIsAddVideo] = useState(false);
 
-	useEffect(() => {
-		socket.on("timeAdminRequestAnswer", ({ success, message }) => {
-			if (success) {
-				setTimeAdmin(true);
-			} else {
-				setErrorMessage(message);
-				setIsError(true);
-			}
-		});
-
-		socket.on("timeAdminChange", ({ nickname, message, isServerTime }) => {
-			if (isServerTime) {
-				setTimeAdmin(false);
-			}
-			if (!nickname) {
-				setWarningMessage(message);
-				setIsWarning(true);
-			} else {
-				setIsSuccess(true);
-				setSuccessMessage(message);
-				setNicknameOfTimeAdmin(nickname);
-			}
-			setIsServerTime(isServerTime);
-		});
-
-		socket.on("timeAdminLeaveAnswer", () => {
-			setTimeAdmin(false);
-		});
-
-		return () => {
-			socket.off("timeAdminRequestAnswer");
-			socket.off("timeAdminChange");
-			socket.off("timeAdminLeaveAnswer");
-		};
-	}, [
-		setErrorMessage,
-		setIsError,
-		setIsSuccess,
-		setSuccessMessage,
-		socket,
-		setNicknameOfTimeAdmin,
-		setTimeAdmin,
-		setIsServerTime,
-		setIsWarning,
-		setWarningMessage,
-	]);
 
 	const handleTwitchLogin = () => {
 		window.location.href = `/auth/twitch`; //DECLARED IN APP

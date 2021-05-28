@@ -14,12 +14,9 @@ const PlayerAndChat = () => {
 		currentVideoLink,
 		socket,
 		setAdmin,
-		videoQueue,
 		setVideoQueue,
 		maxDelay,
-		timeAdmin,
 		nickname,
-		setNicknameOfTimeAdmin,
 		setIsWarning,
 		setWarningMessage,
 		setOnlineUsers,
@@ -70,21 +67,6 @@ const PlayerAndChat = () => {
 		}
 	};
 
-	// ADMIN EMITS HIS DATA TO SHARE WITH OTHERS
-	useEffect(() => {
-		let interval;
-		if (timeAdmin) {
-			interval = setInterval(() => {
-				socket.emit(`timeAdmin`, {
-					currentSeconds: player.current.getCurrentTime(),
-				});
-			}, 3000);
-		}
-		return () => {
-			clearInterval(interval);
-		};
-	}, [timeAdmin, socket, currentRoom, videoQueue, nickname]);
-
 	// JOINING TO ROOM
 	useEffect(() => {
 		socket.emit(`joinRoom`, { currentRoom, nickname });
@@ -101,22 +83,22 @@ const PlayerAndChat = () => {
 			({
 				currentVideo,
 				queue,
-				timeAdmin,
 				title,
 				isAdmin,
 				isServerTime,
 				isPlaylistOpen,
-				isPlaying
+				isPlaying,
+				currentTime
 			}) => {
 				if (isAdmin) {
 					setAdmin(isAdmin);
 				}
 				setCurrentVideoLink(currentVideo);
 				setVideoQueue(queue);
-				setNicknameOfTimeAdmin(timeAdmin);
 				setIsServerTime(isServerTime);
 				setIsPlaylistOpen(isPlaylistOpen);
 				setIsPlaying(isPlaying)
+				// synchronizeVideo(player, currentTime)
 				if (title) {
 					setVideoTitle(title);
 					document.title = title;
@@ -127,25 +109,30 @@ const PlayerAndChat = () => {
 			}
 		);
 
-		if (!timeAdmin) {
+		
 			socket.on("serverTimeAnswer", ({ currentSeconds }) => {
 				synchronizeVideo(player, currentSeconds);
 			});
 			socket.on("isPlayingAnswer", ({ isPlaying }) => {
 				setIsPlaying(isPlaying);
 			});
-		}
+		
 
 		socket.on('changeTimeAnswer', currentSeconds=>{
 			synchronizeVideo(player,currentSeconds)
 		})
 
-		socket.on("timeAdminIsEmpty", ({ message }) => {
-			setIsWarning(true);
-			setWarningMessage(message);
-			setNicknameOfTimeAdmin(null);
-			setIsPlaying(false);
-		});
+		socket.on('serverTimeToggleAnswer', ({isServerTime, message})=>{
+			if(isServerTime){
+				setIsSuccess(true)
+				setSuccessMessage(message)
+			}else{
+				setIsWarning(true)
+				setWarningMessage(message)
+			}
+			setIsServerTime(isServerTime)
+
+		})
 
 		socket.on("videoChangeAnswer", ({ currentVideoLink, queue, title }) => {
 			// TURNED OFF FOR ADMIN TO NOT LOOP PAGE
@@ -182,41 +169,20 @@ const PlayerAndChat = () => {
 		});
 
 		return () => {
-			socket.removeAllListeners(`adminDataAnswer`);
-			socket.removeAllListeners(`joinRoomAnswer`);
-			socket.removeAllListeners(`videoChangeAnswer`);
-			socket.removeAllListeners("queueUpdateAnswer");
-			socket.removeAllListeners("onlineUsersAnswer");
-			socket.removeAllListeners("isPlayingAnswer");
-			socket.removeAllListeners("serverTimeAnswer");
-			socket.removeAllListeners("timeAdminLeftAnnounce");
-			socket.removeAllListeners("getVideoDuration");
-			socket.removeAllListeners("queueDeleteAnswer");
-			socket.removeAllListeners("playlistToggleAnswer");
+			socket.off(`joinRoomAnswer`);
+			socket.off(`videoChangeAnswer`);
+			socket.off("queueUpdateAnswer");
+			socket.off("onlineUsersAnswer");
+			socket.off("isPlayingAnswer");
+			socket.off("serverTimeAnswer");
+			socket.off("getVideoDuration");
+			socket.off("queueDeleteAnswer");
+			socket.off("playlistToggleAnswer");
 			socket.off('changeTimeAnswer')		
 		};
 		// eslint-disable-next-line
-	}, [currentRoom, admin, socket, maxDelay, nickname, timeAdmin]);
+	}, [currentRoom, admin, socket, maxDelay, nickname]);
 
-	const startSendingTimeToSocket = () => {
-		// AVAILABLE ONLY FOR ADMIN
-		if (timeAdmin) {
-			setIsPlaying(true);
-			socket.emit("isPlaying", {
-				isPlaying: true,
-			});
-		}
-	};
-
-	const stopSendingTimeToSocket = () => {
-		// AVAILABLE ONLY FOR ADMIN
-		if (timeAdmin) {
-			setIsPlaying(false);
-			socket.emit("isPlaying", {
-				isPlaying: false,
-			});
-		}
-	};
 
 	const videoDuration = (duration) => {
 			socket.emit("videoDuration", { duration });
@@ -237,8 +203,6 @@ const PlayerAndChat = () => {
 				<div className="player-wrapper" onMouseOver={handleShowControls} onMouseLeave={handleHideControls} >
 					<ReactPlayer
 						ref={player}
-						onPlay={startSendingTimeToSocket}
-						onPause={stopSendingTimeToSocket}
 						onDuration={videoDuration}
 						onProgress={(e)=> setProgress(e.playedSeconds)}
 						playing={isPlaying}

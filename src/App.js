@@ -22,7 +22,6 @@ const socket = io(`/`);
 const App = () => {
 	const history = useHistory();
 	const [admin, setAdmin] = useState(false);
-	const [timeAdmin, setTimeAdmin] = useState(false);
 	const [currentVideoLink, setCurrentVideoLink] = useState("");
 	const [videoQueue, setVideoQueue] = useState([]);
 	const [maxDelay, setMaxDelay] = useState(2);
@@ -33,7 +32,6 @@ const App = () => {
 	const [successMessage, setSuccessMessage] = useState("");
 	const [isWarning, setIsWarning] = useState(false);
 	const [warningMessage, setWarningMessage] = useState("");
-	const [nicknameOfTimeAdmin, setNicknameOfTimeAdmin] = useState(null);
 	const [onlineUsers, setOnlineUsers] = useState(null);
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 	const [isServerTime, setIsServerTime] = useState(false);
@@ -61,17 +59,22 @@ const App = () => {
 	}, []);
 
 	useEffect(() => {
-		socket.on("success", ({ message, success }) => {
+		socket.on("success", ({ message }) => {
 			setSuccessMessage(message);
-			setIsSuccess(success);
+			setIsSuccess(true);
 		});
 		socket.on("error", ({ message }) => {
 			setIsError(true);
 			setErrorMessage(message);
 		});
+		socket.on('warning', ({message})=>{
+			setIsWarning(true)
+			setWarningMessage(message)
+		})
 		return () => {
 			socket.off("success");
 			socket.off("error");
+			socket.off('warning')
 		};
 	}, []);
 
@@ -91,8 +94,6 @@ const App = () => {
 					setVideoQueue,
 					maxDelay,
 					setMaxDelay,
-					timeAdmin,
-					setTimeAdmin,
 					nickname,
 					isError,
 					setIsError,
@@ -102,8 +103,6 @@ const App = () => {
 					setIsSuccess,
 					successMessage,
 					setSuccessMessage,
-					nicknameOfTimeAdmin,
-					setNicknameOfTimeAdmin,
 					isWarning,
 					setIsWarning,
 					warningMessage,

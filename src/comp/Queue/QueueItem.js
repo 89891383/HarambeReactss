@@ -66,8 +66,8 @@ const QueueItem = ({ item }) => {
 
 				{admin && (
 					<div className="manageIcons">
-						<IconButton className={classes.iconButton}>
-							<Tooltip title="Play now" onClick={handlePlayNow} enterDelay={0}>
+						<IconButton onClick={handlePlayNow} className={classes.iconButton}>
+							<Tooltip title="Play now" enterDelay={0}>
 								<PlayArrowIcon />
 							</Tooltip>
 						</IconButton>

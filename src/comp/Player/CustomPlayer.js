@@ -117,7 +117,6 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
     }
 
     const progressRef = useRef(null)
-    const showTimerRef = useRef(null)
 
     const handleToggleShowTimeAbove = () =>{
         setIsTimeShow(prev=> !prev)
@@ -157,7 +156,7 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
                 <div className="progressBar" ref={progressRef} >
                         
                        
-                        {isTimeShow && <ShowTime ref={showTimerRef} time={timeToShow} />}
+                        {isTimeShow && <ShowTime time={timeToShow} />}
                         
                      
                         <div className="currentProgress" 

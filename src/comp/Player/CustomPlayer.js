@@ -20,12 +20,14 @@ const useStyles = makeStyles({
         height:'100%',
         width:'auto',
         color:'white',
+
     },
     volumeBtn:{
         color:'white',
         width:'30px',
         height:'30px',
     },
+
 })
 
 let beforeMute;

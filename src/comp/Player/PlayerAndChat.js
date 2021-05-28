@@ -247,6 +247,7 @@ const PlayerAndChat = () => {
 						width="100%"
 						height="100%"
 						controls={false}
+						muted={false}
 						volume={volume}
 					/>
 					<CSSTransition unmountOnExit in={areControls}  timeout={200} classNames='controls'>

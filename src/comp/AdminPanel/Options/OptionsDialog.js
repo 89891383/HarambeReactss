@@ -2,7 +2,6 @@ import React from "react";
 import { useRef } from "react";
 import { useContext } from "react";
 import { DataContext } from "../../../App";
-import PlayButton from "../PlayButton";
 import OneOption from "./OneOption";
 import "./Options.css";
 import Popout from "../../Popout";
@@ -11,9 +10,6 @@ import ChangeChat from "./ChangeChat";
 
 const OptionsDialog = () => {
 	const {
-		nicknameOfTimeAdmin,
-		admin,
-		timeAdmin,
 		setIsDialogOpen,
 		isServerTime,
 		isDialogOpen,
@@ -26,15 +22,6 @@ const OptionsDialog = () => {
 
 	const optionsRef = useRef(null);
 
-	const handleGetTimeAdmin = () => {
-		if (admin) {
-			if (timeAdmin) {
-				socket.emit("timeAdminLeaveRequest", { nickname });
-			} else {
-				socket.emit("timeAdminRequest", { nickname });
-			}
-		}
-	};
 
 	const serverTimeToggle = () => {
 		setIsServerTime((prev) => {
@@ -68,11 +55,6 @@ const OptionsDialog = () => {
 					}}
 				>
 					<AdminList />
-					<PlayButton onClick={handleGetTimeAdmin} title="Take time admin">
-						{nicknameOfTimeAdmin
-							? `${nicknameOfTimeAdmin} HAS CONTROL`
-							: "TAKE CONTROL"}
-					</PlayButton>
 				</div>
 			</div>
 		</Popout>

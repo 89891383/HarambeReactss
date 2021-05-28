@@ -107,7 +107,8 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
 
     useEffect(()=>{
         // PROGRESS BAR ANIMATION
-        setCurrentProgress(progress/duration*100)
+            setCurrentProgress(progress/duration*100)        
+        
     },[duration,progress,currentProgress])
 
     const handleFullScreen = () =>{
@@ -160,7 +161,7 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
                         
                      
                         <div className="currentProgress" 
-                        style={{width:`${currentProgress}%`}} >
+                        style={{width:`${currentProgress < 100 ? currentProgress : 100}%`}} >
 
                         </div>
                         <div 

@@ -36,8 +36,10 @@ const useStyles = makeStyles({
     },
     toggleChat:{
         color:'white',
+        backgroundColor:' rgba(0, 0, 0, 0.2)',
         '&:hover':{
-            color:'rgb(63,81,181)'
+            color:'rgb(63,81,181)',
+            backgroundColor:' rgba(0, 0, 0, 0.2)',
         }   
     }
 

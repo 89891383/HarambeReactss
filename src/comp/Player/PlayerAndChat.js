@@ -185,7 +185,7 @@ const PlayerAndChat = () => {
 
 
 	const videoDuration = (duration) => {
-			socket.emit("videoDuration", { duration });
+		socket.emit("videoDuration", { duration });
 		setDuration(duration)
 	};
 
@@ -197,27 +197,46 @@ const PlayerAndChat = () => {
 		setAreControls(false)
 	}
 
+	// const handleClearDuration = () =>{
+	// 	setDuration(0)
+
+	// }
+
 	return (
 		<>
 			<div className="playerAndChat">
-				<div className="player-wrapper" onMouseOver={handleShowControls} onMouseLeave={handleHideControls} >
-					<ReactPlayer
-						ref={player}
-						onDuration={videoDuration}
-						onProgress={(e)=> setProgress(e.playedSeconds)}
-						playing={isPlaying}
-						className="react-player"
-						url={currentVideoLink}
-						width="100%"
-						height="100%"
-						controls={false}
-						muted={false}
-						volume={volume}
-					/>
-					<CSSTransition unmountOnExit in={areControls}  timeout={200} classNames='controls'>
-							<CustomPlayer player={player} setIsPlaying={setIsPlaying} isPlaying={isPlaying} progress={progress} duration={duration} setVolume={setVolume} volume={volume} />
-					</CSSTransition>
-				
+				<div 
+					className="player-wrapper" 
+					onMouseOver={handleShowControls} 
+					onMouseLeave={handleHideControls} >
+						<ReactPlayer
+							ref={player}
+							onDuration={videoDuration}
+							onProgress={(e)=> setProgress(e.playedSeconds)}
+							playing={isPlaying}
+							// onEnded={handleClearDuration}
+							className="react-player"
+							url={currentVideoLink}
+							width="100%"
+							height="100%"
+							controls={false}
+							muted={false}
+							volume={volume}
+						/>
+						<CSSTransition 
+						unmountOnExit 
+						in={areControls}  
+						timeout={200} 
+						classNames='controls'>
+							<CustomPlayer
+								player={player}
+								setIsPlaying={setIsPlaying}
+								isPlaying={isPlaying}
+								progress={progress} 
+								duration={duration} 
+								setVolume={setVolume}
+								volume={volume} />
+						</CSSTransition>
 				</div>
 			</div>
 			{videoTitle && <div className="videoTitle">{videoTitle}</div>}

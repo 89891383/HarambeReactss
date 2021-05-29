@@ -29,6 +29,9 @@ const useStyles = makeStyles({
         color:'white',
         width:'30px',
         height:'30px',
+        '&:hover':{
+            color:'rgb(63,81,181)'
+        }   
     },
 
 })
@@ -171,16 +174,16 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
                         onMouseMove={handleTimeToShow}
                         ></div>
 
-                       
+                        <div className="durationBar">
+                            {`${currentTime.hours}:${currentTime.minutes}:${currentTime.seconds} `}
+                                    /
+                            {` ${hours}:${minutes}:${seconds}`}
+
+                        </div>
                     
                    
                 </div>
-                <div className="durationBar">
-                    {`${currentTime.hours}:${currentTime.minutes}:${currentTime.seconds}`}
-                            /
-                   {`${hours}:${minutes}:${seconds}`}
-
-                </div>
+                
                 <div className="volumeBar">
                     <IconButton onClick={handleMute} className={classes.volumeBtn} >
                         {volume ? <VolumeUpIcon /> : <VolumeOffIcon/> }

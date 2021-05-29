@@ -3,7 +3,8 @@ import "./CustomPlayer.css"
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
 import { IconButton, makeStyles, Slider } from '@material-ui/core';
-
+import ShowChat from '@material-ui/icons/VisibilityOff';
+import HideChat from '@material-ui/icons/Visibility';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import { useContext } from 'react';
 import { DataContext } from '../../App';
@@ -33,6 +34,9 @@ const useStyles = makeStyles({
             color:'rgb(63,81,181)'
         }   
     },
+    toggleChat:{
+        color:'white',
+    }
 
 })
 
@@ -40,7 +44,7 @@ let beforeMute;
 
 const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volume}) => {
 
-    const { admin,socket,nickname } = useContext(DataContext)
+    const { admin,socket,nickname,hiddenChat, setHiddenChat } = useContext(DataContext)
 
     const classes = useStyles()
 
@@ -143,8 +147,19 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
     }
 
 
+    const handleToggleChat = () =>{
+        setHiddenChat(prev=> !prev)
+    }
+
     return ( 
         <div className="customPlayer" onClick={handlePlayScreen}>
+
+            <div className="toggleChat">
+                <IconButton className={classes.toggleChat} onClick={handleToggleChat}>
+                    {!hiddenChat ? <ShowChat/> : <HideChat/>}
+                </IconButton>
+            </div>
+
             <div className="controls" ref={controlsRef}>
                 <div className="playButton" onClick={playVideo}>
                     <IconButton className={classes.playButton} onClick={handleTogglePlayServer}>

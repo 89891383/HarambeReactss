@@ -38,6 +38,8 @@ const App = () => {
 	const [videoTitle, setVideoTitle] = useState(null);
 	const [isPlaylistOpen, setIsPlaylistOpen] = useState(false);
 	const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+	const [hiddenChat, setHiddenChat] = useState(false);
+
 
 	const twitchStreamer = "main";
 	const websiteURL = window.location.origin;
@@ -120,6 +122,8 @@ const App = () => {
 					setIsPlaylistOpen,
 					isHistoryOpen,
 					setIsHistoryOpen,
+					hiddenChat,
+					setHiddenChat
 				}}
 			>
 				<div className="app">
@@ -135,7 +139,7 @@ const App = () => {
 						</div>
 					</div>
 					<HistoryDialog />
-					<TwitchChat />
+				{!hiddenChat && <TwitchChat />}	
 					<OptionsDialog />
 				</div>
 				<Success />

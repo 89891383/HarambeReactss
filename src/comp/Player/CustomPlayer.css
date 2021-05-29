@@ -91,22 +91,25 @@
 
 
 .durationBar{
-    /* padding: 5px 20px; */
-    /* height: 100%; */
-    /* background-color: rgba(0, 0, 0, 0.5); */
+
     border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: absolute;
-    /* top:0px; */
     left: 100%;
     width: fit-content;
     display: flex;
     font-weight: bold;
     transform: translate(-100%, -100%);
 }
+.toggleChat{
+    position: absolute;
+    top: 20px;
+    left: 100%;
+    transform: translateX(-150%);
 
+}
 
 
 

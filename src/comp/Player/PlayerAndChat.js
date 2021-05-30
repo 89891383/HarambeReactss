@@ -197,10 +197,10 @@ const PlayerAndChat = () => {
 		setAreControls(false)
 	}
 
-	// const handleClearDuration = () =>{
-	// 	setDuration(0)
-
-	// }
+	const handleClearDuration = () =>{
+		setDuration(0)
+		setProgress(0)
+	}
 
 	return (
 		<>
@@ -214,7 +214,7 @@ const PlayerAndChat = () => {
 							onDuration={videoDuration}
 							onProgress={(e)=> setProgress(e.playedSeconds)}
 							playing={isPlaying}
-							// onEnded={handleClearDuration}
+							onEnded={handleClearDuration}
 							className="react-player"
 							url={currentVideoLink}
 							width="100%"
@@ -225,7 +225,7 @@ const PlayerAndChat = () => {
 						/>
 						<CSSTransition 
 						unmountOnExit 
-						in={areControls}  
+						in={areControls}
 						timeout={200} 
 						classNames='controls'>
 							<CustomPlayer

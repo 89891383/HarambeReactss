@@ -161,7 +161,8 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
 
             <div className="toggleChat">
                 <IconButton className={classes.toggleChat} onClick={handleToggleChat}>
-                    {!hiddenChat ? <ShowChat/> : <HideChat/>}
+                        {!hiddenChat ? <ShowChat/> : <HideChat/>}
+                    
                 </IconButton>
             </div>
 

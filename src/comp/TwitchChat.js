@@ -18,10 +18,7 @@ const TwitchChat = () => {
 				setCurrentChat(currentChatAnswer)
 			}
 		})
-
 		socket.emit('getCurrentChat')
-
-
 		return ()=>{
 			socket.off('changeTwitchChatAnswer')
 		}

@@ -8,6 +8,8 @@
     color: white;
     display: flex;
     align-items: flex-end;
+    background-color: rgba(0, 0, 0, 0.2);
+
 }
 .controls{
     /* background-color: rgba(0, 0, 0, 0.5); */
@@ -61,6 +63,7 @@
 .progressBackground{
     width: 100%;
     background-color: rgba(255, 255, 255, 0.5);
+    /* background-color: rgba(0, 0, 0, 0.5); */
     height: 15px;
     border-radius: 5px;
 }
@@ -91,7 +94,6 @@
 
 
 .durationBar{
-
     border-radius: 5px;
     display: flex;
     align-items: center;
@@ -102,13 +104,28 @@
     display: flex;
     font-weight: bold;
     transform: translate(-100%, -100%);
+
 }
 .toggleChat{
     position: absolute;
     top: 20px;
     left: 100%;
     transform: translateX(-150%);
+}
 
+.videoTitlePlayer{
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 90%;
+    width: fit-content;
+    padding: 25px;
+    margin-right: auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: 800;
+    font-size: 30px;
 }
 
 

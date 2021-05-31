@@ -239,7 +239,7 @@ const PlayerAndChat = () => {
 						</CSSTransition>
 				</div>
 			</div>
-			{videoTitle && <div className="videoTitle">{videoTitle}</div>}
+			{/* {videoTitle && <div className="videoTitle">{videoTitle}</div>} */}
 		</>
 	);
 };

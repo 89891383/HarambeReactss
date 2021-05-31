@@ -47,9 +47,9 @@ const useStyles = makeStyles({
 
 let beforeMute;
 
-const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volume}) => {
+const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volume,}) => {
 
-    const { admin,socket,nickname,hiddenChat, setHiddenChat } = useContext(DataContext)
+    const { admin,socket,nickname,hiddenChat, setHiddenChat,videoTitle,setVideoTitle,currentVideoLink } = useContext(DataContext)
 
     const classes = useStyles()
 
@@ -123,6 +123,23 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
         
     },[duration,progress,currentProgress])
 
+
+	useEffect(() => {
+        if(!videoTitle){
+           fetch(`https://noembed.com/embed?url=${currentVideoLink}`)
+			.then((res) => res.json())
+			.then((res) => {
+				setVideoTitle(res.title)
+			});
+
+		    return () => {
+			setVideoTitle(null)
+		    }; 
+        }
+		
+	}, [setVideoTitle,currentVideoLink, videoTitle]);
+
+
     const handleFullScreen = () =>{
         const playerWrapper = document.querySelector('player-wrapper')
         screenfull.toggle(playerWrapper)
@@ -158,6 +175,10 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
 
     return ( 
         <div className="customPlayer" onClick={handlePlayScreen}>
+
+            <div className="videoTitlePlayer">
+                {videoTitle}
+            </div>
 
             <div className="toggleChat">
                 <IconButton className={classes.toggleChat} onClick={handleToggleChat}>

@@ -21,7 +21,6 @@ const PlayerAndChat = () => {
 		setWarningMessage,
 		setOnlineUsers,
 		setIsServerTime,
-		videoTitle,
 		setVideoTitle,
 		setIsPlaylistOpen,
 		setIsSuccess,

@@ -58,7 +58,9 @@ const App = () => {
 					setTwitchUserData(res.profile);
 				}
 			});
+			console.log('FETCH');
 	}, []);
+
 
 	useEffect(() => {
 		socket.on("success", ({ message }) => {

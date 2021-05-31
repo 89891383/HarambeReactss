@@ -129,14 +129,10 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
            fetch(`https://noembed.com/embed?url=${currentVideoLink}`)
 			.then((res) => res.json())
 			.then((res) => {
+                console.log(res.title);
 				setVideoTitle(res.title)
 			});
-
-		   return () => {
-			setVideoTitle(null)
-		    }; 
         }
-       
 		
 	}, [setVideoTitle,currentVideoLink, videoTitle]);
 

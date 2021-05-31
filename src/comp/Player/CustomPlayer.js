@@ -125,17 +125,18 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
 
 
 	useEffect(() => {
-        if(!videoTitle){
+        if(!videoTitle && currentVideoLink){
            fetch(`https://noembed.com/embed?url=${currentVideoLink}`)
 			.then((res) => res.json())
 			.then((res) => {
 				setVideoTitle(res.title)
 			});
 
-		    return () => {
+		   return () => {
 			setVideoTitle(null)
 		    }; 
         }
+       
 		
 	}, [setVideoTitle,currentVideoLink, videoTitle]);
 
@@ -176,7 +177,7 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
     return ( 
         <div className="customPlayer" onClick={handlePlayScreen}>
 
-            <div className="videoTitlePlayer">
+            <div className="videoTitlePlayer" title={videoTitle} >
                 {videoTitle}
             </div>
 

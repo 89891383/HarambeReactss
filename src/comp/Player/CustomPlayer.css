@@ -89,7 +89,7 @@
     gap: 10px;
     display: flex;
     align-items: center;
-    margin-right: 10px;
+    /* margin-right: 10px; */
     transition: 0.3s width;
     overflow: hidden;
 }
@@ -103,6 +103,7 @@
     width: fit-content;
     display: flex;
     font-weight: bold;
+    margin-left: 15px;
 }
 .toggleChat{
     position: absolute;

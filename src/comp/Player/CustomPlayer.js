@@ -129,7 +129,6 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
            fetch(`https://noembed.com/embed?url=${currentVideoLink}`)
 			.then((res) => res.json())
 			.then((res) => {
-                console.log(res.title);
 				setVideoTitle(res.title)
 			});
         }
@@ -185,17 +184,9 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
             </div>
 
             <div className="controls" ref={controlsRef}>
-                <div className="playButton" onClick={playVideo}>
-                    <IconButton className={classes.playButton} onClick={handleTogglePlayServer}>
-                          {isPlaying ?
-                            <PauseIcon  /> : 
-                            <PlayArrowIcon />}
-                    </IconButton>
-                  
-                </div>
 
-                        
-                <div className="progressBar" ref={progressRef} >
+                
+                    <div className="progressBar" ref={progressRef} >
                         
                        
                         {isTimeShow && <ShowTime time={timeToShow} />}
@@ -213,32 +204,51 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
                         onMouseMove={handleTimeToShow}
                         ></div>
 
-                        <div className="durationBar">
+                       
+                    </div>
+                
+
+
+                <div className="lowerControls" >
+                    <div className="playButton" onClick={playVideo}>
+                        <IconButton className={classes.playButton} onClick={handleTogglePlayServer}>
+                            {isPlaying ?
+                                <PauseIcon  /> : 
+                                <PlayArrowIcon />}
+                        </IconButton>
+                    
+                    </div>
+
+                    
+                    
+                    
+                    <div className="volumeBar">
+                        <IconButton onClick={handleMute} className={classes.volumeBtn} >
+                            {volume ? <VolumeUpIcon /> : <VolumeOffIcon/> }
+                        </IconButton>
+                    
+                            <Slider min={0} max={1} step={0.01} value={volume} onChange={handleVolume} />
+                
+                    </div>
+
+                    <div className="durationBar">
                             {`${currentTime.hours}:${currentTime.minutes}:${currentTime.seconds} `}
                                     /
                             {` ${hours}:${minutes}:${seconds}`}
 
-                        </div>
+                    </div>      
                     
-                   
+
+                    
+                    <div className="fullScreen">
+                        <IconButton className={classes.playButton} onClick={handleFullScreen}>
+                            <FullscreenIcon/>
+                        </IconButton>
+                    </div>
                 </div>
-                
-                <div className="volumeBar">
-                    <IconButton onClick={handleMute} className={classes.volumeBtn} >
-                        {volume ? <VolumeUpIcon /> : <VolumeOffIcon/> }
-                    </IconButton>
-                   
-                        <Slider min={0} max={1} step={0.01} value={volume} onChange={handleVolume} />
-            
-                </div>
-                
+
 
                 
-                <div className="fullScreen">
-                    <IconButton className={classes.playButton} onClick={handleFullScreen}>
-                        <FullscreenIcon/>
-                    </IconButton>
-                </div>
             </div>
            
         </div>

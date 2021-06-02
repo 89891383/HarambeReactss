@@ -182,6 +182,31 @@ const PlayerAndChat = () => {
 		// eslint-disable-next-line
 	}, [currentRoom, admin, socket, maxDelay, nickname]);
 
+	// const handleKeyBindsVolume = (e) =>{
+	// 	if(volume <= 1 && volume >= 0){
+	// 		if(e.keyCode === 40){
+	// 		setVolume(prev=> {
+	// 			console.log(prev);
+	// 			return prev - 0.05})
+	// 		}else if(e.keyCode === 38){
+	// 		setVolume(prev=>{ 
+	// 			console.log(prev);
+	// 			return prev + 0.05})
+	// 		}
+	// }
+	// }
+
+	// useEffect(()=>{
+	// 	console.log('set bindings');
+
+	// 	window.addEventListener('keydown', handleKeyBindsVolume)
+
+	// 	return () =>{
+	// 		console.log('remove bindings');
+	// 		window.removeEventListener('keydown',handleKeyBindsVolume)
+	// 	}
+	// },[])
+
 
 	const videoDuration = (duration) => {
 		socket.emit("videoDuration", { duration });

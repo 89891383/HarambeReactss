@@ -17,6 +17,7 @@
     margin: 0 auto;
     height: 60px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     /* overflow: hidden; */
 }
@@ -28,7 +29,7 @@
     justify-content: center;
 }
 .progressBar{
-    width: 90%;
+    width: 98%;
     height: 100%;
     display: flex;
     align-items: center;
@@ -84,7 +85,6 @@
 
 .volumeBar{
     width: 200px;
-    padding-left: 15px;
     display: flex;
     gap: 10px;
     display: flex;
@@ -98,13 +98,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    position: absolute;
-    left: 100%;
     width: fit-content;
     display: flex;
     font-weight: bold;
-    transform: translate(-100%, -100%);
-
 }
 .toggleChat{
     position: absolute;
@@ -128,6 +124,14 @@
     font-size: 30px;
 }
 
+.lowerControls{
+    display: flex;
+    width: 100%;
+}
+
+.fullScreen{
+    margin-left: auto;
+}
 
 
 
@@ -152,11 +156,14 @@
   }
 
 @media (max-width:900px){
-    .durationBar{
+    /* .durationBar{
         font-size: 12px;
         left: 0;
         top: 5px;
         transform: translateX(0);
         padding:0;
-    }
+    } */
+    /* .controls{
+        transform: scale(0.9);
+    } */
 }

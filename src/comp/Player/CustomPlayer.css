@@ -84,12 +84,14 @@
 }
 
 .volumeBar{
-    width: 200px;
+    width: fit-content;
     display: flex;
     gap: 10px;
     display: flex;
     align-items: center;
     margin-right: 10px;
+    transition: 0.3s width;
+    overflow: hidden;
 }
 
 
@@ -127,6 +129,7 @@
 .lowerControls{
     display: flex;
     width: 100%;
+    align-items: center;
 }
 
 .fullScreen{
@@ -155,11 +158,35 @@
     /* transform: translateY(40px); */
   }
 
+  .sliderFadeIn-enter {
+    opacity: 0;
+    width: 0;
+    /* transform: translateY(40px); */
+  }
+
+  .sliderFadeIn-enter-active {
+    opacity: 1;
+    width: 50px;
+    transition: opacity 200ms, width 2000ms ;
+    /* transform: translateY(0%); */
+
+  }
+  .sliderFadeIn-exit {
+    opacity: 1;
+    width: 50px;
+    /* transform: translateY(0%); */
+  }
+  .sliderFadeIn-exit-active {
+    opacity: 0;
+    width: 0;
+    transition: opacity 200ms, width 2000ms;
+    /* transform: translateY(40px); */
+  }
+
+
 @media (max-width:500px){
     .durationBar{
         font-size: 12px;
-        flex-wrap: nowrap;
-        width: 200px;
     }
     /* .controls{
         transform: scale(0.9);

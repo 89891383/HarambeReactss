@@ -215,6 +215,7 @@ const PlayerAndChat = () => {
 
 
 	const handleShowControls = () =>{
+		if(areControls) return false
 		setAreControls(true)
 	}
 	const handleHideControls = () =>{

@@ -2,18 +2,17 @@ import React from 'react';
 import "./CustomPlayer.css"
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
-import { IconButton, makeStyles, Slider } from '@material-ui/core';
+import { IconButton, makeStyles } from '@material-ui/core';
 import ShowChat from '@material-ui/icons/VisibilityOff';
 import HideChat from '@material-ui/icons/Visibility';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import { useContext } from 'react';
 import { DataContext } from '../../App';
 import { useRef } from 'react';
-import VolumeUpIcon from '@material-ui/icons/VolumeUp';
-import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import ShowTime from './ShowTime';
+import Volume from './Volume';
 const screenfull = require('screenfull');
 
 const useStyles = makeStyles({
@@ -45,7 +44,7 @@ const useStyles = makeStyles({
 
 })
 
-let beforeMute;
+
 
 const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volume,}) => {
 
@@ -92,21 +91,6 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
 
     }
 
-    const handleVolume = (e,value) =>{
-        setVolume(value)
-    }
-
-
-
-    const handleMute = () =>{
- 
-        if(volume){
-            beforeMute = volume 
-            setVolume(0)
-        }else{
-            setVolume(beforeMute)
-        }
-    }
 
 
     const handleProgressChange = (e) =>{
@@ -222,14 +206,8 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
                     
                     
                     
-                    <div className="volumeBar">
-                        <IconButton onClick={handleMute} className={classes.volumeBtn} >
-                            {volume ? <VolumeUpIcon /> : <VolumeOffIcon/> }
-                        </IconButton>
-                    
-                            <Slider min={0} max={1} step={0.01} value={volume} onChange={handleVolume} />
                 
-                    </div>
+                    <Volume setVolume={setVolume} volume={volume} />
 
                     <div className="durationBar">
                             {`${currentTime.hours}:${currentTime.minutes}:${currentTime.seconds} `}

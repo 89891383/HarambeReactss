@@ -24,7 +24,7 @@ const ShowTime = ({time}) => {
     const {hours,minutes, seconds} = time
 
     return ( 
-        <div className="showTime" ref={showTimeRef} style={{transform:`translate(${cursorX - showTimeWidth/2}px, -150%)`}} >
+        <div className="showTime" ref={showTimeRef} style={{transform:`translate(${cursorX - showTimeWidth/2 -20}px, -150%)`}} >
             {`${hours}:${minutes}:${seconds}`}
         </div>
      );

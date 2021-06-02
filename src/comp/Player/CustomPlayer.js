@@ -13,6 +13,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import ShowTime from './ShowTime';
 import Volume from './Volume';
+import SkipNextIcon from '@material-ui/icons/SkipNext';
 const screenfull = require('screenfull');
 
 const useStyles = makeStyles({
@@ -21,14 +22,15 @@ const useStyles = makeStyles({
         width:'auto',
         color:'white',
         transition:'300ms color ease',
+        margin:'none',
         '&:hover':{
             color:'rgb(63,81,181)'
         }
     },
     volumeBtn:{
         color:'white',
-        width:'30px',
-        height:'30px',
+        width:'48px',
+        height:'48px',
         '&:hover':{
             color:'rgb(63,81,181)'
         }   
@@ -101,6 +103,7 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
         socket.emit('changeTime', {procents, nickname})
     }
 
+
     useEffect(()=>{
         // PROGRESS BAR ANIMATION
             setCurrentProgress(progress/duration*100)        
@@ -153,6 +156,13 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
         setHiddenChat(prev=> !prev)
     }
 
+    
+    const handleSkipVideo = () => {
+		if (admin) {
+			socket.emit("skipVideo");
+		}
+	};
+
     return ( 
         <div className="customPlayer" onClick={handlePlayScreen}>
 
@@ -202,6 +212,15 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
                         </IconButton>
                     
                     </div>
+
+                    {/* SKIP ONLY FOR ADMINS */}
+                    {admin && 
+                        <div className="skipButton">
+                            <IconButton onClick={handleSkipVideo} className={classes.playButton}>
+                                <SkipNextIcon/>
+                            </IconButton>
+                        </div>
+                    }
 
                     
                     

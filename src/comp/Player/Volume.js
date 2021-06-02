@@ -7,8 +7,8 @@ import { IconButton, makeStyles, Slider } from '@material-ui/core';
 const useStyles = makeStyles({
     volumeBtn:{
         color:'white',
-        width:'30px',
-        height:'30px',
+        width:'48px',
+        height:'48px',
         transition:'0.3s',
         '&:hover':{
             color:'rgb(63,81,181)'
@@ -48,7 +48,7 @@ const Volume = ({setVolume,volume}) => {
 
     return ( 
         <div className="volumeBar" onMouseEnter={toggleSlider} onMouseLeave={toggleSlider}
-        style={isSlider ? {width:"170px"} : {width:'25px'}}
+        style={isSlider ? {width:"170px"} : {width:'40px'}}
         >
             <IconButton  onClick={handleMute} className={classes.volumeBtn} >
                  {volume ? <VolumeUpIcon /> : <VolumeOffIcon/> }

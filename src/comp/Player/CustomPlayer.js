@@ -159,7 +159,7 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
     
     const handleSkipVideo = () => {
 		if (admin) {
-			socket.emit("skipVideo");
+			socket.emit("skipVideo", {nickname});
 		}
 	};
 

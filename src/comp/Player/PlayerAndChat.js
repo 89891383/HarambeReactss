@@ -134,7 +134,8 @@ const PlayerAndChat = () => {
 		})
 
 		socket.on("videoChangeAnswer", ({ currentVideoLink, queue, title }) => {
-			// TURNED OFF FOR ADMIN TO NOT LOOP PAGE
+			setDuration(0)
+			setProgress(0)
 			setCurrentVideoLink(currentVideoLink);
 			setVideoQueue(queue);
 			if (title) {
@@ -214,6 +215,7 @@ const PlayerAndChat = () => {
 	};
 
 
+
 	const handleShowControls = () =>{
 		if(areControls) return false
 		setAreControls(true)
@@ -222,10 +224,6 @@ const PlayerAndChat = () => {
 		setAreControls(false)
 	}
 
-	const handleClearDuration = () =>{
-		setDuration(0)
-		setProgress(0)
-	}
 
 	return (
 		<>
@@ -239,7 +237,6 @@ const PlayerAndChat = () => {
 							onDuration={videoDuration}
 							onProgress={(e)=> setProgress(e.playedSeconds)}
 							playing={isPlaying}
-							onEnded={handleClearDuration}
 							className="react-player"
 							url={currentVideoLink}
 							width="100%"

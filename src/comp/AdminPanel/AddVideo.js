@@ -31,7 +31,7 @@ const AddVideo = ({ isAddVideo, setIsAddVideo }) => {
 
 	const handleSkipVideo = () => {
 		if (admin) {
-			socket.emit("skipVideo");
+			socket.emit("skipVideo", {nickname});
 		}
 	};
 

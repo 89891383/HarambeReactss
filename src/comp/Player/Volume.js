@@ -43,7 +43,6 @@ const Volume = ({setVolume,volume}) => {
 
     const toggleSlider = () =>{
         setIsSlider(prev=> !prev)
-        console.log('changed');
     }
 
     return ( 

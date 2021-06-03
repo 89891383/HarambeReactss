@@ -6,6 +6,7 @@ import { DataContext } from "../../App";
 import CustomPlayer from "./CustomPlayer";
 import "./PlayerAndChat.css";
 
+
 const PlayerAndChat = () => {
 	const currentRoom = "main";
 	const {
@@ -97,7 +98,6 @@ const PlayerAndChat = () => {
 				setIsServerTime(isServerTime);
 				setIsPlaylistOpen(isPlaylistOpen);
 				setIsPlaying(isPlaying)
-				// synchronizeVideo(player, currentTime)
 				if (title) {
 					setVideoTitle(title);
 					document.title = title;
@@ -183,31 +183,6 @@ const PlayerAndChat = () => {
 		// eslint-disable-next-line
 	}, [currentRoom, admin, socket, maxDelay, nickname]);
 
-	// const handleKeyBindsVolume = (e) =>{
-	// 	if(volume <= 1 && volume >= 0){
-	// 		if(e.keyCode === 40){
-	// 		setVolume(prev=> {
-	// 			console.log(prev);
-	// 			return prev - 0.05})
-	// 		}else if(e.keyCode === 38){
-	// 		setVolume(prev=>{ 
-	// 			console.log(prev);
-	// 			return prev + 0.05})
-	// 		}
-	// }
-	// }
-
-	// useEffect(()=>{
-	// 	console.log('set bindings');
-
-	// 	window.addEventListener('keydown', handleKeyBindsVolume)
-
-	// 	return () =>{
-	// 		console.log('remove bindings');
-	// 		window.removeEventListener('keydown',handleKeyBindsVolume)
-	// 	}
-	// },[])
-
 
 	const videoDuration = (duration) => {
 		socket.emit("videoDuration", { duration });
@@ -217,7 +192,6 @@ const PlayerAndChat = () => {
 
 
 	const handleShowControls = () =>{
-		if(areControls) return false
 		setAreControls(true)
 	}
 	const handleHideControls = () =>{
@@ -230,8 +204,8 @@ const PlayerAndChat = () => {
 			<div className="playerAndChat">
 				<div 
 					className="player-wrapper" 
-					onMouseOver={handleShowControls} 
-					onMouseLeave={handleHideControls} >
+					onMouseEnter={handleShowControls} 
+					onMouseLeave={handleHideControls}>
 						<ReactPlayer
 							ref={player}
 							onDuration={videoDuration}
@@ -261,7 +235,6 @@ const PlayerAndChat = () => {
 						</CSSTransition>
 				</div>
 			</div>
-			{/* {videoTitle && <div className="videoTitle">{videoTitle}</div>} */}
 		</>
 	);
 };

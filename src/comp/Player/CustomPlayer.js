@@ -58,11 +58,6 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
     const [isTimeShow, setIsTimeShow] = useState(false);
     const [timeToShow, setTimeToShow] = useState(null)
 
-
-    const playVideo = () =>{
-        setIsPlaying(prev=> !prev)
-    }
-
     const formatTime = (time) =>{
         return time < 10 ? `0${time}` : time
     }
@@ -88,19 +83,33 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
 
     const handlePlayScreen = (e) =>{
             if([...e.target.classList].includes("customPlayer")){
-            setIsPlaying(prev=> !prev)
+            socket.emit('canPlay')
             }
 
     }
 
+    useEffect(()=>{
+        socket.on('canPlayAnswer', (answer)=>{
+            if(answer){
+                setIsPlaying(prev=> !prev)
+            }
+        })
+
+        return () =>{
+            socket.off('canPlayAnswer')
+        }
+    },[setIsPlaying, socket])
+
 
 
     const handleProgressChange = (e) =>{
-        if(!admin) return false
+        if(!admin || !currentVideoLink) return false
         const position = e.target.getBoundingClientRect();
         const procents =  (e.pageX - position.x)/position.width
+        const time = convertSeconds(duration * procents)
+        const prettyTime = `${time.hours}:${time.minutes}:${time.seconds}`
         // WARTOSC W PROCENTACH 
-        socket.emit('changeTime', {procents, nickname})
+        socket.emit('changeTime', {procents, nickname, prettyTime})
     }
 
 
@@ -204,7 +213,7 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
 
 
                 <div className="lowerControls" >
-                    <div className="playButton" onClick={playVideo}>
+                    <div className="playButton">
                         <IconButton className={classes.playButton} onClick={handleTogglePlayServer}>
                             {isPlaying ?
                                 <PauseIcon  /> : 

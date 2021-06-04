@@ -46,13 +46,21 @@
 	background-color: #121212;
 }
 .queueItemInfo {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	flex-wrap: wrap;
-	word-break: break-word;
+	/* display: flex; */
+	/* flex-direction: column; */
+	/* justify-content: space-between; */
+	/* flex-wrap: wrap; */
+	/* word-break: break-word; */
+	/* width: 100; */
 	gap: 10px;
+	max-height: 200px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+
 }
+
+
 .queueItem .addedBy {
 	display: flex;
 	align-items: center;
@@ -75,6 +83,7 @@
 	display: flex;
 	align-items: center;
 	gap: 15px;
+	width: 80%;
 }
 
 .queue_h3 {

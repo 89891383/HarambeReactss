@@ -243,7 +243,7 @@ const PlayerAndChat = () => {
 								duration={duration} 
 								setVolume={setVolume}
 								volume={volume}
-								setPlaybackRate={setPlaybackRate}
+								playbackRate={playbackRate}
 								/>
 						</CSSTransition>
 				</div>

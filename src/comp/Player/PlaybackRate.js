@@ -1,6 +1,6 @@
 import { IconButton, makeStyles } from '@material-ui/core';
 import TimerIcon from '@material-ui/icons/Timer';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { DataContext } from '../../App';
 
@@ -15,32 +15,48 @@ const useStyles = makeStyles({
     }
 })
 
-const PlaybackRate = ({setPlaybackRate}) => {
+const PlaybackRate = ({playbackRate}) => {
 
     const {socket, admin} = useContext(DataContext)
 
     const classes = useStyles()
 
+    const chooseRef = useRef(null)
+
     const [isOpen, setIsOpen] = useState(false)
 
     const handlePlaybackRate = (e) =>{
-        if(!Number(e.target.textContent) || !admin) return setIsOpen(false)
-        setPlaybackRate(Number(e.target.textContent))
+
+        const chooseNumber = Number(e.target.textContent)
+
+        if(!chooseNumber|| !admin) return setIsOpen(false)
         setIsOpen(false)
-        socket.emit('playbackRate', Number(e.target.textContent))
+        if(playbackRate === chooseNumber) return false
+        socket.emit('playbackRate', chooseNumber)
     }
+
+    useEffect(()=>{
+        if(chooseRef.current){
+            [...chooseRef.current.children].forEach(item=> {
+                if(Number(item.textContent) === playbackRate ){
+                    item.style.backgroundColor = "#101010"
+                }
+            })
+        }
+
+    },[chooseRef,isOpen,playbackRate])
 
 
 
     return (
       
-        <div className="playbackRate">
+        <div className="playbackRate" >
             <IconButton className={classes.timer} onClick={()=>setIsOpen(prev=> !prev)} >
                 <TimerIcon  />
             </IconButton>
 
-            <CSSTransition in={isOpen} unmountOnExit timeout={300} classNames="transition">
-                <div className="playbackRateChoose" onClick={handlePlaybackRate}>
+            <CSSTransition in={isOpen} unmountOnExit timeout={300} classNames="transition" >
+                <div className="playbackRateChoose" onClick={handlePlaybackRate} ref={chooseRef} >
                     <div className="playbackOption">2</div>
                     <div className="playbackOption">1.5</div>
                     <div className="playbackOption">1</div>

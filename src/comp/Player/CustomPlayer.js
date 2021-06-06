@@ -49,7 +49,7 @@ const useStyles = makeStyles({
 
 
 
-const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volume,setPlaybackRate}) => {
+const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volume,setPlaybackRate,playbackRate}) => {
 
     const { admin,socket,nickname,hiddenChat, setHiddenChat,videoTitle,setVideoTitle,currentVideoLink } = useContext(DataContext)
 

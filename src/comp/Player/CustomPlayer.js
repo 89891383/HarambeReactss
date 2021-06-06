@@ -248,7 +248,7 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
 
 
                     <div className="fullScreen">
-                        <PlaybackRate setPlaybackRate={setPlaybackRate} />
+                        <PlaybackRate playbackRate={playbackRate} />
 
                         <IconButton className={classes.playButton} onClick={handleFullScreen}>
                             <FullscreenIcon/>

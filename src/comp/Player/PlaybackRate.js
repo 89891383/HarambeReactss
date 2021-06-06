@@ -40,7 +40,6 @@ const PlaybackRate = ({playbackRate}) => {
             [...chooseRef.current.children].forEach(item=> {
                 if(Number(item.textContent) === playbackRate ){
                     item.style.backgroundColor = "#101010"
-                    console.log(item);
                 }
             })
         }

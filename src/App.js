@@ -7,7 +7,6 @@ import PlayerAndChat from "./comp/Player/PlayerAndChat";
 import Success from "./comp/Snackbars/Success";
 import Error from "./comp/Snackbars/Error";
 import Warning from "./comp/Snackbars/Warning";
-// import { useRef } from "react";
 import { useMemo } from "react";
 import TwitchChat from "./comp/TwitchChat";
 import Options from "./comp/AdminPanel/Options/Options";

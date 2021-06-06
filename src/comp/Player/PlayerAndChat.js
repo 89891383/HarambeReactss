@@ -33,6 +33,7 @@ const PlayerAndChat = () => {
 	const [duration, setDuration] = useState(0);
 	const [volume, setVolume] = useState(0.1);
 	const [areControls, setAreControls] = useState(false);
+	const [playbackRate, setPlaybackRate] = useState(1);
 	const player = useRef(null);
 	const maxDelayLive = 6;
 	// CHAT LINK
@@ -88,11 +89,12 @@ const PlayerAndChat = () => {
 				isServerTime,
 				isPlaylistOpen,
 				isPlaying,
-				currentTime
+				playbackRate,
 			}) => {
 				if (isAdmin) {
 					setAdmin(isAdmin);
 				}
+				setPlaybackRate(playbackRate)
 				setCurrentVideoLink(currentVideo);
 				setVideoQueue(queue);
 				setIsServerTime(isServerTime);
@@ -168,6 +170,12 @@ const PlayerAndChat = () => {
 			}
 		});
 
+		
+		socket.on('playbackRateAnswer', (answer)=>{
+				setPlaybackRate(answer)
+		})
+
+
 		return () => {
 			socket.off(`joinRoomAnswer`);
 			socket.off(`videoChangeAnswer`);
@@ -178,7 +186,8 @@ const PlayerAndChat = () => {
 			socket.off("getVideoDuration");
 			socket.off("queueDeleteAnswer");
 			socket.off("playlistToggleAnswer");
-			socket.off('changeTimeAnswer')		
+			socket.off('changeTimeAnswer')	
+			socket.off('playbackRateAnswer')	
 		};
 		// eslint-disable-next-line
 	}, [currentRoom, admin, socket, maxDelay, nickname]);
@@ -219,12 +228,13 @@ const PlayerAndChat = () => {
 							controls={false}
 							muted={false}
 							volume={volume}
+							playbackRate={playbackRate}
 						/>
 						<CSSTransition 
-						unmountOnExit 
-						in={areControls}
-						timeout={200} 
-						classNames='controls'>
+							unmountOnExit 
+							in={areControls}
+							timeout={200} 
+							classNames='controls'>
 							<CustomPlayer
 								player={player}
 								setIsPlaying={setIsPlaying}
@@ -232,7 +242,9 @@ const PlayerAndChat = () => {
 								progress={progress} 
 								duration={duration} 
 								setVolume={setVolume}
-								volume={volume} />
+								volume={volume}
+								setPlaybackRate={setPlaybackRate}
+								/>
 						</CSSTransition>
 				</div>
 			</div>

@@ -14,6 +14,7 @@ import { useState } from 'react';
 import ShowTime from './ShowTime';
 import Volume from './Volume';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
+import PlaybackRate from './PlaybackRate';
 const screenfull = require('screenfull');
 
 const useStyles = makeStyles({
@@ -48,7 +49,7 @@ const useStyles = makeStyles({
 
 
 
-const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volume,}) => {
+const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volume,setPlaybackRate}) => {
 
     const { admin,socket,nickname,hiddenChat, setHiddenChat,videoTitle,setVideoTitle,currentVideoLink } = useContext(DataContext)
 
@@ -245,8 +246,10 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
                     </div>      
                     
 
-                    
+
                     <div className="fullScreen">
+                        <PlaybackRate setPlaybackRate={setPlaybackRate} />
+
                         <IconButton className={classes.playButton} onClick={handleFullScreen}>
                             <FullscreenIcon/>
                         </IconButton>

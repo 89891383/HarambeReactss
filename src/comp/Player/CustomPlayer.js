@@ -49,7 +49,7 @@ const useStyles = makeStyles({
 
 
 
-const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volume,setPlaybackRate,playbackRate}) => {
+const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volume,playbackRate,playerWrapperRef}) => {
 
     const { admin,socket,nickname,hiddenChat, setHiddenChat,videoTitle,setVideoTitle,currentVideoLink } = useContext(DataContext)
 
@@ -133,8 +133,11 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
 	}, [setVideoTitle,currentVideoLink, videoTitle]);
 
 
+
+
     const handleFullScreen = () =>{
         const playerWrapper = document.querySelector('player-wrapper')
+        playerWrapperRef.current.classList.toggle('fullscreenPlayer')
         screenfull.toggle(playerWrapper)
     }
 

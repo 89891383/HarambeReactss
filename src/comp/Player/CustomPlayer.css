@@ -166,6 +166,16 @@
 }
 
 
+.fullscreenPlayer{
+    position: fixed;
+    left: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: 100;
+    background-color: #121212;
+}
+
 
 .controls-enter {
     opacity: 0;

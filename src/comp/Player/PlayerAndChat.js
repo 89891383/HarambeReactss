@@ -28,6 +28,9 @@ const PlayerAndChat = () => {
 		setSuccessMessage,
 	} = useContext(DataContext);
 
+
+	const playerWrapperRef = useRef(null)
+
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [progress, setProgress] = useState(0);
 	const [duration, setDuration] = useState(0);
@@ -215,7 +218,8 @@ const PlayerAndChat = () => {
 				<div 
 					className="player-wrapper" 
 					onMouseEnter={handleShowControls} 
-					onMouseLeave={handleHideControls}>
+					onMouseLeave={handleHideControls}
+					ref={playerWrapperRef}>
 						<ReactPlayer
 							ref={player}
 							onDuration={videoDuration}
@@ -244,6 +248,7 @@ const PlayerAndChat = () => {
 								setVolume={setVolume}
 								volume={volume}
 								playbackRate={playbackRate}
+								playerWrapperRef={playerWrapperRef}
 								/>
 						</CSSTransition>
 				</div>

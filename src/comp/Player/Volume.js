@@ -47,7 +47,7 @@ const Volume = ({setVolume,volume}) => {
 
     return ( 
         <div className="volumeBar" onMouseEnter={toggleSlider} onMouseLeave={toggleSlider}
-        style={isSlider ? {width:"170px"} : {width:'40px'}}
+        style={isSlider ? {width:"200px"} : {width:'40px'}}
         >
             <IconButton  onClick={handleMute} className={classes.volumeBtn} >
                  {volume ? <VolumeUpIcon /> : <VolumeOffIcon/> }

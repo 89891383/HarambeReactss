@@ -2,7 +2,7 @@ import React from 'react';
 import "./CustomPlayer.css"
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
-import { IconButton, makeStyles } from '@material-ui/core';
+import { CircularProgress, IconButton, makeStyles } from '@material-ui/core';
 import ShowChat from '@material-ui/icons/VisibilityOff';
 import HideChat from '@material-ui/icons/Visibility';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
@@ -43,13 +43,14 @@ const useStyles = makeStyles({
             color:'rgb(63,81,181)',
             backgroundColor:' rgba(0, 0, 0, 0.2)',
         }   
-    }
+    },
+
 
 })
 
 
 
-const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volume,playbackRate,playerWrapperRef}) => {
+const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volume,playbackRate,playerWrapperRef,isLoading}) => {
 
     const { admin,socket,nickname,hiddenChat, setHiddenChat,videoTitle,setVideoTitle,currentVideoLink } = useContext(DataContext)
 
@@ -136,9 +137,8 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
 
 
     const handleFullScreen = () =>{
-        const playerWrapper = document.querySelector('player-wrapper')
         playerWrapperRef.current.classList.toggle('fullscreenPlayer')
-        screenfull.toggle(playerWrapper)
+        screenfull.toggle()
     }
 
     const progressRef = useRef(null)
@@ -189,6 +189,10 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
                     
                 </IconButton>
             </div>
+
+            {isLoading && currentVideoLink && <div className="loading">
+                <CircularProgress size={60} />
+            </div>}
 
             <div className="controls" ref={controlsRef}>
 

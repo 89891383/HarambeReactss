@@ -37,6 +37,7 @@ const PlayerAndChat = () => {
 	const [volume, setVolume] = useState(0.1);
 	const [areControls, setAreControls] = useState(false);
 	const [playbackRate, setPlaybackRate] = useState(1);
+	const [isLoading, setIsLoading] = useState(false);
 	const player = useRef(null);
 	const maxDelayLive = 6;
 	// CHAT LINK
@@ -45,6 +46,7 @@ const PlayerAndChat = () => {
 		if (player.current) {
 			const videoDuration = player.current.getDuration();
 			const currentTime = player.current.getCurrentTime();
+			if(!currentTime) return false
 			// FOR LIVESTREAMS
 			if (videoDuration > currentSeconds) {
 				// STANDARD VIDEO
@@ -141,6 +143,7 @@ const PlayerAndChat = () => {
 		socket.on("videoChangeAnswer", ({ currentVideoLink, queue, title }) => {
 			setDuration(0)
 			setProgress(0)
+			setIsLoading(true)
 			setCurrentVideoLink(currentVideoLink);
 			setVideoQueue(queue);
 			if (title) {
@@ -233,6 +236,7 @@ const PlayerAndChat = () => {
 							muted={false}
 							volume={volume}
 							playbackRate={playbackRate}
+							onReady={()=>setIsLoading(false)}
 						/>
 						<CSSTransition 
 							unmountOnExit 
@@ -249,6 +253,7 @@ const PlayerAndChat = () => {
 								volume={volume}
 								playbackRate={playbackRate}
 								playerWrapperRef={playerWrapperRef}
+								isLoading={isLoading}
 								/>
 						</CSSTransition>
 				</div>

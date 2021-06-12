@@ -7,7 +7,10 @@ import CustomPlayer from "./CustomPlayer";
 import "./PlayerAndChat.css";
 
 
+let autoControlsHide;
+
 const PlayerAndChat = () => {
+
 	const currentRoom = "main";
 	const {
 		admin,
@@ -38,6 +41,7 @@ const PlayerAndChat = () => {
 	const [areControls, setAreControls] = useState(false);
 	const [playbackRate, setPlaybackRate] = useState(1);
 	const [isLoading, setIsLoading] = useState(false);
+	const [videoProgress, setVideoProgress] = useState(null);
 	const player = useRef(null);
 	const maxDelayLive = 6;
 	// CHAT LINK
@@ -207,26 +211,55 @@ const PlayerAndChat = () => {
 
 
 	const handleShowControls = () =>{
-		if(areControls) return false
-		setAreControls(true)
+		// if(areControls) return false
+		if(!areControls){
+			setAreControls(true)
+		}
+		clearInterval(autoControlsHide)
+		autoControlsHide = setTimeout(() => {
+			handleHideControls()
+			const customPlayer = document.querySelector('.customPlayer')
+			if(customPlayer){
+				customPlayer.style.cursor = 'none'
+			}
+		}, 5000);
 	}
 	const handleHideControls = () =>{
-		setAreControls(false)
+		clearInterval(autoControlsHide)
+		if(areControls){
+			setAreControls(false)
+		}
 	}
 
+	const setLiveDuration = () =>{
+		if(!videoProgress) return false
+		const {playedSeconds, played} = videoProgress
+		if(playedSeconds && played){
+			const liveDuration  = Math.floor(playedSeconds/played)
+			if(duration - 2 > liveDuration || duration + 2 < liveDuration){
+				setDuration(liveDuration)
+				synchronizeVideo(player, liveDuration - 3)
+			}
+		}
+	}
 
 	return (
 		<>
 			<div className="playerAndChat">
 				<div 
 					className="player-wrapper" 
-					onMouseEnter={handleShowControls} 
+					onMouseMove={handleShowControls} 
 					onMouseLeave={handleHideControls}
 					ref={playerWrapperRef}>
 						<ReactPlayer
 							ref={player}
 							onDuration={videoDuration}
-							onProgress={(e)=> setProgress(e.playedSeconds)}
+							onProgress={(e)=>{
+								if(videoProgress !== e){
+									setVideoProgress(e)
+									setLiveDuration()
+								}
+								setProgress(e.playedSeconds)}}
 							playing={isPlaying}
 							className="react-player"
 							url={currentVideoLink}
@@ -237,6 +270,8 @@ const PlayerAndChat = () => {
 							volume={volume}
 							playbackRate={playbackRate}
 							onReady={()=>setIsLoading(false)}
+							onBuffer={()=>setIsLoading(true)}
+							onBufferEnd={()=> setIsLoading(false)}
 						/>
 						<CSSTransition 
 							unmountOnExit 

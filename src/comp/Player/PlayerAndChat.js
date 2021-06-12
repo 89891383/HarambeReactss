@@ -5,9 +5,8 @@ import { CSSTransition } from "react-transition-group";
 import { DataContext } from "../../App";
 import CustomPlayer from "./CustomPlayer";
 import "./PlayerAndChat.css";
+import {useIdle} from 'react-use';
 
-
-let autoControlsHide;
 
 const PlayerAndChat = () => {
 
@@ -210,22 +209,30 @@ const PlayerAndChat = () => {
 
 
 
-	const handleShowControls = () =>{
-		// if(areControls) return false
-		if(!areControls){
-			setAreControls(true)
-		}
-		clearInterval(autoControlsHide)
-		autoControlsHide = setTimeout(() => {
-			handleHideControls()
+	const isIdle = useIdle(1000 * 3) // REACT-USE
+
+	useEffect(()=>{
+		if(isIdle && areControls){
+			setAreControls(false)
 			const customPlayer = document.querySelector('.customPlayer')
 			if(customPlayer){
 				customPlayer.style.cursor = 'none'
 			}
-		}, 5000);
+		}
+
+		// eslint-disable-next-line
+	},[isIdle])
+
+	const handleShowControls = () =>{
+		if(areControls) return false
+
+		const customPlayer = document.querySelector('.customPlayer')
+		if(customPlayer){
+			customPlayer.style.cursor = 'initial'
+		}
+		setAreControls(true)
 	}
 	const handleHideControls = () =>{
-		clearInterval(autoControlsHide)
 		if(areControls){
 			setAreControls(false)
 		}

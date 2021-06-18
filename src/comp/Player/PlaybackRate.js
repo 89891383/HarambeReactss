@@ -3,6 +3,7 @@ import TimerIcon from '@material-ui/icons/Timer';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { DataContext } from '../../App';
+import { useClickAway } from 'react-use'
 
 const useStyles = makeStyles({
     timer:{
@@ -24,6 +25,11 @@ const PlaybackRate = ({playbackRate}) => {
     const chooseRef = useRef(null)
 
     const [isOpen, setIsOpen] = useState(false)
+
+    useClickAway(chooseRef, (e)=>{
+        if(e.target.className.baseVal === 'MuiSvgIcon-root') return false
+        setIsOpen(false)
+    })
 
     const handlePlaybackRate = (e) =>{
 

@@ -41,6 +41,7 @@ const PlayerAndChat = () => {
 	const [playbackRate, setPlaybackRate] = useState(1);
 	const [isLoading, setIsLoading] = useState(false);
 	const [videoProgress, setVideoProgress] = useState(null);
+	const [setNativePlayer, nativePlayer] = useState(false)
 	const player = useRef(null);
 	const maxDelayLive = 6;
 	// CHAT LINK
@@ -280,7 +281,8 @@ const PlayerAndChat = () => {
 							onBuffer={()=>setIsLoading(true)}
 							onBufferEnd={()=> setIsLoading(false)}
 						/>
-						<CSSTransition 
+				{nativePlayer && 		
+					<CSSTransition 
 							unmountOnExit 
 							in={areControls}
 							timeout={200} 
@@ -297,8 +299,9 @@ const PlayerAndChat = () => {
 								playerWrapperRef={playerWrapperRef}
 								isLoading={isLoading}
 								/>
-						</CSSTransition>
+						</CSSTransition>}
 				</div>
+
 			</div>
 		</>
 	);

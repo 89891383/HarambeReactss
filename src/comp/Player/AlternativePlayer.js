@@ -6,7 +6,7 @@ const AlternativePlayer = ({currentVideoLink}) => {
 
     return ( 
         <Iframe 
-        url={currentVideoLink || 'https://chaturbate.com/fullvideo/?tour=dU9X&signup_notice=0&campaign=x7eJU&disable_sound=0'}
+        url={currentVideoLink}
         width=""
         height="97%"
         styles={{overflow:'hidden'}}

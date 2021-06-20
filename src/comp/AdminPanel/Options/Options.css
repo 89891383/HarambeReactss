@@ -12,7 +12,10 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 	padding: 20px 10px;
-	min-width: 400px;
+	max-width: 500px;
+	width: 95%;
+	max-height: 90%;
+	overflow: scroll;
 	display: flex;
 	flex-direction: column;
 	background-color: #121212;
@@ -29,9 +32,3 @@
 	border-radius: 5px;
 }
 
-@media (max-width: 430px) {
-	.optionsDialog {
-		min-width: 0;
-		width: 90%;
-	}
-}

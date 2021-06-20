@@ -15,7 +15,6 @@ const AdminPanel = () => {
 
 	const [isAddVideo, setIsAddVideo] = useState(false);
 
-
 	const handleTwitchLogin = () => {
 		window.location.href = `/auth/twitch`; //DECLARED IN APP
 	};

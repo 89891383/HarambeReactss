@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 import { useClickAway } from "react-use"

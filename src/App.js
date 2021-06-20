@@ -38,6 +38,8 @@ const App = () => {
 	const [isPlaylistOpen, setIsPlaylistOpen] = useState(false);
 	const [isHistoryOpen, setIsHistoryOpen] = useState(false);
 	const [hiddenChat, setHiddenChat] = useState(false);
+	const [iFrame, setiFrame] = useState(false);
+
 
 
 	const twitchStreamer = "main";
@@ -80,6 +82,9 @@ const App = () => {
 			socket.off('warning')
 		};
 	}, []);
+
+
+	
 
 	return (
 		<>
@@ -124,7 +129,9 @@ const App = () => {
 					isHistoryOpen,
 					setIsHistoryOpen,
 					hiddenChat,
-					setHiddenChat
+					setHiddenChat,
+					iFrame, 
+					setiFrame
 				}}
 			>
 				<div className="app">
@@ -147,6 +154,7 @@ const App = () => {
 				<Error />
 				<Warning />
 			</DataContext.Provider>
+
 		</>
 	);
 };

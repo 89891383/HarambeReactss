@@ -18,6 +18,7 @@ const OptionsDialog = () => {
 		nickname,
 		isPlaylistOpen,
 		setIsPlaylistOpen,
+		iFrame
 	} = useContext(DataContext);
 
 	const optionsRef = useRef(null);
@@ -33,9 +34,12 @@ const OptionsDialog = () => {
 	const serverPlaylistToggle = () => {
 		setIsPlaylistOpen((prev) => {
 			socket.emit("playlistToggle", { isOpen: !prev, nickname });
-			return !prev;
 		});
 	};
+
+	const iFrameToggle = () =>{
+		socket.emit('iFrameToggle', {nickname})
+	}
 
 	return (
 		<Popout state={isDialogOpen} setState={setIsDialogOpen}>
@@ -46,6 +50,11 @@ const OptionsDialog = () => {
 				<OneOption checked={isPlaylistOpen} onChange={serverPlaylistToggle}>
 					<span>Playlist open</span>
 				</OneOption>
+
+				<OneOption checked={iFrame} onChange={iFrameToggle}>
+					<span>iFrame</span>
+				</OneOption>
+
 				<ChangeChat/>
 				<div
 					style={{

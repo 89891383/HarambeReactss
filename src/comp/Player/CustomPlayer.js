@@ -59,7 +59,7 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
     const [currentProgress, setCurrentProgress] = useState(0);
     const [isTimeShow, setIsTimeShow] = useState(false);
     const [timeToShow, setTimeToShow] = useState(null)
-    const [isFullScreen, setIsFullScreen] = useState(false);
+    // const [isFullScreen, setIsFullScreen] = useState(false);
 
 
     const formatTime = (time) =>{
@@ -141,24 +141,24 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
     const handleFullScreen = () =>{
         playerWrapperRef.current.classList.toggle('fullscreenPlayer')
         screenfull.toggle()
-        setIsFullScreen(prev=> !prev)
+        // setIsFullScreen(prev=> !prev)
     }
 
-    const exitFullScreen = (e) =>{
-        if(e.keyCode === 27 && isFullScreen){
-            console.log('TO JEST ESC');
-        }
-    }
+    // const exitFullScreen = (e) =>{
+    //     if(e.keyCode === 27 && isFullScreen){
+    //         console.log('TO JEST ESC');
+    //     }
+    // }
 
-    useEffect(()=>{
+    // useEffect(()=>{
 
-        document.addEventListener('keydown', exitFullScreen)
+    //     document.addEventListener('keydown', exitFullScreen)
 
-        return () =>{
-            document.removeEventListener('keydown', exitFullScreen)
-        }
+    //     return () =>{
+    //         document.removeEventListener('keydown', exitFullScreen)
+    //     }
 
-    },[])
+    // },[])
 
 
     const progressRef = useRef(null)

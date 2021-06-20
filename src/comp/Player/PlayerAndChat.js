@@ -6,6 +6,7 @@ import { DataContext } from "../../App";
 import CustomPlayer from "./CustomPlayer";
 import "./PlayerAndChat.css";
 import {useIdle} from 'react-use';
+import AlternativePlayer from "./AlternativePlayer";
 
 
 const PlayerAndChat = () => {
@@ -28,6 +29,8 @@ const PlayerAndChat = () => {
 		setIsPlaylistOpen,
 		setIsSuccess,
 		setSuccessMessage,
+		iFrame, 
+		setiFrame
 	} = useContext(DataContext);
 
 
@@ -41,7 +44,7 @@ const PlayerAndChat = () => {
 	const [playbackRate, setPlaybackRate] = useState(1);
 	const [isLoading, setIsLoading] = useState(false);
 	const [videoProgress, setVideoProgress] = useState(null);
-	const [setNativePlayer, nativePlayer] = useState(false)
+	// const [setNativePlayer, nativePlayer] = useState(false)
 	const player = useRef(null);
 	const maxDelayLive = 6;
 	// CHAT LINK
@@ -99,10 +102,12 @@ const PlayerAndChat = () => {
 				isPlaylistOpen,
 				isPlaying,
 				playbackRate,
+				iframe
 			}) => {
 				if (isAdmin) {
 					setAdmin(isAdmin);
 				}
+				setiFrame(iframe)
 				setPlaybackRate(playbackRate)
 				setCurrentVideoLink(currentVideo);
 				setVideoQueue(queue);
@@ -186,6 +191,11 @@ const PlayerAndChat = () => {
 		})
 
 
+		socket.on('iFrameToggleAnswer', ({iFrameAnswer})=>{
+			setiFrame(iFrameAnswer)
+		})
+
+
 		return () => {
 			socket.off(`joinRoomAnswer`);
 			socket.off(`videoChangeAnswer`);
@@ -198,6 +208,7 @@ const PlayerAndChat = () => {
 			socket.off("playlistToggleAnswer");
 			socket.off('changeTimeAnswer')	
 			socket.off('playbackRateAnswer')	
+			socket.off('iFrameToggleAnswer')	
 		};
 		// eslint-disable-next-line
 	}, [currentRoom, admin, socket, maxDelay, nickname]);
@@ -254,7 +265,7 @@ const PlayerAndChat = () => {
 	return (
 		<>
 			<div className="playerAndChat">
-				<div 
+				{!iFrame ?  <div 
 					className="player-wrapper" 
 					onMouseMove={handleShowControls} 
 					onMouseLeave={handleHideControls}
@@ -281,7 +292,7 @@ const PlayerAndChat = () => {
 							onBuffer={()=>setIsLoading(true)}
 							onBufferEnd={()=> setIsLoading(false)}
 						/>
-				{nativePlayer && 		
+				
 					<CSSTransition 
 							unmountOnExit 
 							in={areControls}
@@ -299,8 +310,14 @@ const PlayerAndChat = () => {
 								playerWrapperRef={playerWrapperRef}
 								isLoading={isLoading}
 								/>
-						</CSSTransition>}
+						</CSSTransition>
 				</div>
+
+				:
+			
+							<AlternativePlayer currentVideoLink={currentVideoLink} />
+				}
+				
 
 			</div>
 		</>

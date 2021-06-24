@@ -262,6 +262,10 @@ const PlayerAndChat = () => {
 		}
 	}
 
+
+
+
+
 	return (
 		<>
 			<div className="playerAndChat">
@@ -315,7 +319,8 @@ const PlayerAndChat = () => {
 
 				:
 			
-							<AlternativePlayer currentVideoLink={currentVideoLink} />
+							<AlternativePlayer 
+							currentVideoLink={currentVideoLink} />
 				}
 				
 

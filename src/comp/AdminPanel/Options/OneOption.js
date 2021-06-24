@@ -4,9 +4,8 @@ import { Switch } from "@material-ui/core";
 const OneOption = ({ children, checked, onChange }) => {
 	return (
 		<div className="oneOption">
-			<span>
 				{children}
-			</span>
+			
 			<span>
 				OFF <Switch checked={checked} onChange={onChange} /> ON
 			</span>

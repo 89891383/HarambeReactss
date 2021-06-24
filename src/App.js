@@ -42,6 +42,7 @@ const App = () => {
 
 
 
+
 	const twitchStreamer = "main";
 	const websiteURL = window.location.origin;
 
@@ -131,7 +132,8 @@ const App = () => {
 					hiddenChat,
 					setHiddenChat,
 					iFrame, 
-					setiFrame
+					setiFrame,
+
 				}}
 			>
 				<div className="app">

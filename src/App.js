@@ -63,7 +63,6 @@ const App = () => {
 	}, []);
 
 
-
 	useEffect(() => {
 		socket.on("success", ({ message }) => {
 			setSuccessMessage(message);

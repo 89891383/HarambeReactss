@@ -4,11 +4,12 @@ import Iframe from 'react-iframe'
 const AlternativePlayer = ({currentVideoLink}) => {
 
 
+
     return ( 
         <Iframe 
         url={currentVideoLink}
-        width=""
-        height="97%"
+        width="100%"
+        height="100%"
         styles={{overflow:'hidden'}}
         frameBorder="0"
         scrolling="no"

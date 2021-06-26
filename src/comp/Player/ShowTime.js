@@ -15,7 +15,11 @@ const ShowTime = ({time}) => {
         }
     },[])
 
+
+    const maxWidth = document.querySelector('.customPlayer').getBoundingClientRect().width
+
     
+
 
     if(!time) return false
 
@@ -23,8 +27,17 @@ const ShowTime = ({time}) => {
 
     const {hours,minutes, seconds} = time
 
+    let calculateTranslate  = cursorX - showTimeWidth/2 - 10
+
+    
+    if(showTimeWidth/2 + 2 + cursorX > maxWidth){
+        calculateTranslate = maxWidth - showTimeWidth - 15
+    }else if(cursorX < showTimeWidth/2  ){
+        calculateTranslate = -15
+    }
+
     return ( 
-        <div className="showTime" ref={showTimeRef} style={{transform:`translate(${cursorX - showTimeWidth/2 -20}px, -150%)`}} >
+        <div className="showTime" ref={showTimeRef} style={{transform:`translate(${calculateTranslate}px, -150%)`}} >
             {`${hours}:${minutes}:${seconds}`}
         </div>
      );

@@ -150,16 +150,11 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
     }
 
 
-
-
-
     const progressRef = useRef(null)
 
     const handleToggleShowTimeAbove = () =>{
         setIsTimeShow(prev=> !prev)
     }
-
-
 
 
     const handleTogglePlayServer = () =>{
@@ -255,8 +250,6 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
                         </div>
                     }
 
-                    
-                    
                     
                 
                     <Volume setVolume={setVolume} volume={volume} />

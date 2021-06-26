@@ -309,6 +309,7 @@ const PlayerAndChat = () => {
 								progress={progress} 
 								duration={duration} 
 								setVolume={setVolume}
+								videoProgress={videoProgress}
 								volume={volume}
 								playbackRate={playbackRate}
 								playerWrapperRef={playerWrapperRef}

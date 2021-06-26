@@ -50,7 +50,7 @@ const useStyles = makeStyles({
 
 
 
-const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volume,playbackRate,playerWrapperRef,isLoading}) => {
+const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volume,playbackRate,playerWrapperRef,isLoading, videoProgress}) => {
 
     const { admin,socket,nickname,hiddenChat, setHiddenChat,videoTitle,setVideoTitle,currentVideoLink } = useContext(DataContext)
 
@@ -59,6 +59,7 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
     const [currentProgress, setCurrentProgress] = useState(0);
     const [isTimeShow, setIsTimeShow] = useState(false);
     const [timeToShow, setTimeToShow] = useState(null)
+    const [loadedSeconds, setLoadedSeconds] = useState(0);
 
 
     const formatTime = (time) =>{
@@ -104,6 +105,12 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
     },[setIsPlaying, socket])
 
 
+    useEffect(()=>{
+        const loadedSeconds = videoProgress?.loadedSeconds
+        setLoadedSeconds(loadedSeconds/duration * 100)
+    },[videoProgress,duration])
+
+
 
     const handleProgressChange = (e) =>{
         if(!admin || !currentVideoLink) return false
@@ -120,7 +127,7 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
         // PROGRESS BAR ANIMATION
             setCurrentProgress(progress/duration*100)        
         
-    },[duration,progress,currentProgress])
+    },[duration,progress])
 
 
 	useEffect(() => {
@@ -208,16 +215,20 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
                         {isTimeShow && <ShowTime time={timeToShow} />}
                         
                      
-                        <div className="currentProgress" 
-                        style={{width:`${currentProgress < 100 ? currentProgress : 100}%`}} >
-
+                        <div 
+                            className="currentProgress" 
+                            style={{width:`${currentProgress < 100 ? currentProgress : 100}%`}} >
+                        </div>
+                        <div className="loadedProgress"
+                            style={{width:`${loadedSeconds < 100 ? loadedSeconds : 100}%`}}
+                        >
                         </div>
                         <div 
-                        className="progressBackground" 
-                        onClick={handleProgressChange}
-                        onMouseOver={handleToggleShowTimeAbove}
-                        onMouseLeave={handleToggleShowTimeAbove}
-                        onMouseMove={handleTimeToShow}
+                            className="progressBackground" 
+                            onClick={handleProgressChange}
+                            onMouseOver={handleToggleShowTimeAbove}
+                            onMouseLeave={handleToggleShowTimeAbove}
+                            onMouseMove={handleTimeToShow}
                         ></div>
 
                        

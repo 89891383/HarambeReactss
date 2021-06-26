@@ -57,13 +57,22 @@
     transform: translateX(-50%);
     box-shadow: 0 0 2px black;
 }
+.loadedProgress{
+    width: 100%;
+    height: 10px;
+    position: absolute;
+    left: 0;
+    pointer-events: none;
+    transition: width 1000ms linear;
+    background-color: rgba(255, 255, 255, 0.3);
+    /* background-color: rgba(63, 81, 181); */
+    z-index: -2;
+}
 
 .progressBackground{
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
-    /* background-color: rgba(0, 0, 0, 0.5); */
+    background-color: rgba(255, 255, 255, 0.35);
     height: 10px;
-    /* border-radius: 5px; */
 }
 
 .showTime{

@@ -42,6 +42,7 @@ const AdminList = () => {
 
 	const [isAdminList, setIsAdminList] = useState(false);
 
+
 	return (
 		<>
 			<div
@@ -59,7 +60,7 @@ const AdminList = () => {
 					timeout={300}
 					classNames="transition"
 				>
-					<div className="adminListArray">
+					<div className="adminListArray" >
 						<h3 className="h3_adminListArray">Admins:</h3>
 						{createAdminList}
 					</div>

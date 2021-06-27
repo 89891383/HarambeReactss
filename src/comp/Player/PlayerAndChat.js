@@ -119,7 +119,7 @@ const PlayerAndChat = () => {
 					document.title = title;
 				} else {
 					setVideoTitle(null);
-					document.title = "Harambe Films";
+					document.title = "Legga";
 				}
 			}
 		);

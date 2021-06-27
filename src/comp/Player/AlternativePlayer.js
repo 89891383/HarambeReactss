@@ -1,8 +1,6 @@
-
 import Iframe from 'react-iframe'
 
 const AlternativePlayer = ({currentVideoLink}) => {
-
 
 
     return ( 
@@ -16,7 +14,8 @@ const AlternativePlayer = ({currentVideoLink}) => {
         allowFullScreen
         allow-popouts="no"
         display="initial"
-        position="relative"/>
+        position="relative"
+        />
         	
      );
 }

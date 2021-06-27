@@ -27,19 +27,20 @@ const TwitchChat = () => {
 
 	
 	return (
-		<div className="twitchChat">
-			<span className="onlineUsers">
-				{onlineUsers ? `${onlineUsers} ONLINE` : "CONNECTING"}
-			</span>
-			<iframe
-				style={{ border: "2px solid #121212" }}
-				title="TwitchChat"
-				id="chat_embed"
-				src={`https://www.twitch.tv/embed/${currentChat}/chat?darkpopout&parent=${websiteURL}`}
-				height="100%"
-				width="100%"
-			></iframe>
-		</div>
+			<div className="twitchChat">
+				<span className="onlineUsers">
+					{onlineUsers ? `${onlineUsers} ONLINE` : "CONNECTING"}
+				</span>
+				<iframe
+					style={{ border: "2px solid #121212" }}
+					title="TwitchChat"
+					id="chat_embed"
+					src={`https://www.twitch.tv/embed/${currentChat}/chat?darkpopout&parent=${websiteURL}`}
+					height="100%"
+					width="100%"
+				></iframe>
+			</div>
+
 	);
 };
 

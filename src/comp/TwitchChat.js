@@ -7,6 +7,8 @@ import { useEffect,useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import Tooltip from '@material-ui/core/Tooltip';
 
+let pingInterval;
+
 const useStyles = makeStyles({
 	syncOn:{
 		color:'#90be6d'
@@ -56,9 +58,16 @@ const TwitchChat = () => {
 	},[socket, currentChat])
 
 	const handleCheckPing = () =>{
-		const date = new Date()
-		const ms = date.getUTCMilliseconds()
-		socket.emit('ping', ms)
+			const date = new Date()
+			const ms = date.getUTCMilliseconds()
+			socket.emit('ping', ms)
+
+		pingInterval = setInterval(() => {
+			const date = new Date()
+			const ms = date.getUTCMilliseconds()
+			socket.emit('ping', ms)
+		}, 2000);
+
 	}
 
 	useEffect(()=>{
@@ -87,7 +96,7 @@ const TwitchChat = () => {
 				<span className="onlineUsers">
 					{onlineUsers ? `${onlineUsers} ONLINE` : "CONNECTING"}
 				</span>
-				<span className="syncStatus" onMouseEnter={handleCheckPing} >
+				<span className="syncStatus" onMouseEnter={handleCheckPing} onMouseLeave={()=> clearInterval(pingInterval)} >
 					{syncStatus}
 				</span>
 				<iframe

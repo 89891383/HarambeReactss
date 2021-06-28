@@ -17,7 +17,6 @@ const AddVideo = ({ isAddVideo, setIsAddVideo }) => {
 
 	const [editVideoLink, setEditVideoLink] = useState("");
 	const [videoTitle, setVideoTitle] = useState("");
-	const [isLive, setIsLive] = useState(false);
 
 	const handleSkipVideo = () => {
 		if (admin) {
@@ -30,12 +29,10 @@ const AddVideo = ({ isAddVideo, setIsAddVideo }) => {
 			socket.emit("videoChange", {
 				currentVideoLink: editVideoLink,
 				videoTitle,
-				isLive,
 			});
 			setVideoTitle("");
 			setEditVideoLink("");
 			setIsAddVideo(false);
-			setIsLive(false)
 		}
 	};
 
@@ -45,12 +42,10 @@ const AddVideo = ({ isAddVideo, setIsAddVideo }) => {
 				videoLink: editVideoLink,
 				nickname,
 				videoTitle,
-				isLive,
 			});
 			setEditVideoLink("");
 			setVideoTitle("");
 			setIsAddVideo(false);
-			setIsLive(false)
 		}
 	};
 

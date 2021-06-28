@@ -3,6 +3,7 @@ import { DataContext } from "../../App";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import { IconButton, makeStyles, Tooltip } from "@material-ui/core";
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import "./Queue.css";
 import noImg from "./noImg.jpg";
 
@@ -13,7 +14,7 @@ const useStyles = makeStyles({
 	},
 });
 
-const QueueItem = ({ item }) => {
+const QueueItem = ({ item,index }) => {
 	const classes = useStyles();
 	const { URL, title, addedBy } = item;
 	const [videoData, setVideoData] = useState(null);
@@ -44,6 +45,12 @@ const QueueItem = ({ item }) => {
 		}
 	};
 
+	const handleMoveUp = () =>{
+		if(admin && index){
+			socket.emit('queueMoveUp', {URL})
+		}
+	}
+
 	return (
 		<>
 			<div className="queueItem">
@@ -71,6 +78,15 @@ const QueueItem = ({ item }) => {
 								<PlayArrowIcon />
 							</Tooltip>
 						</IconButton>
+
+						{index ?
+							<IconButton className={classes.iconButton} onClick={handleMoveUp} >
+							<Tooltip title={'Move up'} enterDelay={0} >
+								<ArrowUpwardIcon/>
+							</Tooltip>
+							</IconButton> : false}
+
+
 						<IconButton
 							className={classes.iconButton}
 							onClick={handleDeleteItemFromQueue}

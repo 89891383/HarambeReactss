@@ -25,15 +25,8 @@
 	left: 0;
 	pointer-events: none;
 }
-.onlineUsers {
-	pointer-events: none;
-	color: grey;
-	position: absolute;
-	padding: 6px 10px;
-	margin: 10px 10px;
-	border-radius: 10px;
-	background-color: #121212;
-}
+
+
 .delayInfo {
 	color: white;
 	text-transform: uppercase;

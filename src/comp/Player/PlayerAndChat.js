@@ -167,6 +167,11 @@ const PlayerAndChat = () => {
 		socket.on("queueUpdateAnswer", (serverQueueUpdate) => {
 			setVideoQueue((prev) => [...prev, serverQueueUpdate]);
 		});
+
+		socket.on('queueMoveUpAnswer', (queueAnswer)=>{
+			setVideoQueue(queueAnswer)
+		})
+
 		socket.on("queueDeleteAnswer", (URLToDelete) => {
 			setVideoQueue((prev) => {
 				let newQueue = prev.filter((video) => video.URL !== URLToDelete);
@@ -208,7 +213,8 @@ const PlayerAndChat = () => {
 			socket.off("playlistToggleAnswer");
 			socket.off('changeTimeAnswer')	
 			socket.off('playbackRateAnswer')	
-			socket.off('iFrameToggleAnswer')	
+			socket.off('iFrameToggleAnswer')
+			socket.off('queueMoveUpAnswer')	
 		};
 		// eslint-disable-next-line
 	}, [currentRoom, admin, socket, maxDelay, nickname]);

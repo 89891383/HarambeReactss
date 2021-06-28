@@ -63,7 +63,9 @@ const TwitchChat = () => {
 
 	useEffect(()=>{
 		socket.on('pong', (ping)=>{
-			setPing(ping)
+			if(ping > 0){
+				setPing(ping)
+			}
 		})
 		return ()=>{
 			socket.off('pong')
@@ -72,10 +74,10 @@ const TwitchChat = () => {
 
 
 	const syncStatus = isServerTime ? 
-	<Tooltip title={`SYNC ON, ${ping}ms`} enterDelay={0} onMouseEnter={handleCheckPing}>
+	<Tooltip title={`SYNC ON, ${ping}ms`} enterDelay={0}>
 		<CheckCircleIcon className={classes.syncOn} />
 	</Tooltip> 
-	: <Tooltip title={`SYNC OFF, ${ping}ms`} enterDelay={0} onMouseEnter={handleCheckPing} >
+	: <Tooltip title={`SYNC OFF, ${ping}ms`} enterDelay={0}>
 		<ErrorIcon className={classes.syncOff} />
 	</Tooltip> 
 
@@ -85,7 +87,7 @@ const TwitchChat = () => {
 				<span className="onlineUsers">
 					{onlineUsers ? `${onlineUsers} ONLINE` : "CONNECTING"}
 				</span>
-				<span className="syncStatus">
+				<span className="syncStatus" onMouseEnter={handleCheckPing} >
 					{syncStatus}
 				</span>
 				<iframe

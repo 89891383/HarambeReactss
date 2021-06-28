@@ -12,12 +12,26 @@ const useStyles = makeStyles({
 		color:'#90be6d'
 	},
 	syncOff:{
-		color:'#f9c74f'
+		color:'#f9c74f',
+		animation:'$breatheEffect infinite 3s ease-in-out'
+	},
+	'@keyframes breatheEffect':{
+		'0%':{
+			opacity:'0.6'
+		},
+		'50%':{
+			opacity:'1'
+		},
+		'100%':{
+			opacity:'0.6'
+		},
 	}
 })
 
 const TwitchChat = () => {
 	
+	const [ping, setPing] = useState(null);
+
 	const classes = useStyles()
 
 	const { onlineUsers,socket,isServerTime } = useContext(DataContext);
@@ -41,12 +55,27 @@ const TwitchChat = () => {
 		}
 	},[socket, currentChat])
 
+	const handleCheckPing = () =>{
+		const date = new Date()
+		const ms = date.getUTCMilliseconds()
+		socket.emit('ping', ms)
+	}
+
+	useEffect(()=>{
+		socket.on('pong', (ping)=>{
+			setPing(ping)
+		})
+		return ()=>{
+			socket.off('pong')
+		}
+	},[socket])
+
 
 	const syncStatus = isServerTime ? 
-	<Tooltip title={'SYNC ON'} enterDelay={0}>
+	<Tooltip title={`SYNC ON, ${ping}ms`} enterDelay={0} onMouseEnter={handleCheckPing}>
 		<CheckCircleIcon className={classes.syncOn} />
 	</Tooltip> 
-	: <Tooltip title={'SYNC OFF'} enterDelay={0}>
+	: <Tooltip title={`SYNC OFF, ${ping}ms`} enterDelay={0} onMouseEnter={handleCheckPing} >
 		<ErrorIcon className={classes.syncOff} />
 	</Tooltip> 
 

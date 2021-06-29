@@ -72,7 +72,6 @@ const TwitchChat = () => {
 
 		// CHECK PING ON LOADPAGE
 		const ms = Date.now()
-		console.log(ms);
 		socket.emit('ping', ms)
 		//
 

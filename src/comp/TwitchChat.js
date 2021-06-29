@@ -58,13 +58,11 @@ const TwitchChat = () => {
 	},[socket, currentChat])
 
 	const handleCheckPing = () =>{
-			const date = new Date()
-			const ms = date.getUTCMilliseconds()
+			const ms = Date.now()
 			socket.emit('ping', ms)
 
 		pingInterval = setInterval(() => {
-			const date = new Date()
-			const ms = date.getUTCMilliseconds()
+			const ms = Date.now()
 			socket.emit('ping', ms)
 		}, 2000);
 
@@ -73,11 +71,10 @@ const TwitchChat = () => {
 	useEffect(()=>{
 
 		// CHECK PING ON LOADPAGE
-		const date = new Date()
-		const ms = date.getUTCMilliseconds()
+		const ms = Date.now()
+		console.log(ms);
 		socket.emit('ping', ms)
 		//
-
 
 		socket.on('pong', (ping)=>{
 			if(ping > 0){

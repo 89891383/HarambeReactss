@@ -44,6 +44,7 @@ input:focus {
 	border-radius: 10px;
 	background-color: #121212;
 }
+
 .syncStatus{
 	position: absolute;
 	padding: 5px;

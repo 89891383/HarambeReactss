@@ -66,11 +66,11 @@ const TwitchChat = () => {
 		// ping -> RESPONSE FROM SERVER TIME
 
 			pingInit = Date.now()
-			socket.emit('ping', pingInit)
+			socket.emit('ping')
 
 		pingInterval = setInterval(() => {
 			pingInit = Date.now()
-			socket.emit('ping', pingInit)
+			socket.emit('ping')
 		}, 2000);
 
 	}
@@ -79,10 +79,11 @@ const TwitchChat = () => {
 
 		// CHECK PING ON LOADPAGE
 		pingInit = Date.now()
-		socket.emit('ping', pingInit)
+		socket.emit('ping')
 		//
 
-		socket.on('pong', (ping)=>{
+		socket.on('pong', ()=>{
+			const ping = Date.now()
 			setPing(ping - pingInit)
 		})
 		return ()=>{

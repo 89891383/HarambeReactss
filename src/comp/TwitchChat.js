@@ -76,9 +76,9 @@ const TwitchChat = () => {
 		//
 
 		socket.on('pong', (ping)=>{
-			if(ping > 0){
+			// if(ping > 0){
 				setPing(ping)
-			}
+			// }
 		})
 		return ()=>{
 			socket.off('pong')

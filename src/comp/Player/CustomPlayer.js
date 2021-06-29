@@ -15,6 +15,9 @@ import ShowTime from './ShowTime';
 import Volume from './Volume';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import PlaybackRate from './PlaybackRate';
+import Forward5Icon from '@material-ui/icons/Forward5';
+import Replay5Icon from '@material-ui/icons/Replay5';
+
 const screenfull = require('screenfull');
 
 const useStyles = makeStyles({
@@ -45,6 +48,14 @@ const useStyles = makeStyles({
         }   
     },
 
+    skipSeconds:{
+        fontSize:'150px',
+        position:'absolute',
+        top:'50%',
+        left:'50%',
+        transform:'translate(-50%,-50%)',
+    }
+
 
 })
 
@@ -60,6 +71,7 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
     const [isTimeShow, setIsTimeShow] = useState(false);
     const [timeToShow, setTimeToShow] = useState(null)
     const [loadedSeconds, setLoadedSeconds] = useState(0);
+    const [secondsSkip, setSecondsSkip] = useState(false);
 
 
     const formatTime = (time) =>{
@@ -91,6 +103,19 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
             }
 
     }
+
+    useEffect(()=>{
+        socket.on('secondsSkipAnswer', ({type})=>{
+            setSecondsSkip(type)
+            setTimeout(() => {
+                setSecondsSkip(false)
+            }, 500);
+        })
+
+        return ()=>{
+            socket.off('secondsSkipAnswer')
+        }
+    },[socket])
 
     useEffect(()=>{
         socket.on('canPlayAnswer', (answer)=>{
@@ -201,9 +226,21 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
                 <CircularProgress size={60} />
             </div>}
 
+            {secondsSkip && 
+                <div className="secondsSkip">
+                       {secondsSkip === "FORWARD" ? 
+                        <Forward5Icon className={classes.skipSeconds} />
+                       :
+                        <Replay5Icon className={classes.skipSeconds} />
+                       }
+                        
+                    </div>
+            }
+
             <div className="controls" ref={controlsRef}>
 
-                
+
+
                     <div className="progressBar" ref={progressRef} >
                         
                        

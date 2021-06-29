@@ -61,6 +61,10 @@ const TwitchChat = () => {
 	},[socket, currentChat])
 
 	const handleCheckPing = () =>{
+
+		// pingInit -> START TIME
+		// ping -> RESPONSE FROM SERVER TIME
+
 			pingInit = Date.now()
 			socket.emit('ping', pingInit)
 

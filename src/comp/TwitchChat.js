@@ -9,6 +9,9 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 let pingInterval;
 
+let pingInit;
+
+
 const useStyles = makeStyles({
 	syncOn:{
 		color:'#90be6d'
@@ -58,12 +61,12 @@ const TwitchChat = () => {
 	},[socket, currentChat])
 
 	const handleCheckPing = () =>{
-			const ms = Date.now()
-			socket.emit('ping', ms)
+			pingInit = Date.now()
+			socket.emit('ping', pingInit)
 
 		pingInterval = setInterval(() => {
-			const ms = Date.now()
-			socket.emit('ping', ms)
+			pingInit = Date.now()
+			socket.emit('ping', pingInit)
 		}, 2000);
 
 	}
@@ -71,14 +74,12 @@ const TwitchChat = () => {
 	useEffect(()=>{
 
 		// CHECK PING ON LOADPAGE
-		const ms = Date.now()
-		socket.emit('ping', ms)
+		pingInit = Date.now()
+		socket.emit('ping', pingInit)
 		//
 
 		socket.on('pong', (ping)=>{
-			// if(ping > 0){
-				setPing(ping)
-			// }
+			setPing(ping - pingInit)
 		})
 		return ()=>{
 			socket.off('pong')

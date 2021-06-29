@@ -32,7 +32,7 @@ const useStyles = makeStyles({
 
 const TwitchChat = () => {
 	
-	const [ping, setPing] = useState(null);
+	const [ping, setPing] = useState(0);
 
 	const classes = useStyles()
 

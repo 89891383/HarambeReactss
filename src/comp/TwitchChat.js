@@ -71,6 +71,14 @@ const TwitchChat = () => {
 	}
 
 	useEffect(()=>{
+
+		// CHECK PING ON LOADPAGE
+		const date = new Date()
+		const ms = date.getUTCMilliseconds()
+		socket.emit('ping', ms)
+		//
+
+
 		socket.on('pong', (ping)=>{
 			if(ping > 0){
 				setPing(ping)

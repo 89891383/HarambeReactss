@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React, { useCallback, useContext } from "react";
 import { useEffect, useState, useRef } from "react";
 import ReactPlayer from "react-player/lazy";
 import { CSSTransition } from "react-transition-group";
 import { DataContext } from "../../App";
 import CustomPlayer from "./CustomPlayer";
 import "./PlayerAndChat.css";
-import {useIdle} from 'react-use';
+import { useIdle } from 'react-use';
 import AlternativePlayer from "./AlternativePlayer";
 
 
@@ -268,6 +268,30 @@ const PlayerAndChat = () => {
 		}
 	}
 
+
+	const secondsForward = useCallback((e) =>{
+		if(!admin || !currentVideoLink) return false
+		if(e.which === 39){
+			socket.emit('secondsForward')
+		}
+	},[admin,socket,currentVideoLink])
+	const secondsBackward = useCallback((e) =>{
+		if(!admin || !currentVideoLink) return false
+		if(e.which === 37){
+			socket.emit('secondsBackward')
+		}
+	},[admin,socket,currentVideoLink])
+
+	useEffect(()=>{
+		document.addEventListener('keydown', secondsForward)
+		document.addEventListener('keydown', secondsBackward)
+
+		return ()=>{
+			document.removeEventListener('keydown', secondsForward)
+			document.removeEventListener('keydown', secondsBackward)
+		}
+
+	},[secondsForward,secondsBackward])
 
 
 

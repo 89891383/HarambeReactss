@@ -3,9 +3,23 @@ import { DataContext } from "../../App";
 import React from "react";
 import Popout from "../Popout";
 import HistoryItem from "./HistoryItem";
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress, IconButton, makeStyles, Tooltip } from "@material-ui/core";
+import DeleteIcon from '@material-ui/icons/Delete';
+
+const useStyles = makeStyles({
+	clearHistory:{
+		color:'white',
+		position:'absolute',
+		right:'2%',
+		top:'2%',
+	}
+})
+
 const HistoryDialog = () => {
-	const { isHistoryOpen, setIsHistoryOpen, socket } = useContext(DataContext);
+
+	const classes = useStyles()
+
+	const { isHistoryOpen, setIsHistoryOpen, socket,admin } = useContext(DataContext);
 	const [history, setHistory] = useState(null);
 	useEffect(() => {
 		if (isHistoryOpen) {
@@ -32,6 +46,11 @@ const HistoryDialog = () => {
 		);
 	});
 
+	const handleClearHistory = () =>{
+		if(!admin) return false
+		socket.emit('clearHistory')
+	}
+
 	const checkIsEmpty = createHistory?.length ? (
 		createHistory
 	) : (
@@ -41,6 +60,17 @@ const HistoryDialog = () => {
 	return (
 		<Popout state={isHistoryOpen} setState={setIsHistoryOpen}>
 			<div className="historyContainer">
+
+				{admin && 
+					<IconButton 
+						className={classes.clearHistory} 
+						onClick={handleClearHistory} >
+							<Tooltip title={'Clear history'} enterDelay={0}>
+								<DeleteIcon/>
+							</Tooltip>
+					</IconButton>}
+
+
 				<h2>Last played:</h2>
 				{createHistory ? checkIsEmpty : <CircularProgress />}
 			</div>

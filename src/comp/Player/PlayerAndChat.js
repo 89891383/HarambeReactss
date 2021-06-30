@@ -44,6 +44,7 @@ const PlayerAndChat = () => {
 	const [playbackRate, setPlaybackRate] = useState(1);
 	const [isLoading, setIsLoading] = useState(false);
 	const [videoProgress, setVideoProgress] = useState(null);
+	const [isLive, setIsLive] = useState(false);
 	// const [setNativePlayer, nativePlayer] = useState(false)
 	const player = useRef(null);
 	const maxDelayLive = 6;
@@ -153,6 +154,7 @@ const PlayerAndChat = () => {
 			setDuration(0)
 			setProgress(0)
 			setIsLoading(true)
+			setIsLive(false)
 			setCurrentVideoLink(currentVideoLink);
 			setVideoQueue(queue);
 			if (title) {
@@ -261,9 +263,17 @@ const PlayerAndChat = () => {
 		const {playedSeconds, played} = videoProgress
 		if(playedSeconds && played){
 			const liveDuration  = Math.floor(playedSeconds/played)
-			if(duration - 2 > liveDuration || duration + 2 < liveDuration){
-				setDuration(liveDuration)
-				synchronizeVideo(player, liveDuration - 3)
+			if(liveDuration !== duration){
+				if(duration - 2 > liveDuration || duration + 2 < liveDuration){
+					setDuration(liveDuration)
+					synchronizeVideo(player, liveDuration - 3)
+
+					if(!isLive){
+						setIsLive(true)
+					}
+
+
+				}
 			}
 		}
 	}
@@ -344,6 +354,7 @@ const PlayerAndChat = () => {
 								playbackRate={playbackRate}
 								playerWrapperRef={playerWrapperRef}
 								isLoading={isLoading}
+								isLive={isLive}
 								/>
 						</CSSTransition>
 				</div>

@@ -64,7 +64,7 @@ const useStyles = makeStyles({
 // document.addEventListener('fullscreenchange', ()=> console.log('test2')) 
 
 
-const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volume,playbackRate,playerWrapperRef,isLoading, videoProgress}) => {
+const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volume,playbackRate,playerWrapperRef,isLoading, videoProgress, isLive}) => {
 
     const { admin,socket,nickname,hiddenChat, setHiddenChat,videoTitle,setVideoTitle,currentVideoLink } = useContext(DataContext)
 
@@ -312,7 +312,9 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
                     <div className="durationBar">
                             {`${currentTime.hours}:${currentTime.minutes}:${currentTime.seconds} `}
                                     /
-                            {` ${hours}:${minutes}:${seconds}`}
+                            {isLive ? <span className='live'>LIVE</span> 
+                            : 
+                            ` ${hours}:${minutes}:${seconds}`}
 
                     </div>      
                     

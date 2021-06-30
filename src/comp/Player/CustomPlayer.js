@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import "./CustomPlayer.css"
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
@@ -61,6 +61,9 @@ const useStyles = makeStyles({
 
 
 
+// document.addEventListener('fullscreenchange', ()=> console.log('test2')) 
+
+
 const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volume,playbackRate,playerWrapperRef,isLoading, videoProgress}) => {
 
     const { admin,socket,nickname,hiddenChat, setHiddenChat,videoTitle,setVideoTitle,currentVideoLink } = useContext(DataContext)
@@ -103,6 +106,8 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
             }
 
     }
+
+
 
     useEffect(()=>{
         socket.on('secondsSkipAnswer', ({type})=>{
@@ -170,9 +175,22 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
 
 
     const handleFullScreen = () =>{
-        playerWrapperRef.current.classList.toggle('fullscreenPlayer')
         screenfull.toggle()
     }
+
+
+    const EscCloseFullScreen = useCallback((e) =>{
+         playerWrapperRef.current.classList.toggle('fullscreenPlayer')
+    },[playerWrapperRef])
+
+    useEffect(()=>{
+        document.addEventListener('fullscreenchange', EscCloseFullScreen )
+
+        return () =>{
+        document.removeEventListener('fullscreenchange',EscCloseFullScreen )
+        }
+    },[EscCloseFullScreen])
+
 
 
     const progressRef = useRef(null)

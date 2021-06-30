@@ -45,7 +45,6 @@ const PlayerAndChat = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [videoProgress, setVideoProgress] = useState(null);
 	const [isLive, setIsLive] = useState(false);
-	// const [setNativePlayer, nativePlayer] = useState(false)
 	const player = useRef(null);
 	const maxDelayLive = 6;
 	// CHAT LINK
@@ -258,21 +257,19 @@ const PlayerAndChat = () => {
 		}
 	}
 
-	const setLiveDuration = () =>{
-		if(!videoProgress) return false
-		const {playedSeconds, played} = videoProgress
+	const setLiveDuration = (currentProgress) =>{
+
+		if(!currentProgress) return false
+		const {playedSeconds, played} = currentProgress
 		if(playedSeconds && played){
 			const liveDuration  = Math.floor(playedSeconds/played)
-			if(liveDuration !== duration){
+			if(liveDuration !== duration ){
 				if(duration - 2 > liveDuration || duration + 2 < liveDuration){
 					setDuration(liveDuration)
 					synchronizeVideo(player, liveDuration - 3)
-
 					if(!isLive){
 						setIsLive(true)
 					}
-
-
 				}
 			}
 		}
@@ -320,7 +317,7 @@ const PlayerAndChat = () => {
 							onProgress={(e)=>{
 								if(videoProgress !== e){
 									setVideoProgress(e)
-									setLiveDuration()
+									setLiveDuration(e)
 								}
 								setProgress(e.playedSeconds)}}
 							playing={isPlaying}

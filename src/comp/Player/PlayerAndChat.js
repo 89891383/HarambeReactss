@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import ReactPlayer from "react-player/lazy";
 import { CSSTransition } from "react-transition-group";
 import { DataContext } from "../../App";
-import CustomPlayer from "./CustomPlayer";
+import CustomPlayer from "./CustomPlayer/CustomPlayer";
 import "./PlayerAndChat.css";
 import { useIdle } from 'react-use';
 import AlternativePlayer from "./AlternativePlayer";

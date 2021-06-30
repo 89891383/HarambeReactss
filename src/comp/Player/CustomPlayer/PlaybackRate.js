@@ -2,7 +2,7 @@ import { IconButton, makeStyles } from '@material-ui/core';
 import TimerIcon from '@material-ui/icons/Timer';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import { DataContext } from '../../App';
+import { DataContext } from '../../../App';
 import { useClickAway } from 'react-use'
 
 const useStyles = makeStyles({

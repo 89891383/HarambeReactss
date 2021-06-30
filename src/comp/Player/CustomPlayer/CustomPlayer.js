@@ -7,16 +7,16 @@ import ShowChat from '@material-ui/icons/VisibilityOff';
 import HideChat from '@material-ui/icons/Visibility';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import { useContext } from 'react';
-import { DataContext } from '../../App';
+import { DataContext } from '../../../App';
 import { useRef } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import ShowTime from './ShowTime';
 import Volume from './Volume';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import PlaybackRate from './PlaybackRate';
 import Forward5Icon from '@material-ui/icons/Forward5';
 import Replay5Icon from '@material-ui/icons/Replay5';
+import ProgressBar from './ProgressBar';
 
 const screenfull = require('screenfull');
 
@@ -259,31 +259,17 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
 
 
 
-                    <div className="progressBar" ref={progressRef} >
-                        
-                       
-                        {isTimeShow && <ShowTime time={timeToShow} />}
-                        
-                     
-                        <div 
-                            className="currentProgress" 
-                            style={{width:`${currentProgress < 100 ? currentProgress : 100}%`}} >
-                        </div>
-                        <div className="loadedProgress"
-                            style={{width:`${loadedSeconds < 100 ? loadedSeconds : 100}%`}}
-                        >
-                        </div>
-                        <div 
-                            className="progressBackground" 
-                            onClick={handleProgressChange}
-                            onMouseOver={handleToggleShowTimeAbove}
-                            onMouseLeave={handleToggleShowTimeAbove}
-                            onMouseMove={handleTimeToShow}
-                        ></div>
 
-                       
-                    </div>
-                
+            <ProgressBar
+            progressRef={progressRef} 
+            isTimeShow={isTimeShow} 
+            timeToShow={timeToShow} 
+            isLive={isLive} 
+            currentProgress={currentProgress} 
+            loadedSeconds={loadedSeconds} 
+            handleProgressChange={handleProgressChange} handleToggleShowTimeAbove={handleToggleShowTimeAbove} handleTimeToShow={handleTimeToShow}
+            />
+                    
 
 
                 <div className="lowerControls" >

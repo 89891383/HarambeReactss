@@ -30,7 +30,8 @@ const PlayerAndChat = () => {
 		setIsSuccess,
 		setSuccessMessage,
 		iFrame, 
-		setiFrame
+		setiFrame,
+		setIsAppLoaded
 	} = useContext(DataContext);
 
 
@@ -102,7 +103,8 @@ const PlayerAndChat = () => {
 				isPlaylistOpen,
 				isPlaying,
 				playbackRate,
-				iframe
+				iframe,
+				isLive,
 			}) => {
 				if (isAdmin) {
 					setAdmin(isAdmin);
@@ -114,6 +116,7 @@ const PlayerAndChat = () => {
 				setIsServerTime(isServerTime);
 				setIsPlaylistOpen(isPlaylistOpen);
 				setIsPlaying(isPlaying)
+				setIsLive(isLive)
 				if (title) {
 					setVideoTitle(title);
 					document.title = title;
@@ -269,6 +272,7 @@ const PlayerAndChat = () => {
 					synchronizeVideo(player, liveDuration - 3)
 					if(!isLive){
 						setIsLive(true)
+						socket.emit('liveVideo')
 					}
 				}
 			}

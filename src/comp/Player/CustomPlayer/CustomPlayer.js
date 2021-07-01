@@ -226,6 +226,12 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
 		}
 	};
 
+
+    const timer = isLive ? 
+    <span className='live'>LIVE</span> 
+    : 
+    `${currentTime.hours}:${currentTime.minutes}:${currentTime.seconds} / ${hours}:${minutes}:${seconds}`
+
     return ( 
         <div className="customPlayer" onClick={handlePlayScreen}>
 
@@ -296,12 +302,7 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
                     <Volume setVolume={setVolume} volume={volume} />
 
                     <div className="durationBar">
-                            {`${currentTime.hours}:${currentTime.minutes}:${currentTime.seconds} `}
-                                    /
-                            {isLive ? <span className='live'>LIVE</span> 
-                            : 
-                            ` ${hours}:${minutes}:${seconds}`}
-
+                            {timer}
                     </div>      
                     
 

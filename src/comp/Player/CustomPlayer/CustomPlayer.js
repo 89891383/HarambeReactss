@@ -310,7 +310,7 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
 
                     <div className="fullScreen">
 
-                        {!isLive && <LiveButton/>}
+                        {!isLive && admin && <LiveButton/>}
 
                         <PlaybackRate playbackRate={playbackRate} />
 

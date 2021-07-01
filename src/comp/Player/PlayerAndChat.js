@@ -31,7 +31,6 @@ const PlayerAndChat = () => {
 		setSuccessMessage,
 		iFrame, 
 		setiFrame,
-		setIsAppLoaded
 	} = useContext(DataContext);
 
 
@@ -204,6 +203,11 @@ const PlayerAndChat = () => {
 			setiFrame(iFrameAnswer)
 		})
 
+		socket.on('liveVideoAnswer', ()=>{
+			setIsLive(true)
+			console.log('LIVE VIDEO SET');
+		})
+
 
 		return () => {
 			socket.off(`joinRoomAnswer`);
@@ -219,6 +223,7 @@ const PlayerAndChat = () => {
 			socket.off('playbackRateAnswer')	
 			socket.off('iFrameToggleAnswer')
 			socket.off('queueMoveUpAnswer')	
+			socket.off('liveVideoAnswer')	
 		};
 		// eslint-disable-next-line
 	}, [currentRoom, admin, socket, maxDelay, nickname]);
@@ -227,6 +232,10 @@ const PlayerAndChat = () => {
 	const videoDuration = (duration) => {
 		socket.emit("videoDuration", { duration });
 		setDuration(duration)
+		if(duration === Infinity && !isLive){
+			setIsLive(true)
+			socket.emit('liveVideo')
+		}
 	};
 
 

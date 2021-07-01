@@ -17,6 +17,7 @@ import PlaybackRate from './PlaybackRate';
 import Forward5Icon from '@material-ui/icons/Forward5';
 import Replay5Icon from '@material-ui/icons/Replay5';
 import ProgressBar from './ProgressBar';
+import LiveButton from './LiveButton';
 
 const screenfull = require('screenfull');
 
@@ -308,6 +309,9 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
 
 
                     <div className="fullScreen">
+
+                        {!isLive && <LiveButton/>}
+
                         <PlaybackRate playbackRate={playbackRate} />
 
                         <IconButton className={classes.playButton} onClick={handleFullScreen}>

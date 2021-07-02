@@ -1,5 +1,5 @@
 import React, { useCallback, useContext } from "react";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 import ReactPlayer from "react-player/lazy";
 import { CSSTransition } from "react-transition-group";
 import { DataContext } from "../../App";
@@ -7,44 +7,23 @@ import CustomPlayer from "./CustomPlayer/CustomPlayer";
 import "./PlayerAndChat.css";
 import { useIdle } from 'react-use';
 import AlternativePlayer from "./AlternativePlayer";
+import { useDispatch, useSelector } from "react-redux";
+import { changeiFrame, changeIsLoading, changeOnlineUsers, changePlaybackRate, changePlaying, changeServerTime, isLiveToggle, joinRoomAnswer, onProgress, playlistToggle, queueDelete, queueMoveUpAnswer, queueUpdate, setAreControls, setDuration, successMessage, videoChangeAnswer, warningMessage } from "../../redux/playerState";
 
 
 const PlayerAndChat = () => {
 
+	const { isPlaying, iFrame, currentVideoLink, admin, playbackRate, isLive, areControls, duration, videoProgress, volume,nickname, maxDelay} = useSelector(state => state.player)
+
+	const dispatch = useDispatch()
+
 	const currentRoom = "main";
 	const {
-		admin,
-		setCurrentVideoLink,
-		currentVideoLink,
 		socket,
-		setAdmin,
-		setVideoQueue,
-		maxDelay,
-		nickname,
-		setIsWarning,
-		setWarningMessage,
-		setOnlineUsers,
-		setIsServerTime,
-		setVideoTitle,
-		setIsPlaylistOpen,
-		setIsSuccess,
-		setSuccessMessage,
-		iFrame, 
-		setiFrame,
 	} = useContext(DataContext);
 
 
 	const playerWrapperRef = useRef(null)
-
-	const [isPlaying, setIsPlaying] = useState(false);
-	const [progress, setProgress] = useState(0);
-	const [duration, setDuration] = useState(0);
-	const [volume, setVolume] = useState(0.1);
-	const [areControls, setAreControls] = useState(false);
-	const [playbackRate, setPlaybackRate] = useState(1);
-	const [isLoading, setIsLoading] = useState(false);
-	const [videoProgress, setVideoProgress] = useState(null);
-	const [isLive, setIsLive] = useState(false);
 	const player = useRef(null);
 	const maxDelayLive = 6;
 	// CHAT LINK
@@ -88,41 +67,15 @@ const PlayerAndChat = () => {
 	// SOCKETS LISTENERS FOR USERS ONLY
 	useEffect(() => {
 		socket.on("onlineUsersAnswer", ({ onlineUsers }) => {
-			setOnlineUsers(onlineUsers);
+			dispatch(changeOnlineUsers(onlineUsers))
 		});
 
 		socket.on(
 			"joinRoomAnswer",
-			({
-				currentVideo,
-				queue,
-				title,
-				isAdmin,
-				isServerTime,
-				isPlaylistOpen,
-				isPlaying,
-				playbackRate,
-				iframe,
-				isLive,
-			}) => {
-				if (isAdmin) {
-					setAdmin(isAdmin);
-				}
-				setiFrame(iframe)
-				setPlaybackRate(playbackRate)
-				setCurrentVideoLink(currentVideo);
-				setVideoQueue(queue);
-				setIsServerTime(isServerTime);
-				setIsPlaylistOpen(isPlaylistOpen);
-				setIsPlaying(isPlaying)
-				setIsLive(isLive)
-				if (title) {
-					setVideoTitle(title);
-					document.title = title;
-				} else {
-					setVideoTitle(null);
-					document.title = "Legga";
-				}
+			(serverAnswer) => {
+
+				dispatch(joinRoomAnswer(serverAnswer))
+
 			}
 		);
 
@@ -131,7 +84,7 @@ const PlayerAndChat = () => {
 				synchronizeVideo(player, currentSeconds);
 			});
 			socket.on("isPlayingAnswer", ({ isPlaying }) => {
-				setIsPlaying(isPlaying);
+				dispatch(changePlaying(isPlaying))
 			});
 		
 
@@ -141,71 +94,46 @@ const PlayerAndChat = () => {
 
 		socket.on('serverTimeToggleAnswer', ({isServerTime, message})=>{
 			if(isServerTime){
-				setIsSuccess(true)
-				setSuccessMessage(message)
+				dispatch(successMessage(message))
 			}else{
-				setIsWarning(true)
-				setWarningMessage(message)
+				dispatch(warningMessage(message))
 			}
-			setIsServerTime(isServerTime)
+			dispatch(changeServerTime(isServerTime))
 
 		})
 
-		socket.on("videoChangeAnswer", ({ currentVideoLink, queue, title }) => {
-			setDuration(0)
-			setProgress(0)
-			setIsLoading(true)
-			setIsLive(false)
-			setCurrentVideoLink(currentVideoLink);
-			setVideoQueue(queue);
-			if (title) {
-				setVideoTitle(title);
-				document.title = title;
-			} else {
-				setVideoTitle(null);
-				document.title = "Legga";
-			}
+		socket.on("videoChangeAnswer", (answer) => {
+			dispatch(videoChangeAnswer(answer))
 		});
 
 		socket.on("queueUpdateAnswer", (serverQueueUpdate) => {
-			setVideoQueue((prev) => [...prev, serverQueueUpdate]);
+			dispatch(queueUpdate(serverQueueUpdate))
 		});
 
 		socket.on('queueMoveUpAnswer', (queueAnswer)=>{
-			setVideoQueue(queueAnswer)
+			dispatch(queueMoveUpAnswer(queueAnswer))
 		})
 
 		socket.on("queueDeleteAnswer", (URLToDelete) => {
-			setVideoQueue((prev) => {
-				let newQueue = prev.filter((video) => video.URL !== URLToDelete);
-				return newQueue;
-			});
+			dispatch(queueDelete(URLToDelete))
 		});
 
 		socket.on("playlistToggleAnswer", ({ isOpen }) => {
-			setIsPlaylistOpen(isOpen);
-			if (isOpen) {
-				setIsSuccess(true);
-				setSuccessMessage("PLAYLIST IS NOW OPEN");
-			} else {
-				setIsWarning(true);
-				setWarningMessage("PLAYLIST IS NOW CLOSED");
-			}
+			dispatch(playlistToggle(isOpen))
 		});
 
 		
 		socket.on('playbackRateAnswer', (answer)=>{
-				setPlaybackRate(answer)
+			dispatch(changePlaybackRate(answer))
 		})
 
 
 		socket.on('iFrameToggleAnswer', ({iFrameAnswer})=>{
-			setiFrame(iFrameAnswer)
+			dispatch(changeiFrame(iFrameAnswer))
 		})
 
 		socket.on('liveVideoAnswer', ()=>{
-			setIsLive(true)
-			console.log('LIVE VIDEO SET');
+			dispatch(isLiveToggle(true))
 		})
 
 
@@ -224,6 +152,7 @@ const PlayerAndChat = () => {
 			socket.off('iFrameToggleAnswer')
 			socket.off('queueMoveUpAnswer')	
 			socket.off('liveVideoAnswer')	
+			socket.off('serverTimeToggleAnswer')
 		};
 		// eslint-disable-next-line
 	}, [currentRoom, admin, socket, maxDelay, nickname]);
@@ -231,9 +160,9 @@ const PlayerAndChat = () => {
 
 	const videoDuration = (duration) => {
 		socket.emit("videoDuration", { duration });
-		setDuration(duration)
+		dispatch(setDuration(duration))
 		if(duration === Infinity && !isLive){
-			setIsLive(true)
+			dispatch(isLiveToggle(true))
 			socket.emit('liveVideo')
 		}
 	};
@@ -244,7 +173,7 @@ const PlayerAndChat = () => {
 
 	useEffect(()=>{
 		if(isIdle && areControls){
-			setAreControls(false)
+			dispatch(setAreControls(false))
 			const customPlayer = document.querySelector('.customPlayer')
 			if(customPlayer){
 				customPlayer.style.cursor = 'none'
@@ -261,11 +190,11 @@ const PlayerAndChat = () => {
 		if(customPlayer){
 			customPlayer.style.cursor = 'initial'
 		}
-		setAreControls(true)
+		dispatch(setAreControls(true))
 	}
 	const handleHideControls = () =>{
 		if(areControls){
-			setAreControls(false)
+			dispatch(setAreControls(false))
 		}
 	}
 
@@ -277,10 +206,10 @@ const PlayerAndChat = () => {
 			const liveDuration  = Math.floor(playedSeconds/played)
 			if(liveDuration !== duration ){
 				if(duration - 2 > liveDuration || duration + 2 < liveDuration){
-					setDuration(liveDuration)
+					dispatch(setDuration(liveDuration))
 					synchronizeVideo(player, liveDuration - 3)
 					if(!isLive){
-						setIsLive(true)
+						dispatch(isLiveToggle(true))
 						socket.emit('liveVideo')
 					}
 				}
@@ -313,8 +242,7 @@ const PlayerAndChat = () => {
 
 	},[secondsForward,secondsBackward])
 
-
-
+	
 
 	return (
 		<>
@@ -329,10 +257,10 @@ const PlayerAndChat = () => {
 							onDuration={videoDuration}
 							onProgress={(e)=>{
 								if(videoProgress !== e){
-									setVideoProgress(e)
-									setLiveDuration(e)
+									setLiveDuration(e) // FUNCTION
 								}
-								setProgress(e.playedSeconds)}}
+								dispatch(onProgress(e))
+							}}
 							playing={isPlaying}
 							className="react-player"
 							url={currentVideoLink}
@@ -342,9 +270,9 @@ const PlayerAndChat = () => {
 							muted={false}
 							volume={volume}
 							playbackRate={playbackRate}
-							onReady={()=>setIsLoading(false)}
-							onBuffer={()=>setIsLoading(true)}
-							onBufferEnd={()=> setIsLoading(false)}
+							onReady={()=>dispatch(changeIsLoading(false))}
+							onBuffer={()=>dispatch(changeIsLoading(true))}
+							onBufferEnd={()=> dispatch(changeIsLoading(false))}
 						/>
 				
 					<CSSTransition 
@@ -353,18 +281,8 @@ const PlayerAndChat = () => {
 							timeout={200} 
 							classNames='controls'>
 							<CustomPlayer
-								player={player}
-								setIsPlaying={setIsPlaying}
-								isPlaying={isPlaying}
-								progress={progress} 
-								duration={duration} 
-								setVolume={setVolume}
-								videoProgress={videoProgress}
-								volume={volume}
-								playbackRate={playbackRate}
 								playerWrapperRef={playerWrapperRef}
-								isLoading={isLoading}
-								isLive={isLive}
+							
 								/>
 						</CSSTransition>
 				</div>

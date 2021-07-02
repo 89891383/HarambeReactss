@@ -2,8 +2,8 @@ import React from "react";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { makeStyles } from "@material-ui/core/styles";
-import { DataContext } from "../../App";
-import { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { changeIsWarning } from "../../redux/playerState";
 
 function Alert(props) {
 	return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -19,14 +19,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CustomizedSnackbars() {
-	const { isWarning, setIsWarning, warningMessage } = useContext(DataContext);
+
+	const { isWarning, warningMessage } = useSelector(state=> state.player);
 	const classes = useStyles();
+
+	const dispatch = useDispatch()
 
 	const handleClose = (event, reason) => {
 		if (reason === "clickaway") {
 			return;
 		}
-		setIsWarning(false);
+		dispatch(changeIsWarning(false))
 	};
 
 	return (

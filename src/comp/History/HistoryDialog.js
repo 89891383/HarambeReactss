@@ -5,6 +5,8 @@ import Popout from "../Popout";
 import HistoryItem from "./HistoryItem";
 import { CircularProgress, IconButton, makeStyles, Tooltip } from "@material-ui/core";
 import DeleteIcon from '@material-ui/icons/Delete';
+import { useDispatch, useSelector } from "react-redux";
+import { historyOpenToggle } from "../../redux/playerState";
 
 const useStyles = makeStyles({
 	clearHistory:{
@@ -19,7 +21,12 @@ const HistoryDialog = () => {
 
 	const classes = useStyles()
 
-	const { isHistoryOpen, setIsHistoryOpen, socket,admin } = useContext(DataContext);
+	const dispatch = useDispatch()
+
+	const { admin, isHistoryOpen } = useSelector(state=> state.player)
+
+	const {  socket } = useContext(DataContext);
+
 	const [history, setHistory] = useState(null);
 	useEffect(() => {
 		if (isHistoryOpen) {
@@ -58,7 +65,7 @@ const HistoryDialog = () => {
 	);
 
 	return (
-		<Popout state={isHistoryOpen} setState={setIsHistoryOpen}>
+		<Popout state={isHistoryOpen} setState={()=> dispatch(historyOpenToggle())}>
 			<div className="historyContainer">
 
 				{admin && 

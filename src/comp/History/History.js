@@ -2,8 +2,8 @@ import React from "react";
 import "./History.css";
 import HistoryIcon from "@material-ui/icons/History";
 import { IconButton, makeStyles, Tooltip } from "@material-ui/core";
-import { useContext } from "react";
-import { DataContext } from "../../App";
+import { useDispatch } from "react-redux";
+import { historyOpenToggle } from "../../redux/playerState";
 
 const useStyles = makeStyles({
 	historyBtn: {
@@ -14,10 +14,10 @@ const useStyles = makeStyles({
 const History = () => {
 	const classes = useStyles();
 
-	const { setIsHistoryOpen } = useContext(DataContext);
+	const dispatch = useDispatch()
 
 	const handleToggleHistory = () => {
-		setIsHistoryOpen((prev) => !prev);
+		dispatch(historyOpenToggle())
 	};
 
 	return (

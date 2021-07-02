@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import io from "socket.io-client";
 import "./App.css";
@@ -7,13 +7,15 @@ import PlayerAndChat from "./comp/Player/PlayerAndChat";
 import Success from "./comp/Snackbars/Success";
 import Error from "./comp/Snackbars/Error";
 import Warning from "./comp/Snackbars/Warning";
-import { useMemo } from "react";
 import TwitchChat from "./comp/TwitchChat";
 import Options from "./comp/AdminPanel/Options/Options";
 import OptionsDialog from "./comp/AdminPanel/Options/OptionsDialog";
 import Profile from "./comp/Profile/Profile";
 import History from "./comp/History/History";
 import HistoryDialog from "./comp/History/HistoryDialog";
+import {  useDispatch, useSelector } from 'react-redux'
+
+import { changeNickname, errorMessage, setTwitchUserData, successMessage, warningMessage } from "./redux/playerState";
 export const DataContext = React.createContext();
 
 const socket = io(`/`);
@@ -21,35 +23,14 @@ const socket = io(`/`);
 
 const App = () => {
 	const history = useHistory();
-	const [admin, setAdmin] = useState(false);
-	const [currentVideoLink, setCurrentVideoLink] = useState("");
-	const [videoQueue, setVideoQueue] = useState([]);
-	const [maxDelay, setMaxDelay] = useState(2);
-	const [twitchUserData, setTwitchUserData] = useState(null);
-	const [isError, setIsError] = useState(false);
-	const [errorMessage, setErrorMessage] = useState("");
-	const [isSuccess, setIsSuccess] = useState(false);
-	const [successMessage, setSuccessMessage] = useState("");
-	const [isWarning, setIsWarning] = useState(false);
-	const [warningMessage, setWarningMessage] = useState("");
-	const [onlineUsers, setOnlineUsers] = useState(null);
-	const [isDialogOpen, setIsDialogOpen] = useState(false);
-	const [isServerTime, setIsServerTime] = useState(false);
-	const [videoTitle, setVideoTitle] = useState(null);
-	const [isPlaylistOpen, setIsPlaylistOpen] = useState(false);
-	const [isHistoryOpen, setIsHistoryOpen] = useState(false);
-	const [hiddenChat, setHiddenChat] = useState(false);
-	const [iFrame, setiFrame] = useState(false);
+
+	const { twitchUserData,admin, hiddenChat } = useSelector(state => state.player)
+
+	const dispatch = useDispatch()
 
 
-
-
-	const twitchStreamer = "main";
+	// const twitchStreamer = "main";
 	const websiteURL = window.location.origin;
-
-	let nickname = useMemo(() => {
-		return twitchUserData?.login.toLowerCase();
-	}, [twitchUserData]);
 
 	// APP, ADMINPANEL, PLAYERANDCHAT, PACKAGE.JSON
 
@@ -58,84 +39,39 @@ const App = () => {
 			.then((res) => res.json())
 			.then((res) => {
 				if (res.profile) {
-					setTwitchUserData(res.profile);
+					dispatch(setTwitchUserData(res.profile))
+					dispatch(changeNickname(res.profile.login.toLowerCase()))
 				}
 			});
-	}, []);
+	}, [dispatch]);
 
 
 
 
 	useEffect(() => {
 		socket.on("success", ({ message }) => {
-			setSuccessMessage(message);
-			setIsSuccess(true);
+			dispatch(successMessage(message))
 		});
 		socket.on("error", ({ message }) => {
-			setIsError(true);
-			setErrorMessage(message);
+			dispatch(errorMessage(message))
 		});
 		socket.on('warning', ({message})=>{
-			setIsWarning(true)
-			setWarningMessage(message)
+			dispatch(warningMessage(message))
 		})
 		return () => {
 			socket.off("success");
 			socket.off("error");
 			socket.off('warning')
 		};
-	}, []);
+	}, [dispatch]);
 
-
-	
 
 	return (
-		<>
 			<DataContext.Provider
 				value={{
-					websiteURL,
-					twitchUserData,
-					admin,
-					setAdmin,
+					websiteURL,		
 					socket,
-					currentVideoLink,
-					setCurrentVideoLink,
 					history,
-					videoQueue,
-					setVideoQueue,
-					maxDelay,
-					setMaxDelay,
-					nickname,
-					isError,
-					setIsError,
-					errorMessage,
-					setErrorMessage,
-					isSuccess,
-					setIsSuccess,
-					successMessage,
-					setSuccessMessage,
-					isWarning,
-					setIsWarning,
-					warningMessage,
-					setWarningMessage,
-					twitchStreamer,
-					onlineUsers,
-					setOnlineUsers,
-					isDialogOpen,
-					setIsDialogOpen,
-					isServerTime,
-					setIsServerTime,
-					videoTitle,
-					setVideoTitle,
-					isPlaylistOpen,
-					setIsPlaylistOpen,
-					isHistoryOpen,
-					setIsHistoryOpen,
-					hiddenChat,
-					setHiddenChat,
-					iFrame, 
-					setiFrame,
-
 				}}
 			>
 				<div className="app">
@@ -151,15 +87,13 @@ const App = () => {
 						</div>
 					</div>
 					<HistoryDialog />
-				{!hiddenChat && <TwitchChat />}	
+					{!hiddenChat && <TwitchChat />}	
 					<OptionsDialog />
 				</div>
 				<Success />
 				<Error />
 				<Warning />
 			</DataContext.Provider>
-
-		</>
 	);
 };
 

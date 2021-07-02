@@ -18,6 +18,8 @@ import Forward5Icon from '@material-ui/icons/Forward5';
 import Replay5Icon from '@material-ui/icons/Replay5';
 import ProgressBar from './ProgressBar';
 import LiveButton from './LiveButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeVideoTitle, hiddenChatToggle, togglePlaying } from '../../../redux/playerState';
 
 const screenfull = require('screenfull');
 
@@ -65,9 +67,13 @@ const useStyles = makeStyles({
 // document.addEventListener('fullscreenchange', ()=> console.log('test2')) 
 
 
-const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volume,playbackRate,playerWrapperRef,isLoading, videoProgress, isLive}) => {
+const CustomPlayer = ({playerWrapperRef}) => {
 
-    const { admin,socket,nickname,hiddenChat, setHiddenChat,videoTitle,setVideoTitle,currentVideoLink } = useContext(DataContext)
+    const {isLive, isPlaying, progress, duration, playbackRate, isLoading, videoProgress, admin ,hiddenChat, videoTitle, currentVideoLink,nickname} = useSelector(state=> state.player)
+
+    const dispatch = useDispatch()
+
+    const { socket } = useContext(DataContext)
 
     const classes = useStyles()
 
@@ -126,14 +132,15 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
     useEffect(()=>{
         socket.on('canPlayAnswer', (answer)=>{
             if(answer){
-                setIsPlaying(prev=> !prev)
+                dispatch(togglePlaying())
+                // setIsPlaying(prev=> !prev)
             }
         })
 
         return () =>{
             socket.off('canPlayAnswer')
         }
-    },[setIsPlaying, socket])
+    },[dispatch, socket])
 
 
     useEffect(()=>{
@@ -166,11 +173,11 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
            fetch(`https://noembed.com/embed?url=${currentVideoLink}`)
 			.then((res) => res.json())
 			.then((res) => {
-				setVideoTitle(res.title)
+                dispatch(changeVideoTitle(res.title))
 			});
         }
 		
-	}, [setVideoTitle,currentVideoLink, videoTitle]);
+	}, [dispatch,currentVideoLink, videoTitle]);
 
 
 
@@ -217,7 +224,8 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
 
 
     const handleToggleChat = () =>{
-        setHiddenChat(prev=> !prev)
+        dispatch(hiddenChatToggle())
+        // setHiddenChat(prev=> !prev)
     }
 
     
@@ -300,7 +308,7 @@ const CustomPlayer = ({setIsPlaying,isPlaying,progress,duration, setVolume,volum
 
                     
                 
-                    <Volume setVolume={setVolume} volume={volume} />
+                    <Volume />
 
                     <div className="durationBar">
                             {timer}

@@ -9,11 +9,13 @@ import SkipButton from "./SkipButton";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
 import QueueIcon from "@material-ui/icons/Queue";
+import { useSelector } from "react-redux";
 
 const AddVideo = ({ isAddVideo, setIsAddVideo }) => {
 
+	const { admin,nickname } = useSelector(state=> state.player)
 
-	const { admin, socket, nickname } = useContext(DataContext);
+	const { socket} = useContext(DataContext);
 
 	const [editVideoLink, setEditVideoLink] = useState("");
 	const [videoTitle, setVideoTitle] = useState("");

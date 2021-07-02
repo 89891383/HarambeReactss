@@ -1,5 +1,6 @@
 import {  IconButton, makeStyles,  } from '@material-ui/core';
 import { useContext } from 'react';
+import { useSelector } from 'react-redux';
 import { DataContext } from '../../../App';
 
 const useStyles = makeStyles({
@@ -16,14 +17,15 @@ const useStyles = makeStyles({
 
 const LiveButton = () => {
 
-    const { socket,admin } = useContext(DataContext) 
+    const {admin} = useSelector(state=> state.player)
+
+    const { socket } = useContext(DataContext) 
 
     const classes = useStyles()
 
     const handleLive = () =>{
         if(admin){
             socket.emit('liveVideo')
-            console.log('emit');
         }
     }
 

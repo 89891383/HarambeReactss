@@ -6,6 +6,7 @@ import { IconButton, makeStyles, Tooltip } from "@material-ui/core";
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import "./Queue.css";
 import noImg from "./noImg.jpg";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles({
 	iconButton: {
@@ -19,7 +20,9 @@ const QueueItem = ({ item,index }) => {
 	const { URL, title, addedBy } = item;
 	const [videoData, setVideoData] = useState(null);
 
-	const { admin, socket } = useContext(DataContext);
+	const {admin} = useSelector(state=> state.player)
+
+	const { socket } = useContext(DataContext);
 
 	useEffect(() => {
 		fetch(`https://noembed.com/embed?url=${URL}`)

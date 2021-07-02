@@ -2,6 +2,8 @@ import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 import React, {useState} from 'react';
 import { IconButton, makeStyles, Slider } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeVolume } from '../../../redux/playerState';
 
 
 const useStyles = makeStyles({
@@ -18,14 +20,18 @@ const useStyles = makeStyles({
 
 let beforeMute;
 
-const Volume = ({setVolume,volume}) => {
+const Volume = () => {
+
+    const {volume} = useSelector(state=> state.player)
+
+    const dispatch = useDispatch()
 
     const [isSlider, setIsSlider] = useState(false);
 
     const classes = useStyles()
 
     const handleVolume = (e,value) =>{
-        setVolume(value)
+        dispatch(changeVolume(value))
     }
 
 
@@ -34,9 +40,9 @@ const Volume = ({setVolume,volume}) => {
  
         if(volume){
             beforeMute = volume 
-            setVolume(0)
+            dispatch(changeVolume(0))
         }else{
-            setVolume(beforeMute)
+            dispatch(changeVolume(beforeMute))
         }
     }
 

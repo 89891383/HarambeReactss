@@ -7,34 +7,27 @@ import "./Options.css";
 import Popout from "../../Popout";
 import AdminList from "./AdminList";
 import ChangeChat from "./ChangeChat";
+import { useDispatch, useSelector } from "react-redux";
+import { dialogOpenToggle } from "../../../redux/playerState";
 
 const OptionsDialog = () => {
 	const {
-		setIsDialogOpen,
-		isServerTime,
-		isDialogOpen,
-		setIsServerTime,
 		socket,
-		nickname,
-		isPlaylistOpen,
-		setIsPlaylistOpen,
-		iFrame
 	} = useContext(DataContext);
+	
+	const dispatch = useDispatch()
+
+	const {isServerTime, isDialogOpen, isPlaylistOpen, iFrame,nickname,} = useSelector(state=> state.player)
 
 	const optionsRef = useRef(null);
 
 
 	const serverTimeToggle = () => {
-		setIsServerTime((prev) => {
-			socket.emit("serverTimeToggle", { isServerTime: !prev, nickname });
-			return !prev;
-		});
+		socket.emit("serverTimeToggle", { isServerTime, nickname });
 	};
 
 	const serverPlaylistToggle = () => {
-		setIsPlaylistOpen((prev) => {
-			socket.emit("playlistToggle", { isOpen: !prev, nickname });
-		});
+		socket.emit("playlistToggle", { isOpen: !isPlaylistOpen, nickname });
 	};
 
 	const iFrameToggle = () =>{
@@ -42,7 +35,7 @@ const OptionsDialog = () => {
 	}
 
 	return (
-		<Popout state={isDialogOpen} setState={setIsDialogOpen}>
+		<Popout state={isDialogOpen} setState={()=> dispatch(dialogOpenToggle())}>
 			<div className="optionsDialog" ref={optionsRef}>
 				<OneOption checked={isServerTime} onChange={serverTimeToggle}>
 					<span>Server time </span>

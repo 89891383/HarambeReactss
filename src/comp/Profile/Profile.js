@@ -1,11 +1,11 @@
 import React from "react";
-import { useContext, useState } from "react";
-import { DataContext } from "../../App";
+import {  useState } from "react";
 import "./Profile.css";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import { makeStyles } from "@material-ui/core";
 import { CSSTransition } from "react-transition-group";
 import Button2 from "../Button";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles({
 	profileIcon: {
@@ -15,7 +15,7 @@ const useStyles = makeStyles({
 
 const Profile = () => {
 	const classes = useStyles();
-	const { twitchUserData } = useContext(DataContext);
+	const { twitchUserData } = useSelector(state=> state.player)
 	const [isHover, setIsHover] = useState(false);
 
 	const handleLogout = () => {

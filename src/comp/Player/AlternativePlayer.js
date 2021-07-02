@@ -1,12 +1,11 @@
-import { useContext } from 'react';
 import Iframe from 'react-iframe'
+import { useSelector } from 'react-redux';
 import { useCss, useIdle } from 'react-use';
-import { DataContext } from '../../App';
 
 
 const AlternativePlayer = ({currentVideoLink}) => {
 
-    const { videoTitle } = useContext(DataContext)
+    const { videoTitle } =  useSelector(state=> state.player)
 
    const iframePlayer = useCss({
             width:'100%',

@@ -6,6 +6,8 @@ import ErrorIcon from '@material-ui/icons/Error';
 import { useEffect,useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import Tooltip from '@material-ui/core/Tooltip';
+import { useDispatch, useSelector } from "react-redux";
+import { changeCurrentChat } from "../redux/playerState";
 
 let pingInterval;
 
@@ -39,26 +41,31 @@ const TwitchChat = () => {
 
 	const classes = useStyles()
 
-	const { onlineUsers,socket,isServerTime } = useContext(DataContext);
+	const dispatch = useDispatch()
+
+	const {onlineUsers, isServerTime, currentChat} = useSelector(state=> state.player)
+
+	const { socket } = useContext(DataContext);
 	let websiteURL = window.location.host; // HEROKU HOSTING
 	if (websiteURL.includes("localhost")) {
 		websiteURL = "localhost";
 	}
 
 
-	const [currentChat, setCurrentChat] = useState('victorowsky_');
+	// const [currentChat, setCurrentChat] = useState('victorowsky_');
 
 	useEffect(()=>{
 		socket.on('changeTwitchChatAnswer', (currentChatAnswer)=>{
 			if(currentChat !== currentChatAnswer ){
-				setCurrentChat(currentChatAnswer)
+				dispatch(changeCurrentChat(currentChatAnswer))
+				// setCurrentChat(currentChatAnswer)
 			}
 		})
 		socket.emit('getCurrentChat')
 		return ()=>{
 			socket.off('changeTwitchChatAnswer')
 		}
-	},[socket, currentChat])
+	},[socket, currentChat, dispatch])
 
 	const handleCheckPing = () =>{
 

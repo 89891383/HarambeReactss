@@ -2,8 +2,8 @@ import React from "react";
 import "./Options.css";
 import SettingsIcon from "@material-ui/icons/Settings";
 import { IconButton, makeStyles, Tooltip } from "@material-ui/core";
-import { DataContext } from "../../../App";
-import { useContext } from "react";
+import { useDispatch } from "react-redux";
+import { dialogOpenToggle } from "../../../redux/playerState";
 
 const useStyles = makeStyles({
 	settingsButton: {
@@ -12,10 +12,12 @@ const useStyles = makeStyles({
 });
 
 const Options = () => {
-	const { setIsDialogOpen } = useContext(DataContext);
+
+	const dispatch = useDispatch()
+
 
 	const handleToggleDialog = () => {
-		setIsDialogOpen((prev) => !prev);
+		dispatch(dialogOpenToggle())
 	};
 
 	const classes = useStyles();

@@ -1,17 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useState } from "react";
 import Button2 from "../Button";
-import { DataContext } from "../../App";
+
 import "./AdminPanel.css";
 import Queue from "../Queue/Queue";
 import AddVideo from "./AddVideo";
+import { useSelector } from "react-redux";
 
 const AdminPanel = () => {
-	const {
-		admin,
-		nickname,
-		isPlaylistOpen,
-	} = useContext(DataContext);
+
+	const {admin, nickname, isPlaylistOpen} = useSelector(state=> state.player)
+
 
 	const [isAddVideo, setIsAddVideo] = useState(false);
 

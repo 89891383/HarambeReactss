@@ -8,7 +8,7 @@ const Popout = ({ children, state, setState }) => {
 
 
 	useClickAway(popoutRef, ()=>{
-		setState(false);
+		setState(); // CLOSE
 	})
 
 	return (

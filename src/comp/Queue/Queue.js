@@ -1,9 +1,11 @@
-import React, { useContext } from "react";
-import { DataContext } from "../../App";
+import React from "react";
 import QueueItem from "./QueueItem";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { useSelector } from "react-redux";
 const Queue = () => {
-	const { videoQueue } = useContext(DataContext);
+
+	const {videoQueue} = useSelector(state=> state.player)
+
 	const queueList = videoQueue.map((item, index) => {
 		return (
 			<CSSTransition key={index} timeout={500} classNames="transition">

@@ -20,7 +20,7 @@ import ProgressBar from './ProgressBar';
 import LiveButton from './LiveButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeVideoTitle, hiddenChatToggle, togglePlaying } from '../../../redux/playerState';
-import PlayerSettings from './PlayerSettings';
+// import PlayerSettings from './PlayerSettings';
 
 const screenfull = require('screenfull');
 
@@ -151,7 +151,7 @@ const CustomPlayer = ({playerWrapperRef}) => {
 
 
     const handleProgressChange = (e) =>{
-        if(!admin || !currentVideoLink) return false
+        if(!admin || !currentVideoLink || isLive) return false
         const position = e.target.getBoundingClientRect();
         const procents =  (e.pageX - position.x)/position.width
         const time = convertSeconds(duration * procents)

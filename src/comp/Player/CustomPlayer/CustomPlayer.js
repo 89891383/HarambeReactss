@@ -20,6 +20,7 @@ import ProgressBar from './ProgressBar';
 import LiveButton from './LiveButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeVideoTitle, hiddenChatToggle, togglePlaying } from '../../../redux/playerState';
+import PlayerSettings from './PlayerSettings';
 
 const screenfull = require('screenfull');
 
@@ -133,7 +134,6 @@ const CustomPlayer = ({playerWrapperRef}) => {
         socket.on('canPlayAnswer', (answer)=>{
             if(answer){
                 dispatch(togglePlaying())
-                // setIsPlaying(prev=> !prev)
             }
         })
 
@@ -225,7 +225,6 @@ const CustomPlayer = ({playerWrapperRef}) => {
 
     const handleToggleChat = () =>{
         dispatch(hiddenChatToggle())
-        // setHiddenChat(prev=> !prev)
     }
 
     
@@ -320,7 +319,10 @@ const CustomPlayer = ({playerWrapperRef}) => {
 
                         {!isLive && admin && <LiveButton/>}
 
+
                         <PlaybackRate playbackRate={playbackRate} />
+
+                        {/* <PlayerSettings/> */}
 
                         <IconButton className={classes.playButton} onClick={handleFullScreen}>
                             <FullscreenIcon/>

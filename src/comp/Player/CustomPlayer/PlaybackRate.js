@@ -4,6 +4,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { DataContext } from '../../../App';
 import { useClickAway } from 'react-use'
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles({
     timer:{
@@ -18,7 +19,9 @@ const useStyles = makeStyles({
 
 const PlaybackRate = ({playbackRate}) => {
 
-    const {socket, admin} = useContext(DataContext)
+    const {admin} = useSelector(state=> state.player)
+
+    const {socket} = useContext(DataContext)
 
     const classes = useStyles()
 

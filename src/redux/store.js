@@ -5,5 +5,5 @@ export const store = configureStore({
   reducer: {
     player: playerReducer
   },
-  // devTools:false
+  devTools:false
 })

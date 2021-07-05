@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import "./CustomPlayer.css"
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
-import { CircularProgress, IconButton, makeStyles } from '@material-ui/core';
+import { IconButton, makeStyles } from '@material-ui/core';
 import ShowChat from '@material-ui/icons/VisibilityOff';
 import HideChat from '@material-ui/icons/Visibility';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
@@ -20,7 +20,7 @@ import ProgressBar from './ProgressBar';
 import LiveButton from './LiveButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeVideoTitle, hiddenChatToggle, togglePlaying } from '../../../redux/playerState';
-// import PlayerSettings from './PlayerSettings';
+import PlayerSettings from './PlayerSettings/PlayerSettings';
 
 const screenfull = require('screenfull');
 
@@ -65,12 +65,11 @@ const useStyles = makeStyles({
 
 
 
-// document.addEventListener('fullscreenchange', ()=> console.log('test2')) 
 
 
 const CustomPlayer = ({playerWrapperRef}) => {
 
-    const {isLive, isPlaying, progress, duration, playbackRate, isLoading, videoProgress, admin ,hiddenChat, videoTitle, currentVideoLink,nickname} = useSelector(state=> state.player)
+    const {isLive, isPlaying, progress, duration, playbackRate, videoProgress, admin ,hiddenChat, videoTitle, currentVideoLink,nickname} = useSelector(state=> state.player)
 
     const dispatch = useDispatch()
 
@@ -109,6 +108,7 @@ const CustomPlayer = ({playerWrapperRef}) => {
     const controlsRef = useRef(null)
 
     const handlePlayScreen = (e) =>{
+
             if([...e.target.classList].includes("customPlayer")){
             socket.emit('canPlay')
             }
@@ -254,9 +254,6 @@ const CustomPlayer = ({playerWrapperRef}) => {
                 </IconButton>
             </div>
 
-            {isLoading && currentVideoLink && <div className="loading">
-                <CircularProgress size={60} />
-            </div>}
 
             {secondsSkip && 
                 <div className="secondsSkip">

@@ -22,6 +22,7 @@ const socket = io(`/`);
 
 
 const App = () => {
+
 	const history = useHistory();
 
 	const { twitchUserData,admin, hiddenChat } = useSelector(state => state.player)

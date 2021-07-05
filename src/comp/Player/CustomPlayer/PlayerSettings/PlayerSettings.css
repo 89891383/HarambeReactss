@@ -1,0 +1,22 @@
+.playerSettings{
+    position: relative;
+}
+
+.playerSettingsDialog{
+    position: absolute;
+    top: 0;
+    left:0%;
+    transform:translate(-50%,-100%);
+    background-color: black;
+    padding: 15px 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}
+.changeDelay{
+    display: flex;
+    gap: 7px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}

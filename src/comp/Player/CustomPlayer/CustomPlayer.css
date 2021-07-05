@@ -198,21 +198,7 @@
     height: 100%;
     margin-left: 5px;
 }
-.playerSettings{
-    position: relative;
-}
 
-.playerSettingsDialog{
-    position: absolute;
-    top: 0;
-    left:50%;
-    transform:translate(-50%,-100%);
-    background-color: black;
-    padding: 5px 15px;
-    border-radius: 5px;
-    display: flex;
-
-}
 .playerSettingsDialog .delay{
     padding: 0px 20px;
 

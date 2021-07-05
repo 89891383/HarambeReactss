@@ -6,6 +6,8 @@ import { DataContext } from "../../App";
 import CustomPlayer from "./CustomPlayer/CustomPlayer";
 import "./PlayerAndChat.css";
 import { useIdle } from 'react-use';
+import { CircularProgress } from '@material-ui/core';
+
 import AlternativePlayer from "./AlternativePlayer";
 import { useDispatch, useSelector } from "react-redux";
 import { changeiFrame, changeIsLoading, changeOnlineUsers, changePlaybackRate, changePlaying, changeServerTime, isLiveToggle, joinRoomAnswer, onProgress, playlistToggle, queueDelete, queueMoveUpAnswer, queueUpdate, setAreControls, setDuration, successMessage, videoChangeAnswer, warningMessage } from "../../redux/playerState";
@@ -13,7 +15,7 @@ import { changeiFrame, changeIsLoading, changeOnlineUsers, changePlaybackRate, c
 
 const PlayerAndChat = () => {
 
-	const { isPlaying, iFrame, currentVideoLink, admin, playbackRate, isLive, areControls, duration, videoProgress, volume,nickname, maxDelay} = useSelector(state => state.player)
+	const { isPlaying, iFrame, currentVideoLink, admin, playbackRate, isLive, areControls, duration, videoProgress, volume,nickname, maxDelay, isLoading} = useSelector(state => state.player)
 
 	const dispatch = useDispatch()
 
@@ -284,7 +286,13 @@ const PlayerAndChat = () => {
 								playerWrapperRef={playerWrapperRef}
 							
 								/>
-						</CSSTransition>
+					</CSSTransition>
+
+						{/* LOADING IS OUT OF CUSTOM PLAYER TO BE SEEN IF IT IS HIDDEN */}
+						{isLoading && currentVideoLink && <div 	className="loading">
+						<CircularProgress size={60} />
+						</div>} 
+
 				</div>
 
 				:

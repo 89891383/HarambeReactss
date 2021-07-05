@@ -18,7 +18,6 @@ const initialState = {
     videoQueue: [],
     isServerTime:false,
     isPlaylistOpen: false,
-    videoTitle: null,
     onlineUsers: null,
     isSuccess: false,
     successMessage: "",
@@ -32,6 +31,7 @@ const initialState = {
     liveDuration: null,
     currentChat: 'victorowsky_',
     nickname: null,
+    videoTitle: null,
 
 }
 

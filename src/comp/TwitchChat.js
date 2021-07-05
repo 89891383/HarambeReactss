@@ -78,7 +78,7 @@ const TwitchChat = () => {
 		pingInterval = setInterval(() => {
 			pingInit = Date.now()
 			socket.emit('ping')
-		}, 2000);
+		}, 1000);
 
 	}
 

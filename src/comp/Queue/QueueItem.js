@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { DataContext } from "../../App";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
@@ -18,7 +18,6 @@ const useStyles = makeStyles({
 const QueueItem = ({ item,index }) => {
 	const classes = useStyles();
 	const { URL, title, addedBy, thumbnail } = item;
-	const [videoData, setVideoData] = useState(null);
 
 	const {admin} = useSelector(state=> state.player)
 

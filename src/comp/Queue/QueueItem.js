@@ -43,6 +43,8 @@ const QueueItem = ({ item,index }) => {
 
 	const checkThumbnail = thumbnail || noImg
 	
+	const checkTitle = title || URL
+
 	return (
 		<>
 			<div className="queueItem">
@@ -57,7 +59,7 @@ const QueueItem = ({ item,index }) => {
 					<Tooltip title={`Added by: ${addedBy}`} placement="bottom">
 						<div className="queueItemInfo">
 							<a href={URL} target="_blank" rel="noopener noreferrer">
-								{title}
+								{checkTitle}
 							</a>
 						</div>
 					</Tooltip>

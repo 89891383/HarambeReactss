@@ -20,7 +20,7 @@ import ProgressBar from './ProgressBar';
 import LiveButton from './LiveButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeVideoTitle, hiddenChatToggle, togglePlaying } from '../../../redux/playerState';
-import PlayerSettings from './PlayerSettings/PlayerSettings';
+// import PlayerSettings from './PlayerSettings/PlayerSettings';
 
 const screenfull = require('screenfull');
 

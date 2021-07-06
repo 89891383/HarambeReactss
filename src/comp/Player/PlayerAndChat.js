@@ -258,10 +258,12 @@ const PlayerAndChat = () => {
 							ref={player}
 							onDuration={videoDuration}
 							onProgress={(e)=>{
-								if(videoProgress !== e){
+								if(videoProgress !== e && !isLive){
 									setLiveDuration(e) // FUNCTION
 								}
-								dispatch(onProgress(e))
+								if(!isLive){
+									dispatch(onProgress(e))
+								}
 							}}
 							playing={isPlaying}
 							className="react-player"

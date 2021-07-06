@@ -26,6 +26,9 @@
 	background-color: #0f0f0f;
 	font-size: 20px;
 }
+.queueItem{
+	min-height: 120px;
+}
 .emptyQueueText {
 	font-size: 40px;
 	display: flex;

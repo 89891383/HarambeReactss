@@ -17,24 +17,12 @@ const useStyles = makeStyles({
 
 const QueueItem = ({ item,index }) => {
 	const classes = useStyles();
-	const { URL, title, addedBy } = item;
+	const { URL, title, addedBy, thumbnail } = item;
 	const [videoData, setVideoData] = useState(null);
 
 	const {admin} = useSelector(state=> state.player)
 
 	const { socket } = useContext(DataContext);
-
-	useEffect(() => {
-		fetch(`https://noembed.com/embed?url=${URL}`)
-			.then((res) => res.json())
-			.then((res) => {
-				setVideoData(res);
-			});
-
-		return () => {
-			setVideoData(null);
-		};
-	}, [item, URL]);
 
 	const handleDeleteItemFromQueue = () => {
 		if (admin) {
@@ -54,13 +42,15 @@ const QueueItem = ({ item,index }) => {
 		}
 	}
 
+	const checkThumbnail = thumbnail || noImg
+	
 	return (
 		<>
 			<div className="queueItem">
 				<div className="videoImgAndInfo_Container">
 					<div className="videoImg">
 						<img
-							src={videoData?.thumbnail_url ? videoData?.thumbnail_url : noImg}
+							src={checkThumbnail}
 							alt=""
 							srcSet=""
 						/>
@@ -68,7 +58,7 @@ const QueueItem = ({ item,index }) => {
 					<Tooltip title={`Added by: ${addedBy}`} placement="bottom">
 						<div className="queueItemInfo">
 							<a href={URL} target="_blank" rel="noopener noreferrer">
-								{title ? title : videoData?.title ? videoData?.title : URL}
+								{title}
 							</a>
 						</div>
 					</Tooltip>

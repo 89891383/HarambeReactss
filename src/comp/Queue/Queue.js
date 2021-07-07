@@ -4,7 +4,7 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { useSelector } from "react-redux";
 const Queue = () => {
 
-	const {videoQueue} = useSelector(state=> state.player)
+	const { videoQueue } = useSelector(state=> state.player)
 
 	const queueList = videoQueue.map((item, index) => {
 		return (

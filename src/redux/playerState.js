@@ -139,6 +139,18 @@ export const counterSlice = createSlice({
         state.videoQueue = [...state.videoQueue, action.payload]
     },
 
+    queueDurationUpdate: (state,action)=>{
+
+        const {link, duration} = action.payload
+
+        state.videoQueue.forEach(video=>{
+            if(video.URL === link){
+                video.duration = duration
+            }
+        })
+        
+    },
+
     queueMoveUpAnswer: (state,action)=>{
         state.videoQueue = action.payload
     },
@@ -229,6 +241,6 @@ export const counterSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {  
-    changePlaying,changeiFrame,changePlaybackRate,changeCurrentVideoLink,changeVideoQueue,changeServerTime,changePlaylistOpen,joinRoomAnswer,changeOnlineUsers,setTwitchUserData,successMessage,errorMessage,warningMessage,videoChangeAnswer,queueUpdate,queueMoveUpAnswer,queueDelete,playlistToggle,isLiveToggle,setDuration,setAreControls,setVideoProgress,changeLiveDuration,changeProgress,changeIsLoading,changeVolume,changeCurrentChat,togglePlaying,changeVideoTitle,hiddenChatToggle,changeNickname,dialogOpenToggle,historyOpenToggle,changeIsError,changeIsSuccess,changeIsWarning,onProgress,changeMaxDelay } = counterSlice.actions
+    changePlaying,changeiFrame,changePlaybackRate,changeCurrentVideoLink,changeVideoQueue,changeServerTime,changePlaylistOpen,joinRoomAnswer,changeOnlineUsers,setTwitchUserData,successMessage,errorMessage,warningMessage,videoChangeAnswer,queueUpdate,queueMoveUpAnswer,queueDelete,playlistToggle,isLiveToggle,setDuration,setAreControls,setVideoProgress,changeLiveDuration,changeProgress,changeIsLoading,changeVolume,changeCurrentChat,togglePlaying,changeVideoTitle,hiddenChatToggle,changeNickname,dialogOpenToggle,historyOpenToggle,changeIsError,changeIsSuccess,changeIsWarning,onProgress,changeMaxDelay,queueDurationUpdate } = counterSlice.actions
 
 export default counterSlice.reducer

@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 
 const QueueItem = ({ item,index }) => {
 	const classes = useStyles();
-	const { URL, title, addedBy, thumbnail } = item;
+	const { URL, title, addedBy, thumbnail, duration } = item;
 
 	const {admin} = useSelector(state=> state.player)
 
@@ -45,6 +45,11 @@ const QueueItem = ({ item,index }) => {
 	
 	const checkTitle = title || URL
 
+	const checkDuration = duration === 'LIVE' ? 
+	(<span className="live" style={{padding:0}} >
+		LIVE
+	</span>) : duration
+
 	return (
 		<>
 			<div className="queueItem">
@@ -56,14 +61,29 @@ const QueueItem = ({ item,index }) => {
 							srcSet=""
 						/>
 					</div>
-					<Tooltip title={`Added by: ${addedBy}`} placement="bottom">
-						<div className="queueItemInfo">
-							<a href={URL} target="_blank" rel="noopener noreferrer">
-								{checkTitle}
-							</a>
-						</div>
-					</Tooltip>
+
+				
+						<Tooltip title={`Added by: ${addedBy}`} placement="bottom">
+							<div className="queueItemInfo">
+								<a href={URL} target="_blank" rel="noopener noreferrer">
+									{checkTitle}
+								</a>
+							</div>
+						</Tooltip>
+
+						{duration && (
+							<div className="queueItemDuration">
+								{checkDuration}
+							</div>
+						) }
+					
+
+				
+
+
 				</div>
+
+				
 
 				{admin && (
 					<div className="manageIcons">

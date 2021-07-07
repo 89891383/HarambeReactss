@@ -8,10 +8,10 @@ import Success from "./comp/Snackbars/Success";
 import Error from "./comp/Snackbars/Error";
 import Warning from "./comp/Snackbars/Warning";
 import TwitchChat from "./comp/TwitchChat";
-import Options from "./comp/AdminPanel/Options/Options";
+// import Options from "./comp/AdminPanel/Options/Options";
 import OptionsDialog from "./comp/AdminPanel/Options/OptionsDialog";
-import Profile from "./comp/Profile/Profile";
-import History from "./comp/History/History";
+// import Profile from "./comp/Profile/Profile";
+// import History from "./comp/History/History";
 import HistoryDialog from "./comp/History/HistoryDialog";
 import {  useDispatch, useSelector } from 'react-redux'
 
@@ -25,7 +25,7 @@ const App = () => {
 
 	const history = useHistory();
 
-	const { twitchUserData,admin, hiddenChat } = useSelector(state => state.player)
+	const { hiddenChat } = useSelector(state => state.player)
 
 	const dispatch = useDispatch()
 
@@ -80,11 +80,11 @@ const App = () => {
 						<PlayerAndChat />
 						<div className="bottomDiv">
 							<AdminPanel />
-							<div className="sideOptions">
+							{/* <div className="sideOptions">
 								{twitchUserData && <Profile />}
 								<History />
 								{admin && <Options />}
-							</div>
+							</div> */}
 						</div>
 					</div>
 					<HistoryDialog />

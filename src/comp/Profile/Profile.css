@@ -10,8 +10,8 @@
 	border-radius: 5px;
 	background-color: #161616;
 	width: fit-content;
-	margin-bottom: 10px;
-	transform: translate(-105%, -75%);
+	/* margin-bottom: 10px; */
+	transform: translate(-50%, -135%);
 	box-shadow: 0 0 5px black;
 }
 .accountInfo a {

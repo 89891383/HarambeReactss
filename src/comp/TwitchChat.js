@@ -8,6 +8,11 @@ import { makeStyles } from "@material-ui/core";
 import Tooltip from '@material-ui/core/Tooltip';
 import { useDispatch, useSelector } from "react-redux";
 import { changeCurrentChat } from "../redux/playerState";
+import Profile from "./Profile/Profile";
+import History from "./History/History";
+import Options from "./AdminPanel/Options/Options";
+
+
 
 let pingInterval;
 
@@ -43,7 +48,7 @@ const TwitchChat = () => {
 
 	const dispatch = useDispatch()
 
-	const {onlineUsers, isServerTime, currentChat} = useSelector(state=> state.player)
+	const {onlineUsers, isServerTime, currentChat,twitchUserData,admin} = useSelector(state=> state.player)
 
 	const { socket } = useContext(DataContext);
 	let websiteURL = window.location.host; // HEROKU HOSTING
@@ -110,6 +115,14 @@ const TwitchChat = () => {
 	
 	return (
 			<div className="twitchChat">
+
+				<div className="sideOptions">
+					{twitchUserData && <Profile />}
+					<History />
+					{admin && <Options />}
+				</div>
+
+
 				<span className="onlineUsers">
 					{onlineUsers ? `${onlineUsers} ONLINE` : "CONNECTING"}
 				</span>

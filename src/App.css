@@ -70,9 +70,10 @@ input:focus {
 .sideOptions {
 	position: absolute;
 	display: flex;
-	top: 0;
-	left: 100%;
-	transform: translateX(-100%);
+	flex-direction: row-reverse;
+	top: 95%;
+	left: 0%;
+	transform: translateX(0%);
 }
 
 @media (max-width: 720px) {

@@ -29,7 +29,7 @@ const AddVideo = ({ isAddVideo, setIsAddVideo }) => {
 	const handleAddVideo = () => {
 		if (editVideoLink) {
 			socket.emit("videoChange", {
-				currentVideoLink: editVideoLink,
+				currentVideoLink: editVideoLink.toLowerCase(),
 				videoTitle,
 			});
 			setVideoTitle("");

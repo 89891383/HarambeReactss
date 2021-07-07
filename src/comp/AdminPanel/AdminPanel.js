@@ -13,7 +13,9 @@ const useStyles = makeStyles({
 	addVideoBtn: {
 		color:'#90be6d',
 		borderColor:'#90be6d',
-		padding:'5px 35px',
+		// height:'50px',
+		// width:'fit-content',
+		// padding:'5px 35px',
 		"&:hover":{
 			borderColor:'black',
 			backgroundColor:'#90be6d',
@@ -26,7 +28,7 @@ const AdminPanel = () => {
 
 	const classes = useStyles()
 
-	const {admin, nickname, isPlaylistOpen} = useSelector(state=> state.player)
+	const {admin, nickname, isPlaylistOpen,videoQueue} = useSelector(state=> state.player)
 
 
 	const [isAddVideo, setIsAddVideo] = useState(false);
@@ -44,8 +46,13 @@ const AdminPanel = () => {
 				// ADMIN PANEL
 				<>
 					{/* ADDING VIDEO PANEL */}
-					<div className="adminPanel">
-						{/* <div className="adminButtons"> */}
+					<div className="adminPanel"> 
+							<h3 className="currentQueue_Counter"> 
+								<span className="queueCounter">{videoQueue.length}</span> Current
+								queue:
+							</h3>
+								{/* QUEUE_H3 CSS IS IN Queue.css */}
+
 
 							<Button 
 							variant="outlined" 

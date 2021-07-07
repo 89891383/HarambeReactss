@@ -18,10 +18,6 @@ const Queue = () => {
 		<>
 			{queueList.length > 0 ? (
 				<div className="queue">
-					<h3 className="queue_h3">
-						<span className="queueCounter">{videoQueue.length}</span> Current
-						queue:
-					</h3>
 					<TransitionGroup className="queue_List">{queueList}</TransitionGroup>
 				</div>
 			) : (

@@ -97,10 +97,6 @@ const QueueItem = ({ item,index }) => {
 							</div>
 						) }
 					
-
-				
-
-
 				</div>
 
 				

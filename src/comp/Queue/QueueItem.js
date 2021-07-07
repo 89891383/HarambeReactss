@@ -19,6 +19,26 @@ const QueueItem = ({ item,index }) => {
 	const classes = useStyles();
 	const { URL, title, addedBy, thumbnail, duration } = item;
 
+	const formatTime = (time) =>{
+        return time < 10 ? `0${time}` : time
+    }
+
+    const convertSeconds = (time) =>{
+
+		if(typeof time !== "number") return false
+
+        let minutes = Math.floor(time / 60)
+        let hours = Math.floor(minutes/60)
+        let seconds  = Math.floor(time - (60 * minutes))
+        minutes = formatTime(minutes%60)
+        hours = formatTime(hours)
+        seconds = formatTime(seconds) 
+        return {seconds, minutes, hours}
+    }
+
+
+	const {seconds, minutes, hours} = convertSeconds(duration)
+
 	const {admin} = useSelector(state=> state.player)
 
 	const { socket } = useContext(DataContext);
@@ -48,7 +68,7 @@ const QueueItem = ({ item,index }) => {
 	const checkDuration = duration === 'LIVE' ? 
 	(<span className="live" style={{padding:0}} >
 		LIVE
-	</span>) : duration
+	</span>) : `${hours}:${minutes}:${seconds}`
 
 	return (
 		<>

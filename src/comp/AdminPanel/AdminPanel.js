@@ -57,14 +57,6 @@ const AdminPanel = () => {
 								ADD VIDEO
 							</Button>
 
-
-							{/* <Button2
-								disabled={isDisabled}
-								onClick={() => setIsAddVideo((prev) => !prev)}
-							>
-								Add Video
-							</Button2> */}
-						{/* </div> */}
 					</div>
 					<Queue />
 				</>
@@ -87,13 +79,6 @@ const AdminPanel = () => {
 									>
 									ADD VIDEO
 									</Button>
-
-									{/* <Button2
-										disabled={isDisabled}
-										onClick={() => setIsAddVideo((prev) => !prev)}
-									>
-										Add Video
-									</Button2> */}
 								</div>
 							</>
 						)}

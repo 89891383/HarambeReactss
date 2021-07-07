@@ -38,6 +38,9 @@
 
 .twitchLoginButton {
 	padding: 10px 0;
+	display: flex;
+	justify-content: flex-end;
+	margin-right: 3%;
 }
 .addVideo_Form {
 	width: 90vw;

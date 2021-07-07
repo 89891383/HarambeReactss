@@ -41,7 +41,7 @@ const AddVideo = ({ isAddVideo, setIsAddVideo }) => {
 	const handleAddVideoToQueue = () => {
 		if (editVideoLink) {
 			socket.emit("queueUpdate", {
-				videoLink: editVideoLink,
+				videoLink: editVideoLink.toLowerCase(),
 				nickname,
 				videoTitle,
 			});

@@ -271,7 +271,7 @@ const CustomPlayer = ({playerWrapperRef}) => {
 
 
 
-            <ProgressBar
+           {!isLive &&  <ProgressBar // IF LIVE PROGRESS BAR IS OFF
             progressRef={progressRef} 
             isTimeShow={isTimeShow} 
             timeToShow={timeToShow} 
@@ -279,7 +279,7 @@ const CustomPlayer = ({playerWrapperRef}) => {
             currentProgress={currentProgress} 
             loadedSeconds={loadedSeconds} 
             handleProgressChange={handleProgressChange} handleToggleShowTimeAbove={handleToggleShowTimeAbove} handleTimeToShow={handleTimeToShow}
-            />
+            />}
                     
 
 
@@ -317,7 +317,9 @@ const CustomPlayer = ({playerWrapperRef}) => {
                         {!isLive && admin && <LiveButton/>}
 
 
-                        <PlaybackRate playbackRate={playbackRate} />
+                        {!isLive && ( // IF LIVE PLAYBACKRATE IS OFF
+                           <PlaybackRate playbackRate={playbackRate} /> 
+                        )}
 
                         {/* <PlayerSettings/> */}
 

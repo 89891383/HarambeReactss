@@ -112,16 +112,16 @@ const PlayerAndChat = () => {
 			dispatch(queueUpdate(serverQueueUpdate))
 		});
 
-		socket.on('updateQueueYoutubeDL', ({link,duration,thumbnail, title})=>{
-			dispatch(updateQueueYoutubeDL({link,duration,thumbnail, title}))
+		socket.on('updateQueueYoutubeDL', ({link,duration,thumbnail, title,id})=>{
+			dispatch(updateQueueYoutubeDL({link,duration,thumbnail, title,id}))
 		})
 
 		socket.on('queueMoveUpAnswer', (queueAnswer)=>{
 			dispatch(queueMoveUpAnswer(queueAnswer))
 		})
 
-		socket.on("queueDeleteAnswer", (URLToDelete) => {
-			dispatch(queueDelete(URLToDelete))
+		socket.on("queueDeleteAnswer", (idToDelete) => {
+			dispatch(queueDelete(idToDelete))
 		});
 
 		socket.on("playlistToggleAnswer", ({ isOpen }) => {

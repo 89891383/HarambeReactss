@@ -141,10 +141,11 @@ export const counterSlice = createSlice({
 
     updateQueueYoutubeDL: (state,action)=>{
 
-        const {link, duration,thumbnail, title} = action.payload
+        const {link, duration,thumbnail, title,id} = action.payload
 
         state.videoQueue.forEach(video=>{
-            if(video.URL === link){
+            if(video.id === id){
+                video.URL = link || video.URL
                 video.duration = duration || video.duration
                 video.thumbnail = thumbnail || video.thumbnail
 				if(!video.title){
@@ -163,7 +164,7 @@ export const counterSlice = createSlice({
     queueDelete: (state,action)=>{
         const {payload} = action
 
-        const newQueue = state.videoQueue.filter((video) => video.URL !== payload);
+        const newQueue = state.videoQueue.filter((video) => video.id !== payload);
 
         state.videoQueue = newQueue
     },

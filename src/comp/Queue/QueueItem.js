@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 
 const QueueItem = ({ item,index }) => {
 	const classes = useStyles();
-	const { URL, title, addedBy, thumbnail, duration } = item;
+	const { URL, title, addedBy, thumbnail, duration,id } = item;
 
 	const formatTime = (time) =>{
         return time < 10 ? `0${time}` : time
@@ -45,19 +45,19 @@ const QueueItem = ({ item,index }) => {
 
 	const handleDeleteItemFromQueue = () => {
 		if (admin) {
-			socket.emit("deleteVideoFromQueue", { URL });
+			socket.emit("deleteVideoFromQueue", id);
 		}
 	};
 
 	const handlePlayNow = () => {
 		if (admin) {
-			socket.emit("playVideoNow", { URL, title });
+			socket.emit("playVideoNow", id);
 		}
 	};
 
 	const handleMoveUp = () =>{
 		if(admin && index){
-			socket.emit('queueMoveUp', {URL})
+			socket.emit('queueMoveUp', id)
 		}
 	}
 

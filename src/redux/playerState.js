@@ -145,10 +145,10 @@ export const counterSlice = createSlice({
 
         state.videoQueue.forEach(video=>{
             if(video.URL === link){
-                video.duration = duration
-                video.thumbnail = thumbnail
+                video.duration = duration || video.duration
+                video.thumbnail = thumbnail || video.thumbnail
 				if(!video.title){
-					video.title = title
+					video.title = title || video.title
 				}
             }
         })

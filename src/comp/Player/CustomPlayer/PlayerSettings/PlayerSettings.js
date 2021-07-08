@@ -4,7 +4,9 @@ import React, { useRef, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import "./PlayerSettings.css"
 import { useClickAway } from 'react-use';
-import Delay from './Delay';
+// import Delay from './Delay';
+import { useSelector } from 'react-redux';
+import FormatOption from './FormatOption';
 
 
 const useStyles = makeStyles({
@@ -34,6 +36,7 @@ const PlayerSettings = () => {
 
     const classes = useStyles()
 
+    let {currentAvailableFormats} = useSelector(state=> state.player)
 
     const ref = useRef(null)
 
@@ -41,6 +44,12 @@ const PlayerSettings = () => {
     useClickAway(ref, ()=>{
         setIsOpen(false)
     })
+
+    const createFormats = currentAvailableFormats?.map(item=>{
+      return <FormatOption item={item} key={item.url}/>
+    })
+
+
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -57,7 +66,8 @@ const PlayerSettings = () => {
             <CSSTransition in={isOpen} unmountOnExit timeout={300} classNames='transition' >
                 <div className="playerSettingsDialog" ref={ref}>
                     
-                <Delay/>
+                {/* <Delay/> */}
+                {createFormats}
 
                 </div>
             </CSSTransition>

@@ -112,8 +112,8 @@ const PlayerAndChat = () => {
 			dispatch(queueUpdate(serverQueueUpdate))
 		});
 
-		socket.on('updateQueueYoutubeDL', ({link,duration,thumbnail, title,id})=>{
-			dispatch(updateQueueYoutubeDL({link,duration,thumbnail, title,id}))
+		socket.on('updateQueueYoutubeDL', ({link,duration,thumbnail, title,formats,id})=>{
+			dispatch(updateQueueYoutubeDL({link,duration,thumbnail, title,id,formats}))
 		})
 
 		socket.on('queueMoveUpAnswer', (queueAnswer)=>{

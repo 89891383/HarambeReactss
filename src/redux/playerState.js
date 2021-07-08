@@ -32,6 +32,7 @@ const initialState = {
     currentChat: 'victorowsky_',
     nickname: null,
     videoTitle: null,
+    currentAvailableFormats: [],
 
 }
 
@@ -83,7 +84,7 @@ export const counterSlice = createSlice({
     },
 
     joinRoomAnswer: (state, action)=>{
-        const {iframe, currentVideo, title, queue, isAdmin, isServerTime, isPlaylistOpen, isPlaying, playbackRate, isLive } = action.payload
+        const {iframe, currentVideo, title, queue, isAdmin, isServerTime, isPlaylistOpen, isPlaying, playbackRate, isLive,currentAvailableFormats } = action.payload
         state.iFrame = iframe
         state.currentVideoLink = currentVideo
         state.admin = isAdmin
@@ -94,6 +95,8 @@ export const counterSlice = createSlice({
         state.isPlaylistOpen = isPlaylistOpen
         state.isServerTime = isServerTime
         state.isLive = isLive
+        state.currentAvailableFormats = currentAvailableFormats
+
     },
 
     changeOnlineUsers: (state,action) =>{
@@ -120,7 +123,7 @@ export const counterSlice = createSlice({
     },
 
     videoChangeAnswer: (state, action)=>{
-        const { currentVideoLink, queue, title } = action.payload
+        const { currentVideoLink, queue, title, formats } = action.payload
 
         state.duration = 0
         state.progress = 0
@@ -128,6 +131,7 @@ export const counterSlice = createSlice({
         state.isLive = false
         state.currentVideoLink = currentVideoLink
         state.videoQueue = queue
+        state.currentAvailableFormats = formats
         if(title){
             state.videoTitle = title
         }else{
@@ -141,13 +145,22 @@ export const counterSlice = createSlice({
 
     updateQueueYoutubeDL: (state,action)=>{
 
-        const {link, duration,thumbnail, title,id} = action.payload
+        const {link, duration,thumbnail, title,formats,id} = action.payload
 
         state.videoQueue.forEach(video=>{
             if(video.id === id){
-                video.URL = link
-                video.duration = video.duration || duration
-                video.thumbnail = video.thumbnail || thumbnail 
+                if(link){
+                    video.URL = link
+                }
+                if(duration){
+                    video.duration = duration
+                }
+                if(thumbnail){
+                   video.thumbnail = thumbnail  
+                }
+                if(formats){
+                    video.availableFormats = formats
+                }
 				if(!video.title){
 					video.title = title
 				}
@@ -237,6 +250,10 @@ export const counterSlice = createSlice({
             state.maxDelay += action.payload
             console.log(state.maxDelay);
         }
+    },
+
+    changeQuality: (state,action)=>{
+        state.currentVideoLink = action.payload
     }
 
 
@@ -246,6 +263,6 @@ export const counterSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {  
-    changePlaying,changeiFrame,changePlaybackRate,changeCurrentVideoLink,changeVideoQueue,changeServerTime,changePlaylistOpen,joinRoomAnswer,changeOnlineUsers,setTwitchUserData,successMessage,errorMessage,warningMessage,videoChangeAnswer,queueUpdate,queueMoveUpAnswer,queueDelete,playlistToggle,isLiveToggle,setDuration,setAreControls,setVideoProgress,changeLiveDuration,changeProgress,changeIsLoading,changeVolume,changeCurrentChat,togglePlaying,changeVideoTitle,hiddenChatToggle,changeNickname,dialogOpenToggle,historyOpenToggle,changeIsError,changeIsSuccess,changeIsWarning,onProgress,changeMaxDelay,updateQueueYoutubeDL } = counterSlice.actions
+    changePlaying,changeiFrame,changePlaybackRate,changeCurrentVideoLink,changeVideoQueue,changeServerTime,changePlaylistOpen,joinRoomAnswer,changeOnlineUsers,setTwitchUserData,successMessage,errorMessage,warningMessage,videoChangeAnswer,queueUpdate,queueMoveUpAnswer,queueDelete,playlistToggle,isLiveToggle,setDuration,setAreControls,setVideoProgress,changeLiveDuration,changeProgress,changeIsLoading,changeVolume,changeCurrentChat,togglePlaying,changeVideoTitle,hiddenChatToggle,changeNickname,dialogOpenToggle,historyOpenToggle,changeIsError,changeIsSuccess,changeIsWarning,onProgress,changeMaxDelay,updateQueueYoutubeDL,changeQuality } = counterSlice.actions
 
 export default counterSlice.reducer

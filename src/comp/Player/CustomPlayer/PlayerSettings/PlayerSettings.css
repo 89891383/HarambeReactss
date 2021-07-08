@@ -8,10 +8,10 @@
     left:0%;
     transform:translate(-50%,-100%);
     background-color: black;
-    padding: 15px 20px;
-    border-radius: 5px;
+    /* padding: 15px 20px; */
+    /* border-radius: 5px; */
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
 }
 .changeDelay{
     display: flex;
@@ -19,4 +19,15 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+}
+.formatOption{
+	padding: 15px 20px;
+    cursor: pointer;
+    /* border-radius: 5px; */
+}
+.formatOption .current{
+    background-color: red;
+}
+.formatOption:hover{
+	background-color: #121212;
 }

@@ -20,7 +20,7 @@ import ProgressBar from './ProgressBar';
 import LiveButton from './LiveButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeVideoTitle, hiddenChatToggle, togglePlaying } from '../../../redux/playerState';
-// import PlayerSettings from './PlayerSettings/PlayerSettings';
+import PlayerSettings from './PlayerSettings/PlayerSettings';
 
 const screenfull = require('screenfull');
 
@@ -69,7 +69,7 @@ const useStyles = makeStyles({
 
 const CustomPlayer = ({playerWrapperRef}) => {
 
-    const {isLive, isPlaying, progress, duration, playbackRate, videoProgress, admin ,hiddenChat, videoTitle, currentVideoLink,nickname} = useSelector(state=> state.player)
+    const {isLive, isPlaying, progress, duration, playbackRate, videoProgress, admin ,hiddenChat, videoTitle, currentVideoLink,nickname,currentAvailableFormats} = useSelector(state=> state.player)
 
     const dispatch = useDispatch()
 
@@ -321,7 +321,7 @@ const CustomPlayer = ({playerWrapperRef}) => {
                            <PlaybackRate playbackRate={playbackRate} /> 
                         )}
 
-                        {/* <PlayerSettings/> */}
+                        {currentAvailableFormats && <PlayerSettings/>}
 
                         <IconButton className={classes.playButton} onClick={handleFullScreen}>
                             <FullscreenIcon/>

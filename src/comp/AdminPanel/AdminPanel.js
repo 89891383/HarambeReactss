@@ -13,13 +13,8 @@ const useStyles = makeStyles({
 	addVideoBtn: {
 		color:'#90be6d',
 		borderColor:'#90be6d',
-		// height:'50px',
-		// width:'fit-content',
-		// padding:'5px 35px',
 		"&:hover":{
-			borderColor:'black',
-			backgroundColor:'#90be6d',
-			color:'black'
+			borderColor:'#90be6d',
 		}
 	}
 })
@@ -42,9 +37,7 @@ const AdminPanel = () => {
 	return (
 		<>
 			<AddVideo isAddVideo={isAddVideo} setIsAddVideo={setIsAddVideo} />
-			{admin ? (
-				// ADMIN PANEL
-				<>
+		
 					{/* ADDING VIDEO PANEL */}
 					<div className="adminPanel"> 
 							<h3 className="currentQueue_Counter"> 
@@ -54,7 +47,7 @@ const AdminPanel = () => {
 								{/* QUEUE_H3 CSS IS IN Queue.css */}
 
 
-							<Button 
+						{nickname && <Button 
 							variant="outlined" 
 							color="primary"
 							disabled={isDisabled}
@@ -62,38 +55,16 @@ const AdminPanel = () => {
 							onClick={()=>setIsAddVideo(prev=> !prev)}
 							>
 								ADD VIDEO
-							</Button>
+							</Button>}
+
+						{!nickname  && (
+
+							<Button2 onClick={handleTwitchLogin}> LOGIN WITH TWITCH</Button2>
+						)}
 
 					</div>
 					<Queue />
 				</>
-			) : (
-				// IS NOT ADMIN
-				<div className="delayInfoContainer">
-					<div className="twitchLoginButton">
-						{!nickname ? (
-							<Button2 onClick={handleTwitchLogin}> LOGIN WITH TWITCH</Button2>
-						) : (
-							<>
-								<div className="adminPanel">
-
-									<Button 
-										variant="outlined" 
-										color="primary"
-										disabled={isDisabled}
-										className={classes.addVideoBtn}
-										onClick={()=>setIsAddVideo(prev=> !prev)}
-									>
-									ADD VIDEO
-									</Button>
-								</div>
-							</>
-						)}
-					</div>
-					<Queue />
-				</div>
-			)}
-		</>
 	);
 };
 

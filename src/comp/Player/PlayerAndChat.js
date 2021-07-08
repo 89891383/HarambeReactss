@@ -10,7 +10,7 @@ import { CircularProgress } from '@material-ui/core';
 
 import AlternativePlayer from "./AlternativePlayer";
 import { useDispatch, useSelector } from "react-redux";
-import { changeiFrame, changeIsLoading, changeOnlineUsers, changePlaybackRate, changePlaying, changeServerTime, isLiveToggle, joinRoomAnswer, onProgress, playlistToggle, queueDelete, queueDurationUpdate, queueMoveUpAnswer, queueUpdate, setAreControls, setDuration, successMessage, videoChangeAnswer, warningMessage } from "../../redux/playerState";
+import { changeiFrame, changeIsLoading, changeOnlineUsers, changePlaybackRate, changePlaying, changeServerTime, isLiveToggle, joinRoomAnswer, onProgress, playlistToggle, queueDelete, updateQueueYoutubeDL, queueMoveUpAnswer, queueUpdate, setAreControls, setDuration, successMessage, videoChangeAnswer, warningMessage } from "../../redux/playerState";
 
 
 const PlayerAndChat = () => {
@@ -112,8 +112,8 @@ const PlayerAndChat = () => {
 			dispatch(queueUpdate(serverQueueUpdate))
 		});
 
-		socket.on('updateQueueDuration', ({link,duration})=>{
-			dispatch(queueDurationUpdate({link,duration}))
+		socket.on('updateQueueYoutubeDL', ({link,duration,thumbnail, title})=>{
+			dispatch(updateQueueYoutubeDL({link,duration,thumbnail, title}))
 		})
 
 		socket.on('queueMoveUpAnswer', (queueAnswer)=>{
@@ -159,7 +159,7 @@ const PlayerAndChat = () => {
 			socket.off('queueMoveUpAnswer')	
 			socket.off('liveVideoAnswer')	
 			socket.off('serverTimeToggleAnswer')
-			socket.off('updateQueueDuration')
+			socket.off('updateQueueYoutubeDL')
 		};
 		// eslint-disable-next-line
 	}, [currentRoom, admin, socket, maxDelay, nickname]);

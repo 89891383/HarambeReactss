@@ -139,13 +139,17 @@ export const counterSlice = createSlice({
         state.videoQueue = [...state.videoQueue, action.payload]
     },
 
-    queueDurationUpdate: (state,action)=>{
+    updateQueueYoutubeDL: (state,action)=>{
 
-        const {link, duration} = action.payload
+        const {link, duration,thumbnail, title} = action.payload
 
         state.videoQueue.forEach(video=>{
             if(video.URL === link){
                 video.duration = duration
+                video.thumbnail = thumbnail
+				if(!video.title){
+					video.title = title
+				}
             }
         })
         
@@ -241,6 +245,6 @@ export const counterSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {  
-    changePlaying,changeiFrame,changePlaybackRate,changeCurrentVideoLink,changeVideoQueue,changeServerTime,changePlaylistOpen,joinRoomAnswer,changeOnlineUsers,setTwitchUserData,successMessage,errorMessage,warningMessage,videoChangeAnswer,queueUpdate,queueMoveUpAnswer,queueDelete,playlistToggle,isLiveToggle,setDuration,setAreControls,setVideoProgress,changeLiveDuration,changeProgress,changeIsLoading,changeVolume,changeCurrentChat,togglePlaying,changeVideoTitle,hiddenChatToggle,changeNickname,dialogOpenToggle,historyOpenToggle,changeIsError,changeIsSuccess,changeIsWarning,onProgress,changeMaxDelay,queueDurationUpdate } = counterSlice.actions
+    changePlaying,changeiFrame,changePlaybackRate,changeCurrentVideoLink,changeVideoQueue,changeServerTime,changePlaylistOpen,joinRoomAnswer,changeOnlineUsers,setTwitchUserData,successMessage,errorMessage,warningMessage,videoChangeAnswer,queueUpdate,queueMoveUpAnswer,queueDelete,playlistToggle,isLiveToggle,setDuration,setAreControls,setVideoProgress,changeLiveDuration,changeProgress,changeIsLoading,changeVolume,changeCurrentChat,togglePlaying,changeVideoTitle,hiddenChatToggle,changeNickname,dialogOpenToggle,historyOpenToggle,changeIsError,changeIsSuccess,changeIsWarning,onProgress,changeMaxDelay,updateQueueYoutubeDL } = counterSlice.actions
 
 export default counterSlice.reducer

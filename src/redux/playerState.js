@@ -156,7 +156,7 @@ export const counterSlice = createSlice({
                     video.duration = duration
                 }
                 if(thumbnail){
-                   video.thumbnail = thumbnail  
+                   video.thumbnail = video.thumbnail || thumbnail  
                 }
                 if(formats){
                     video.availableFormats = formats

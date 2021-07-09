@@ -53,6 +53,10 @@ const PlayerSettings = () => {
 
     const [isOpen, setIsOpen] = useState(false);
 
+    const handleClose = () =>{
+        setIsOpen(false)
+    }
+
     return ( 
         <div className="playerSettings">
             <IconButton 
@@ -64,9 +68,8 @@ const PlayerSettings = () => {
 
             
             <CSSTransition in={isOpen} unmountOnExit timeout={300} classNames='transition' >
-                <div className="playerSettingsDialog" ref={ref}>
+                <div className="playerSettingsDialog" onClick={handleClose} ref={ref}>
                     
-                {/* <Delay/> */}
                 {createFormats}
 
                 </div>

@@ -128,5 +128,8 @@
 	.queueItemDuration{
 		transform: translate(0, 100%);
 	}
+	.queueItemDuration{
+		left: -133px
+	}
 
 }

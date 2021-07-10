@@ -7,6 +7,7 @@ import Queue from "../Queue/Queue";
 import AddVideo from "./AddVideo";
 import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/styles";
+import SideOptions from '../SideOptions';
 
 
 const useStyles = makeStyles({
@@ -46,6 +47,9 @@ const AdminPanel = () => {
 							</h3>
 								{/* QUEUE_H3 CSS IS IN Queue.css */}
 
+
+						<SideOptions/>
+						
 
 						{nickname && <Button 
 							variant="outlined" 

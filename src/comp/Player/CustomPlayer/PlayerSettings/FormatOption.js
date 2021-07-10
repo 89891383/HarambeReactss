@@ -13,6 +13,8 @@ const FormatOption = (item) => {
 
     const ref = useRef(null)
 
+    if(!format || !url) return false
+
     if(currentVideoLink === url){
             ref?.current?.classList.add('current')
     }
@@ -24,7 +26,6 @@ const FormatOption = (item) => {
         dispatch(changeQuality(url))
     }
 
-    if(!format) return false
 
 
     return ( 

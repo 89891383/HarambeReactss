@@ -2,6 +2,7 @@
 	color: white;
 	margin-top: 5px;
 	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
 	justify-content: flex-end;
 	margin-top: 50px;

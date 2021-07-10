@@ -68,13 +68,8 @@ input:focus {
 	gap: 10px;
 }
 .sideOptions {
-	position: absolute;
 	display: flex;
 	flex-direction: row-reverse;
-	top: 95%;
-	left: 0%;
-	transform: translate(90px, -5px);
-    /* background: #18181b; */
 }
 
 @media (max-width: 720px) {

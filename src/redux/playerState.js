@@ -15,6 +15,7 @@ const initialState = {
     isLive: false,
     iFrame: false,
     currentVideoLink: null,
+    currentVideoID: null,
     videoQueue: [],
     isServerTime:false,
     isPlaylistOpen: false,
@@ -123,7 +124,7 @@ export const counterSlice = createSlice({
     },
 
     videoChangeAnswer: (state, action)=>{
-        const { currentVideoLink, queue, title, formats } = action.payload
+        const { currentVideoLink, queue, title, formats,id } = action.payload
 
         state.duration = 0
         state.progress = 0
@@ -132,6 +133,7 @@ export const counterSlice = createSlice({
         state.currentVideoLink = currentVideoLink
         state.videoQueue = queue
         state.currentAvailableFormats = formats
+        state.currentVideoID = id
         if(title){
             state.videoTitle = title
         }else{
@@ -149,6 +151,8 @@ export const counterSlice = createSlice({
 
         state.videoQueue.forEach(video=>{
             if(video.id === id){
+
+
                 if(link){
                     video.URL = link
                 }
@@ -166,7 +170,15 @@ export const counterSlice = createSlice({
 				}
             }
         })
+
         
+    },
+
+    updateCurrentVideo: (state,action)=>{
+        const {id, formats} = action.payload
+        if(state.currentVideoID === id ){
+            state.currentAvailableFormats = formats
+        }
     },
 
     queueMoveUpAnswer: (state,action)=>{
@@ -263,6 +275,6 @@ export const counterSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {  
-    changePlaying,changeiFrame,changePlaybackRate,changeCurrentVideoLink,changeVideoQueue,changeServerTime,changePlaylistOpen,joinRoomAnswer,changeOnlineUsers,setTwitchUserData,successMessage,errorMessage,warningMessage,videoChangeAnswer,queueUpdate,queueMoveUpAnswer,queueDelete,playlistToggle,isLiveToggle,setDuration,setAreControls,setVideoProgress,changeLiveDuration,changeProgress,changeIsLoading,changeVolume,changeCurrentChat,togglePlaying,changeVideoTitle,hiddenChatToggle,changeNickname,dialogOpenToggle,historyOpenToggle,changeIsError,changeIsSuccess,changeIsWarning,onProgress,changeMaxDelay,updateQueueYoutubeDL,changeQuality } = counterSlice.actions
+    changePlaying,changeiFrame,changePlaybackRate,changeCurrentVideoLink,changeVideoQueue,changeServerTime,changePlaylistOpen,joinRoomAnswer,changeOnlineUsers,setTwitchUserData,successMessage,errorMessage,warningMessage,videoChangeAnswer,queueUpdate,queueMoveUpAnswer,queueDelete,playlistToggle,isLiveToggle,setDuration,setAreControls,setVideoProgress,changeLiveDuration,changeProgress,changeIsLoading,changeVolume,changeCurrentChat,togglePlaying,changeVideoTitle,hiddenChatToggle,changeNickname,dialogOpenToggle,historyOpenToggle,changeIsError,changeIsSuccess,changeIsWarning,onProgress,changeMaxDelay,updateQueueYoutubeDL,changeQuality,updateCurrentVideo } = counterSlice.actions
 
 export default counterSlice.reducer

@@ -80,11 +80,6 @@ const App = () => {
 						<PlayerAndChat />
 						<div className="bottomDiv">
 							<AdminPanel />
-							{/* <div className="sideOptions">
-								{twitchUserData && <Profile />}
-								<History />
-								{admin && <Options />}
-							</div> */}
 						</div>
 					</div>
 					<HistoryDialog />

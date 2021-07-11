@@ -9,6 +9,9 @@
     transform:translate(-25%,-100%);
     background-color: black;
     display: flex;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 0 5px black;
     flex-direction: column-reverse;
 }
 .changeDelay{

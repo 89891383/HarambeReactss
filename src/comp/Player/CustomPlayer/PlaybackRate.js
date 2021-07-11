@@ -30,7 +30,7 @@ const PlaybackRate = ({playbackRate}) => {
     const [isOpen, setIsOpen] = useState(false)
 
     useClickAway(chooseRef, (e)=>{
-        if(e.target.className.baseVal === 'MuiSvgIcon-root') return false
+        if(e.target.tagName === 'BUTTON'|| e.target.tagName === 'path' || e.target.tagName === 'svg') return false
         setIsOpen(false)
     })
 

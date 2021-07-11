@@ -40,8 +40,11 @@ const PlayerSettings = () => {
 
     const ref = useRef(null)
 
+    const SettingsButtonRef = useRef(null)
+
     
-    useClickAway(ref, ()=>{
+    useClickAway(ref, (e)=>{
+        if(e.target.tagName === 'BUTTON'|| e.target.tagName === 'path' || e.target.tagName === 'svg') return false
         setIsOpen(false)
     })
 
@@ -58,10 +61,10 @@ const PlayerSettings = () => {
     }
 
     return ( 
-        <div className="playerSettings">
+        <div className="playerSettings" ref={SettingsButtonRef}>
             <IconButton 
             className={classes.settingsIcon} 
-            onClick={()=>setIsOpen(prev=> !prev)}>
+            onClick={()=>setIsOpen(prev => !prev)}>
                 <SettingsIcon/>
             </IconButton>
 

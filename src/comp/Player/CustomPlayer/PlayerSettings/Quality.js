@@ -1,8 +1,8 @@
-import SettingsIcon from '@material-ui/icons/Settings';
+import HighQualityIcon from '@material-ui/icons/HighQuality';
 import { IconButton, makeStyles } from '@material-ui/core';
 import React, { useRef, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import "./PlayerSettings.css"
+import "./Quality.css"
 import { useClickAway } from 'react-use';
 // import Delay from './Delay';
 import { useSelector } from 'react-redux';
@@ -32,7 +32,7 @@ const useStyles = makeStyles({
     }
 })
 
-const PlayerSettings = () => {
+const Quality = () => {
 
     const classes = useStyles()
 
@@ -65,7 +65,7 @@ const PlayerSettings = () => {
             <IconButton 
             className={classes.settingsIcon} 
             onClick={()=>setIsOpen(prev => !prev)}>
-                <SettingsIcon/>
+                <HighQualityIcon/>
             </IconButton>
 
 
@@ -83,4 +83,4 @@ const PlayerSettings = () => {
      );
 }
  
-export default PlayerSettings;
+export default Quality;

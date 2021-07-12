@@ -20,7 +20,7 @@ import ProgressBar from './ProgressBar';
 import LiveButton from './LiveButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeVideoTitle, hiddenChatToggle, togglePlaying } from '../../../redux/playerState';
-import PlayerSettings from './PlayerSettings/PlayerSettings';
+import Quality from './PlayerSettings/Quality';
 
 const screenfull = require('screenfull');
 
@@ -168,20 +168,6 @@ const CustomPlayer = ({playerWrapperRef}) => {
     },[duration,progress])
 
 
-	useEffect(() => {
-        if(!videoTitle && currentVideoLink){
-           fetch(`https://noembed.com/embed?url=${currentVideoLink}`)
-			.then((res) => res.json())
-			.then((res) => {
-                dispatch(changeVideoTitle(res.title))
-			});
-        }
-		
-	}, [dispatch,currentVideoLink, videoTitle]);
-
-
-
-
     const handleFullScreen = () =>{
         screenfull.toggle()
     }
@@ -321,7 +307,7 @@ const CustomPlayer = ({playerWrapperRef}) => {
                            <PlaybackRate playbackRate={playbackRate} /> 
                         )}
 
-                        {currentAvailableFormats && <PlayerSettings/>}
+                        {currentAvailableFormats && <Quality/>}
 
                         <IconButton className={classes.playButton} onClick={handleFullScreen}>
                             <FullscreenIcon/>

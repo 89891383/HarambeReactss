@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 
 const QueueItem = ({ item,index }) => {
 	const classes = useStyles();
-	const { URL, title, addedBy, thumbnail, duration,id } = item;
+	const { URL, title, addedBy, thumbnail, duration,noData ,id } = item;
 
 	const formatTime = (time) =>{
         return time < 10 ? `0${time}` : time
@@ -96,6 +96,12 @@ const QueueItem = ({ item,index }) => {
 								{checkDuration}
 							</div>
 						) }
+
+						{noData && (
+							<div className="queueItemDuration">
+								No data
+							</div>
+						)}
 					
 				</div>
 

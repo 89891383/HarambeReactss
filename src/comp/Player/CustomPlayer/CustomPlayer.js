@@ -8,9 +8,7 @@ import HideChat from '@material-ui/icons/Visibility';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import { useContext } from 'react';
 import { DataContext } from '../../../App';
-import { useRef } from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import Volume from './Volume';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import PlaybackRate from './PlaybackRate';
@@ -19,7 +17,7 @@ import Replay5Icon from '@material-ui/icons/Replay5';
 import ProgressBar from './ProgressBar';
 import LiveButton from './LiveButton';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeVideoTitle, hiddenChatToggle, togglePlaying } from '../../../redux/playerState';
+import { hiddenChatToggle, togglePlaying } from '../../../redux/playerState';
 import Quality from './PlayerSettings/Quality';
 
 const screenfull = require('screenfull');
@@ -76,6 +74,7 @@ const CustomPlayer = ({playerWrapperRef}) => {
     const { socket } = useContext(DataContext)
 
     const classes = useStyles()
+
 
     const [currentProgress, setCurrentProgress] = useState(0);
     const [isTimeShow, setIsTimeShow] = useState(false);

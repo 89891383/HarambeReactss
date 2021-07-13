@@ -34,7 +34,8 @@ export default function CustomizedSnackbars() {
 
 	return (
 		<div className={classes.root}>
-			<Snackbar open={isWarning} autoHideDuration={2000} onClose={handleClose}>
+			<Snackbar open={isWarning} autoHideDuration={2000} 
+		 	anchorOrigin={{horizontal:'left', vertical:'top'}} onClose={handleClose}>
 				<Alert onClose={handleClose} severity="warning">
 					{warningMessage}
 				</Alert>

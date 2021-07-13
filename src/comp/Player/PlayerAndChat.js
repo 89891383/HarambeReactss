@@ -7,11 +7,9 @@ import CustomPlayer from "./CustomPlayer/CustomPlayer";
 import "./PlayerAndChat.css";
 import { useIdle } from 'react-use';
 import { CircularProgress } from '@material-ui/core';
-
 import AlternativePlayer from "./AlternativePlayer";
 import { useDispatch, useSelector } from "react-redux";
 import { changeiFrame, changeIsLoading, changeOnlineUsers, changePlaybackRate, changePlaying, changeServerTime, isLiveToggle, joinRoomAnswer, onProgress, playlistToggle, queueDelete, updateQueueYoutubeDL, queueMoveUpAnswer, queueUpdate, setAreControls, setDuration, successMessage, videoChangeAnswer, warningMessage, updateCurrentVideo } from "../../redux/playerState";
-
 
 const PlayerAndChat = () => {
 
@@ -90,7 +88,7 @@ const PlayerAndChat = () => {
 			});
 		
 
-		socket.on('changeTimeAnswer', currentSeconds=>{
+		socket.on('changeTimeAnswer', (currentSeconds)=>{
 			synchronizeVideo(player,currentSeconds)
 		})
 
@@ -112,8 +110,8 @@ const PlayerAndChat = () => {
 			dispatch(queueUpdate(serverQueueUpdate))
 		});
 
-		socket.on('updateQueueYoutubeDL', ({link,duration,thumbnail, title,formats,id, noData})=>{
-			dispatch(updateQueueYoutubeDL({link,duration,thumbnail, title,id,formats, noData}))
+		socket.on('updateQueueYoutubeDL', (answer)=>{
+			dispatch(updateQueueYoutubeDL(answer))
 		})
 
 		socket.on('updateCurrentVideoYoutubeDL', (answer)=>{
@@ -289,6 +287,7 @@ const PlayerAndChat = () => {
 							onBufferEnd={()=> dispatch(changeIsLoading(false))}
 						/>
 				
+				
 					<CSSTransition 
 							unmountOnExit 
 							in={areControls}
@@ -296,9 +295,9 @@ const PlayerAndChat = () => {
 							classNames='controls'>
 							<CustomPlayer
 								playerWrapperRef={playerWrapperRef}
-							
 								/>
 					</CSSTransition>
+				
 
 						{/* LOADING IS OUT OF CUSTOM PLAYER TO BE SEEN IF IT IS HIDDEN */}
 						{isLoading && currentVideoLink && <div 	className="loading">

@@ -65,7 +65,7 @@ const HistoryDialog = () => {
 	);
 
 	return (
-		<Popout state={isHistoryOpen} setState={()=> dispatch(historyOpenToggle())}>
+		<Popout state={isHistoryOpen} setState={()=> dispatch(historyOpenToggle(false))}>
 			<div className="historyContainer">
 
 				{admin && 

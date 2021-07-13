@@ -35,7 +35,7 @@ const OptionsDialog = () => {
 	}
 
 	return (
-		<Popout state={isDialogOpen} setState={()=> dispatch(dialogOpenToggle())}>
+		<Popout state={isDialogOpen} setState={()=> dispatch(dialogOpenToggle(false))}>
 			<div className="optionsDialog" ref={optionsRef}>
 				<OneOption checked={isServerTime} onChange={serverTimeToggle}>
 					<span>Server time </span>

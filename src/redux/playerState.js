@@ -239,11 +239,13 @@ export const counterSlice = createSlice({
     changeCurrentChat: (state,action)=>{
         state.currentChat = action.payload
     },
-    dialogOpenToggle: (state) => {
-        state.isDialogOpen = !state.isDialogOpen
+    dialogOpenToggle: (state,action) => {
+
+        state.isDialogOpen = action.payload
     }, 
-    historyOpenToggle: (state)=>{
-        state.isHistoryOpen = !state.isHistoryOpen
+    historyOpenToggle: (state,action)=>{
+        state.isHistoryOpen = action.payload
+        // state.isHistoryOpen = !state.isHistoryOpen
     },
     changeIsError: (state,action)=>{
         state.isError = action.payload

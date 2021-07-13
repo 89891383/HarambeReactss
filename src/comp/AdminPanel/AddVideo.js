@@ -15,7 +15,7 @@ const AddVideo = ({ isAddVideo, setIsAddVideo }) => {
 
 	const { admin,nickname } = useSelector(state=> state.player)
 
-	const { socket} = useContext(DataContext);
+	const { socket } = useContext(DataContext);
 
 	const [editVideoLink, setEditVideoLink] = useState("");
 	const [videoTitle, setVideoTitle] = useState("");
@@ -52,7 +52,7 @@ const AddVideo = ({ isAddVideo, setIsAddVideo }) => {
 	};
 
 	return (
-		<Popout state={isAddVideo} setState={setIsAddVideo}>
+		<Popout state={isAddVideo} setState={()=> setIsAddVideo(false)}>
 			<form className="addVideo_Form">
 				<h1>ADD VIDEO</h1>
 				<hr />

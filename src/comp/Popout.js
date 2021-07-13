@@ -6,7 +6,6 @@ import "./Popout.css";
 const Popout = ({ children, state, setState }) => {
 	const popoutRef = useRef(null);
 
-
 	useClickAway(popoutRef, ()=>{
 		setState(); // CLOSE
 	})

@@ -17,7 +17,7 @@ const Options = () => {
 
 
 	const handleToggleDialog = () => {
-		dispatch(dialogOpenToggle())
+		dispatch(dialogOpenToggle(true))
 	};
 
 	const classes = useStyles();

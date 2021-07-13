@@ -17,7 +17,7 @@ const History = () => {
 	const dispatch = useDispatch()
 
 	const handleToggleHistory = () => {
-		dispatch(historyOpenToggle())
+		dispatch(historyOpenToggle(true))
 	};
 
 	return (

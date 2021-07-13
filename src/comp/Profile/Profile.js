@@ -27,6 +27,7 @@ const Profile = () => {
 			className="profileIcon"
 			onMouseEnter={() => setIsHover(true)}
 			onMouseLeave={() => setIsHover(false)}
+			onClick={()=> setIsHover(prev => !prev)}
 		>
 			<AccountBoxIcon className={classes.profileIcon} />
 

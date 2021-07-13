@@ -194,9 +194,11 @@ const CustomPlayer = ({playerWrapperRef}) => {
 
 
     const handleTogglePlayServer = () =>{
-        if(!admin) return false
+        if(!admin){
+            return dispatch(togglePlaying())
+        }
 
-        socket.emit('togglePlay', {isPlaying: !isPlaying,nickname})
+        socket.emit('togglePlay')
 
     }
 
@@ -235,7 +237,6 @@ const CustomPlayer = ({playerWrapperRef}) => {
             <div className="toggleChat">
                 <IconButton className={classes.toggleChat} onClick={handleToggleChat}>
                         {!hiddenChat ? <ShowChat/> : <HideChat/>}
-                    
                 </IconButton>
             </div>
 

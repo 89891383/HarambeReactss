@@ -81,7 +81,9 @@ const PlayerAndChat = () => {
 
 		
 			socket.on("serverTimeAnswer", ({ currentSeconds }) => {
-				synchronizeVideo(player, currentSeconds);
+				if(isPlaying){ // IF VIDEO IS NOT PLAYING DONT SYNC IT
+					synchronizeVideo(player, currentSeconds);
+				}
 			});
 			socket.on("isPlayingAnswer", ({ isPlaying }) => {
 				dispatch(changePlaying(isPlaying))
@@ -165,7 +167,7 @@ const PlayerAndChat = () => {
 			socket.off('updateCurrentVideoYoutubeDL')
 		};
 		// eslint-disable-next-line
-	}, [currentRoom, admin, socket, maxDelay, nickname]);
+	}, [currentRoom, admin, socket, maxDelay, nickname,isPlaying]);
 
 
 	const videoDuration = (duration) => {
@@ -308,8 +310,7 @@ const PlayerAndChat = () => {
 
 				:
 			
-							<AlternativePlayer 
-							currentVideoLink={currentVideoLink} />
+							<AlternativePlayer />
 				}
 				
 

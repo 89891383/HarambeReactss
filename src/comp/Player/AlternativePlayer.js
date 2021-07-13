@@ -3,9 +3,9 @@ import { useSelector } from 'react-redux';
 import { useCss, useIdle } from 'react-use';
 
 
-const AlternativePlayer = ({currentVideoLink}) => {
+const AlternativePlayer = () => {
 
-    const { videoTitle } =  useSelector(state=> state.player)
+    const { videoTitle, currentVideoLink } =  useSelector(state=> state.player)
 
    const iframePlayer = useCss({
             width:'100%',

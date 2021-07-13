@@ -13,7 +13,10 @@ const useStyles = makeStyles({
         color:'white',
         '&:hover':{
             color:'rgb(63,81,181)'
-        }   
+        },
+        '@media (max-width: 500px)':{
+            display:'none'
+        }
     }
 })
 

@@ -27,10 +27,11 @@ const PlaybackRate = ({playbackRate}) => {
 
     const chooseRef = useRef(null)
 
+    const containerRef = useRef(null)
+
     const [isOpen, setIsOpen] = useState(false)
 
-    useClickAway(chooseRef, (e)=>{
-        if(e.target.tagName === 'BUTTON'|| e.target.tagName === 'path' || e.target.tagName === 'svg') return false
+    useClickAway(containerRef, (e)=>{
         setIsOpen(false)
     })
 
@@ -59,7 +60,7 @@ const PlaybackRate = ({playbackRate}) => {
 
     return (
       
-        <div className="playbackRate" >
+        <div className="playbackRate" ref={containerRef} >
             <IconButton className={classes.timer} onClick={()=>setIsOpen(prev=> !prev)} >
                 <TimerIcon  />
             </IconButton>

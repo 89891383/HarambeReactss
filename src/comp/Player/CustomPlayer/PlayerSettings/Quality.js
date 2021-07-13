@@ -40,11 +40,8 @@ const Quality = () => {
 
     const ref = useRef(null)
 
-    const SettingsButtonRef = useRef(null)
-
     
-    useClickAway(ref, (e)=>{
-        if(e.target.tagName === 'BUTTON'|| e.target.tagName === 'path' || e.target.tagName === 'svg') return false
+    useClickAway(ref,()=>{
         setIsOpen(false)
     })
 
@@ -61,7 +58,7 @@ const Quality = () => {
     }
 
     return ( 
-        <div className="playerSettings" ref={SettingsButtonRef}>
+        <div className="playerSettings" ref={ref}>
             <IconButton 
             className={classes.settingsIcon} 
             onClick={()=>setIsOpen(prev => !prev)}>
@@ -71,7 +68,7 @@ const Quality = () => {
 
             
             <CSSTransition in={isOpen} unmountOnExit timeout={300} classNames='transition' >
-                <div className="playerSettingsDialog" onClick={handleClose} ref={ref}>
+                <div className="playerSettingsDialog" onClick={handleClose}>
                     
                 {createFormats}
 

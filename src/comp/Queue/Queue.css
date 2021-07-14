@@ -53,11 +53,19 @@
 }
 .queueItemInfo {
 	gap: 10px;
-	max-height: 200px;
+	height: 25px;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
-
+	max-width: 100%;
+	text-align: start;
+}
+.queueItemInfo a{
+	width: 100%;
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 
@@ -84,10 +92,14 @@
 	display: flex;
 	align-items: center;
 	gap: 15px;
-	width: 80%;
+	width: calc(100% - 175px)
 }
+.queueItemButtons{
+	display: flex;
+	width: fit-content;
+	padding: 15px;
 
-
+}
 
 .queueItemDuration{
 	position: absolute;
@@ -116,7 +128,7 @@
 
 @media (max-width:1000px){
 	.videoImgAndInfo_Container{
-		width: 70%;
+		/* width: 70%; */
 	}
 }
 

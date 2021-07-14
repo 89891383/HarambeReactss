@@ -10,6 +10,7 @@ import { CircularProgress } from '@material-ui/core';
 import AlternativePlayer from "./AlternativePlayer";
 import { useDispatch, useSelector } from "react-redux";
 import { changeiFrame, changeIsLoading, changeOnlineUsers, changePlaybackRate, changePlaying, changeServerTime, isLiveToggle, joinRoomAnswer, onProgress, playlistToggle, queueDelete, updateQueueYoutubeDL, queueMoveUpAnswer, queueUpdate, setAreControls, setDuration, successMessage, videoChangeAnswer, warningMessage, updateCurrentVideo } from "../../redux/playerState";
+import CenterPlayButton from "./CustomPlayer/CenterPlayButton";
 
 const PlayerAndChat = () => {
 
@@ -305,6 +306,15 @@ const PlayerAndChat = () => {
 						{isLoading && currentVideoLink && <div 	className="loading">
 						<CircularProgress size={60} />
 						</div>} 
+
+
+						{/* IF PAUSE PLAY BUTTON IS ON CENTER OF SCREEN */}
+						<CSSTransition in={!isPlaying && currentVideoLink && !isLoading} classNames="transition" timeout={300} unmountOnExit>
+
+							<CenterPlayButton/>	
+		 
+						</CSSTransition>
+
 
 				</div>
 

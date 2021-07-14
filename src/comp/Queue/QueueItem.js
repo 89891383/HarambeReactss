@@ -95,7 +95,7 @@ const QueueItem = ({ item,index }) => {
 							<div className="queueItemDuration">
 								{checkDuration}
 							</div>
-						) }
+						) }	
 
 						{noData && (
 							<div className="queueItemDuration">
@@ -108,7 +108,7 @@ const QueueItem = ({ item,index }) => {
 				
 
 				{admin && (
-					<div className="manageIcons">
+					<div className="queueItemButtons">
 						<IconButton onClick={handlePlayNow} className={classes.iconButton}>
 							<Tooltip title="Play now" enterDelay={0}>
 								<PlayArrowIcon />

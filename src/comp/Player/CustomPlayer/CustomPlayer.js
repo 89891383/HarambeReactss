@@ -19,6 +19,9 @@ import LiveButton from './LiveButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { hiddenChatToggle, togglePlaying } from '../../../redux/playerState';
 import Quality from './PlayerSettings/Quality';
+import CenterPlayButton from './CenterPlayButton';
+import { CSSTransition } from 'react-transition-group';
+
 
 const screenfull = require('screenfull');
 
@@ -67,7 +70,7 @@ const useStyles = makeStyles({
 
 const CustomPlayer = ({playerWrapperRef}) => {
 
-    const {isLive, isPlaying, progress, duration, playbackRate, videoProgress, admin ,hiddenChat, videoTitle, currentVideoLink,nickname,currentAvailableFormats} = useSelector(state=> state.player)
+    const {isLive, isPlaying, progress, duration, playbackRate, videoProgress, admin ,hiddenChat, videoTitle, currentVideoLink,nickname,currentAvailableFormats, isLoading} = useSelector(state=> state.player)
 
     const dispatch = useDispatch()
 
@@ -266,7 +269,8 @@ const CustomPlayer = ({playerWrapperRef}) => {
             loadedSeconds={loadedSeconds} 
             handleProgressChange={handleProgressChange} handleToggleShowTimeAbove={handleToggleShowTimeAbove} handleTimeToShow={handleTimeToShow}
             />}
-                    
+
+        
 
 
                 <div className="lowerControls" >

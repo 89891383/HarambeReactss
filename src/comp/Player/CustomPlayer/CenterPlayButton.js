@@ -6,7 +6,6 @@ import "./CustomPlayer.css"
 const useStyles = makeStyles({
     playButton:{
         fontSize:'150px',
-        textShadow:'0 0 15px #111',
     }
 })
 

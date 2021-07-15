@@ -219,7 +219,7 @@ const PlayerAndChat = () => {
 			const liveDuration  = Math.floor(playedSeconds/played)
 			if(liveDuration !== duration ){
 				if(duration - 2 > liveDuration || duration + 2 < liveDuration){
-					dispatch(setDuration(liveDuration))
+					// dispatch(setDuration(liveDuration))
 					synchronizeVideo(player, liveDuration - 3)
 					if(!isLive){
 						dispatch(isLiveToggle(true))
@@ -269,7 +269,7 @@ const PlayerAndChat = () => {
 							ref={player}
 							onDuration={videoDuration}
 							onProgress={(e)=>{
-								if(videoProgress !== e && !isLive){
+								if(videoProgress !== e && isPlaying){
 									setLiveDuration(e) // FUNCTION
 								}
 								if(!isLive){

@@ -92,7 +92,7 @@
 	display: flex;
 	align-items: center;
 	gap: 15px;
-	width: calc(100% - 175px)
+	width: calc(100% - 225px)
 }
 .queueItemButtons{
 	display: flex;

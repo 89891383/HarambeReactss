@@ -9,7 +9,7 @@ import { useIdle } from 'react-use';
 import { CircularProgress } from '@material-ui/core';
 import AlternativePlayer from "./AlternativePlayer";
 import { useDispatch, useSelector } from "react-redux";
-import { changeiFrame, changeIsLoading, changeOnlineUsers, changePlaybackRate, changePlaying, changeServerTime, isLiveToggle, joinRoomAnswer, onProgress, playlistToggle, queueDelete, updateQueueYoutubeDL, queueMoveUpAnswer, queueUpdate, setAreControls, setDuration, successMessage, videoChangeAnswer, warningMessage, updateCurrentVideo } from "../../redux/playerState";
+import { changeiFrame, changeIsLoading, changeOnlineUsers, changePlaybackRate, changePlaying, changeServerTime, isLiveToggle, joinRoomAnswer, onProgress, playlistToggle, queueDelete, updateQueueYoutubeDL, queueMoveUpAnswer, queueUpdate, setAreControls, setDuration, successMessage, videoChangeAnswer, warningMessage, updateCurrentVideo, iFrameVideoToggle } from "../../redux/playerState";
 import CenterPlayButton from "./CustomPlayer/CenterPlayButton";
 
 
@@ -150,6 +150,10 @@ const PlayerAndChat = () => {
 			dispatch(isLiveToggle(true))
 		})
 
+		socket.on('iFrameVideoToggleAnswer', (answer)=>{
+			dispatch(iFrameVideoToggle(answer))
+		})
+
 
 		return () => {
 			socket.off(`joinRoomAnswer`);
@@ -169,6 +173,7 @@ const PlayerAndChat = () => {
 			socket.off('serverTimeToggleAnswer')
 			socket.off('updateQueueYoutubeDL')
 			socket.off('updateCurrentVideoYoutubeDL')
+			socket.off('iFrameVideoToggleAnswer')
 		};
 		// eslint-disable-next-line
 	}, [currentRoom, admin, socket, maxDelay, nickname,isPlaying]);

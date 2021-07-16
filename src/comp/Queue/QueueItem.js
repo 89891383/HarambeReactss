@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { DataContext } from "../../App";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import CodeIcon from '@material-ui/icons/Code';
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import { IconButton, makeStyles, Tooltip } from "@material-ui/core";
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
@@ -17,7 +18,7 @@ const useStyles = makeStyles({
 
 const QueueItem = ({ item,index }) => {
 	const classes = useStyles();
-	const { URL, title, addedBy, thumbnail, duration,noData ,id } = item;
+	const { URL, title, addedBy, thumbnail, duration,noData,iframe ,id } = item;
 
 	const formatTime = (time) =>{
         return time < 10 ? `0${time}` : time
@@ -59,6 +60,18 @@ const QueueItem = ({ item,index }) => {
 		if(admin && index){
 			socket.emit('queueMoveUp', id)
 		}
+	}
+
+	const handleiFrame  = () =>{
+		if(admin){
+			socket.emit('iFrameVideoToggle', id)
+		}
+	}
+
+	const iFrameStyles = iframe ? {
+		color:'#90be6d'
+	} : {
+		color:'white'
 	}
 
 	const checkThumbnail = thumbnail || noImg
@@ -121,6 +134,17 @@ const QueueItem = ({ item,index }) => {
 								<ArrowUpwardIcon/>
 							</Tooltip>
 							</IconButton> : false}
+
+						<IconButton 
+						classes={classes.iconButton} 
+						onClick={handleiFrame}
+						style={iFrameStyles}
+						>
+							<Tooltip enterDelay={0} title="iFrame" >
+								<CodeIcon/>
+							</Tooltip>
+						</IconButton>
+
 
 
 						<IconButton

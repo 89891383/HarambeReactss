@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
+    firstInteraction: false,
     admin: false,
     isPlaying: false,
     maxDelay: 2,
@@ -41,6 +42,10 @@ export const counterSlice = createSlice({
   name: 'playerState',
   initialState,
   reducers: {
+
+    loadPlayer: (state)=>{
+        state.firstInteraction = true
+    },
 
     changePlaying: (state, action) =>{
         state.isPlaying = action.payload
@@ -97,7 +102,6 @@ export const counterSlice = createSlice({
         state.isServerTime = isServerTime
         state.isLive = isLive
         state.currentAvailableFormats = currentAvailableFormats
-
     },
 
     changeOnlineUsers: (state,action) =>{
@@ -178,9 +182,12 @@ export const counterSlice = createSlice({
     },
 
     updateCurrentVideo: (state,action)=>{
-        const {id, formats} = action.payload
+        const {id, formats,duration} = action.payload
         if(state.currentVideoID === id ){
             state.currentAvailableFormats = formats
+            if(duration === 'LIVE'){
+                state.isLive = true
+            }
         }
     },
 
@@ -280,6 +287,6 @@ export const counterSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {  
-    changePlaying,changeiFrame,changePlaybackRate,changeCurrentVideoLink,changeVideoQueue,changeServerTime,changePlaylistOpen,joinRoomAnswer,changeOnlineUsers,setTwitchUserData,successMessage,errorMessage,warningMessage,videoChangeAnswer,queueUpdate,queueMoveUpAnswer,queueDelete,playlistToggle,isLiveToggle,setDuration,setAreControls,setVideoProgress,changeLiveDuration,changeProgress,changeIsLoading,changeVolume,changeCurrentChat,togglePlaying,changeVideoTitle,hiddenChatToggle,changeNickname,dialogOpenToggle,historyOpenToggle,changeIsError,changeIsSuccess,changeIsWarning,onProgress,changeMaxDelay,updateQueueYoutubeDL,changeQuality,updateCurrentVideo } = counterSlice.actions
+    changePlaying,changeiFrame,changePlaybackRate,changeCurrentVideoLink,changeVideoQueue,changeServerTime,changePlaylistOpen,joinRoomAnswer,changeOnlineUsers,setTwitchUserData,successMessage,errorMessage,warningMessage,videoChangeAnswer,queueUpdate,queueMoveUpAnswer,queueDelete,playlistToggle,isLiveToggle,setDuration,setAreControls,setVideoProgress,changeLiveDuration,changeProgress,changeIsLoading,changeVolume,changeCurrentChat,togglePlaying,changeVideoTitle,hiddenChatToggle,changeNickname,dialogOpenToggle,historyOpenToggle,changeIsError,changeIsSuccess,changeIsWarning,onProgress,changeMaxDelay,updateQueueYoutubeDL,changeQuality,updateCurrentVideo,loadPlayer } = counterSlice.actions
 
 export default counterSlice.reducer

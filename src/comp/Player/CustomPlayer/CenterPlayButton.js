@@ -15,7 +15,7 @@ const CenterPlayButton = () => {
 
     return (
 
-            <div className="playVideo">
+            <div className="centerPlayButton">
                 <PlayArrowIcon className={classes.playButton} />
             </div>
 

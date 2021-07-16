@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeiFrame, changeIsLoading, changeOnlineUsers, changePlaybackRate, changePlaying, changeServerTime, isLiveToggle, joinRoomAnswer, onProgress, playlistToggle, queueDelete, updateQueueYoutubeDL, queueMoveUpAnswer, queueUpdate, setAreControls, setDuration, successMessage, videoChangeAnswer, warningMessage, updateCurrentVideo } from "../../redux/playerState";
 import CenterPlayButton from "./CustomPlayer/CenterPlayButton";
 
+
 const PlayerAndChat = () => {
 
 	const { isPlaying, iFrame, currentVideoLink, admin, playbackRate, isLive, areControls, duration, videoProgress, volume,nickname, maxDelay, isLoading} = useSelector(state => state.player)
@@ -76,7 +77,9 @@ const PlayerAndChat = () => {
 			(serverAnswer) => {
 
 				dispatch(joinRoomAnswer(serverAnswer))
+				const {timer} = serverAnswer
 
+				synchronizeVideo(player, timer)
 			}
 		);
 
@@ -219,8 +222,9 @@ const PlayerAndChat = () => {
 			const liveDuration  = Math.floor(playedSeconds/played)
 			if(liveDuration !== duration ){
 				if(duration - 2 > liveDuration || duration + 2 < liveDuration){
-					// dispatch(setDuration(liveDuration))
+					dispatch(setDuration(liveDuration))
 					synchronizeVideo(player, liveDuration - 3)
+					console.log('SYNC');
 					if(!isLive){
 						dispatch(isLiveToggle(true))
 						socket.emit('liveVideo')
@@ -260,6 +264,8 @@ const PlayerAndChat = () => {
 	return (
 		<>
 			<div className="playerAndChat">
+
+
 				{!iFrame ?  <div 
 					className="player-wrapper" 
 					onMouseMove={handleShowControls} 
@@ -301,7 +307,7 @@ const PlayerAndChat = () => {
 								/>
 					</CSSTransition>
 				
-
+						
 						{/* LOADING IS OUT OF CUSTOM PLAYER TO BE SEEN IF IT IS HIDDEN */}
 						{isLoading && currentVideoLink && <div 	className="loading">
 						<CircularProgress size={60} />

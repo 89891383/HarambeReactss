@@ -16,6 +16,7 @@ import HistoryDialog from "./comp/History/HistoryDialog";
 import {  useDispatch, useSelector } from 'react-redux'
 
 import { changeNickname, errorMessage, setTwitchUserData, successMessage, warningMessage } from "./redux/playerState";
+import ClickToLoad from "./comp/Player/ClickToLoad";
 export const DataContext = React.createContext();
 
 const socket = io(`/`);
@@ -25,7 +26,7 @@ const App = () => {
 
 	const history = useHistory();
 
-	const { hiddenChat } = useSelector(state => state.player)
+	const { hiddenChat,firstInteraction } = useSelector(state => state.player)
 
 	const dispatch = useDispatch()
 
@@ -77,7 +78,10 @@ const App = () => {
 			>
 				<div className="app">
 					<div className="playerAndControls">
-						<PlayerAndChat />
+
+					{firstInteraction ? <PlayerAndChat/> : <ClickToLoad/>}
+						{/* <ClickToLoad/>
+						<PlayerAndChat /> */}
 						<div className="bottomDiv">
 							<AdminPanel />
 						</div>

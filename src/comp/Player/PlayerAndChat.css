@@ -3,6 +3,7 @@
 	flex-direction: column;
 	background-color: #121212;
 	height: 100vh;
+	position: relative;
 }
 .videoTitle {
 	background-color: black;
@@ -53,6 +54,26 @@
 }
 .delayManageOptionIncrement:hover {
 	background-color: #90be6d;
+}
+
+
+.clickToLoad{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: #111;
+	z-index: 100;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	font-weight: 800;
+	font-size: 25px;
+	transition: 0.3s ease-in-out color;
+}
+.clickToLoad:hover{
+	color:#3f50b5;
+	cursor: pointer;
 }
 
 @media (max-width: 720px) {

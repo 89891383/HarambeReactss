@@ -35,6 +35,7 @@
     align-items: center;
     position: relative;
     margin: 0 10px;
+    border-radius: 5px;
 }
 
 .currentProgress{
@@ -57,6 +58,7 @@
     background-color: rgb(63,81,181);
     transform: translateX(-50%);
     box-shadow: 0 0 2px black;
+    transition: 0.3s ease-in-out;
 }
 .loadedProgress{
     width: 100%;
@@ -70,12 +72,15 @@
     border-radius: 5px;
 }
 
+
 .progressBackground{
     width: 100%;
     background-color: rgba(255, 255, 255, 0.35);
     height: 100%;
     border-radius: 5px;
 }
+
+
 
 .showTime{
     display: flex;
@@ -204,7 +209,7 @@
 
 }
 
-.playVideo{
+.centerPlayButton{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -216,55 +221,49 @@
     align-items: center;
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.205);
-    /* pointer-events: none; */
     backdrop-filter: blur(5px);
-
+    transition: 0.3s ease-in-out color 0.3s ease-in-out backdrop-filter;
+}
+.customPlayer:hover ~ .centerPlayButton{
+    color: rgb(63,81,181);
 }
 
 
 .controls-enter {
     opacity: 0;
-    /* transform: translateY(40px); */
   }
   .controls-enter-active {
     opacity: 1;
     transition: opacity 200ms, transform 200ms ;
-    /* transform: translateY(0%); */
 
   }
   .controls-exit {
     opacity: 1;
-    /* transform: translateY(0%); */
   }
   .controls-exit-active {
     opacity: 0;
     transition: opacity 200ms, transform 200ms;
-    /* transform: translateY(40px); */
   }
 
   .sliderFadeIn-enter {
     opacity: 0;
     width: 0;
-    /* transform: translateY(40px); */
   }
 
   .sliderFadeIn-enter-active {
     opacity: 1;
     width: 50px;
     transition: opacity 200ms, width 2000ms ;
-    /* transform: translateY(0%); */
 
   }
   .sliderFadeIn-exit {
     opacity: 1;
     width: 50px;
-    /* transform: translateY(0%); */
   }
   .sliderFadeIn-exit-active {
     opacity: 0;
     width: 0;
     transition: opacity 200ms, width 2000ms;
-    /* transform: translateY(40px); */
   }
 
 
@@ -272,7 +271,4 @@
     .durationBar{
         font-size: 12px;
     }
-    /* .controls{
-        transform: scale(0.9);
-    } */
 }

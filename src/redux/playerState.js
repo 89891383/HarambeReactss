@@ -90,8 +90,8 @@ export const counterSlice = createSlice({
     },
 
     joinRoomAnswer: (state, action)=>{
-        const {iframe, currentVideo, title, queue, isAdmin, isServerTime, isPlaylistOpen, isPlaying, playbackRate, isLive,currentAvailableFormats } = action.payload
-        state.iFrame = iframe
+        const {iFrame, currentVideo, title, queue, isAdmin, isServerTime, isPlaylistOpen, isPlaying, playbackRate, isLive,currentAvailableFormats } = action.payload
+        state.iFrame = iFrame
         state.currentVideoLink = currentVideo
         state.admin = isAdmin
         state.playbackRate = playbackRate
@@ -128,7 +128,7 @@ export const counterSlice = createSlice({
     },
 
     videoChangeAnswer: (state, action)=>{
-        const { currentVideoLink, queue, title, formats,id } = action.payload
+        const { currentVideoLink, queue, title, formats,id,iFrame } = action.payload
 
         state.duration = 0
         state.progress = 0
@@ -138,6 +138,7 @@ export const counterSlice = createSlice({
         state.videoQueue = queue
         state.currentAvailableFormats = formats
         state.currentVideoID = id
+        state.iFrame = iFrame
         if(title){
             state.videoTitle = title
         }else{
@@ -281,10 +282,10 @@ export const counterSlice = createSlice({
     },
 
     iFrameVideoToggle: (state,action)=>{
-        const {id, iframe} = action.payload
+        const {id, iFrame} = action.payload
         state.videoQueue.forEach(video=>{
             if(video.id === id){
-                video.iframe = iframe
+                video.iFrame = iFrame
             }
         })
     }

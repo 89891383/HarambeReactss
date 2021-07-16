@@ -20,7 +20,7 @@ const QueueItem = ({ item,index }) => {
 	const classes = useStyles();
 
 
-	const { URL, title, addedBy, thumbnail, duration,noData,iframe ,id } = item;
+	const { URL, title, addedBy, thumbnail, duration,noData,iFrame ,id } = item;
 
 	const formatTime = (time) =>{
         return time < 10 ? `0${time}` : time
@@ -75,7 +75,7 @@ const QueueItem = ({ item,index }) => {
 		}
 	}
 
-	const iFrameStyles = iframe ? {
+	const iFrameStyles = iFrame ? {
 		color:'#90be6d'
 	} : {
 		color:'white'

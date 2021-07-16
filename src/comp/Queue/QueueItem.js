@@ -18,6 +18,8 @@ const useStyles = makeStyles({
 
 const QueueItem = ({ item,index }) => {
 	const classes = useStyles();
+
+
 	const { URL, title, addedBy, thumbnail, duration,noData,iframe ,id } = item;
 
 	const formatTime = (time) =>{
@@ -43,6 +45,11 @@ const QueueItem = ({ item,index }) => {
 	const {admin} = useSelector(state=> state.player)
 
 	const { socket } = useContext(DataContext);
+
+
+	// STYLES FOR TEXT OVERFLOW EMPHASIS
+	const queueItemStyle = admin ? {width:'calc(100% - 225px)'} : {width:'95%'}
+
 
 	const handleDeleteItemFromQueue = () => {
 		if (admin) {
@@ -86,7 +93,8 @@ const QueueItem = ({ item,index }) => {
 	return (
 		<>
 			<div className="queueItem">
-				<div className="videoImgAndInfo_Container">
+				<div className="videoImgAndInfo_Container" 
+				style={queueItemStyle} >
 					<div className="videoImg">
 						<img
 							src={checkThumbnail}

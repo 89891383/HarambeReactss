@@ -1,7 +1,7 @@
 import React from "react";
 import "./Options.css";
 import SettingsIcon from "@material-ui/icons/Settings";
-import { IconButton, makeStyles, Tooltip } from "@material-ui/core";
+import { IconButton, makeStyles, Tooltip, Zoom } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { dialogOpenToggle } from "../../../redux/playerState";
 
@@ -33,6 +33,7 @@ const Options = () => {
 					placement="bottom"
 					className={classes.toolTip}
 					enterDelay={0}
+					TransitionComponent={Zoom}
 				>
 					<SettingsIcon />
 				</Tooltip>

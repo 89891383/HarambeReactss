@@ -3,7 +3,7 @@ import { DataContext } from "../../App";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import CodeIcon from '@material-ui/icons/Code';
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import { IconButton, makeStyles, Tooltip } from "@material-ui/core";
+import { IconButton, makeStyles, Tooltip, Zoom } from "@material-ui/core";
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import "./Queue.css";
 import noImg from "./noImg.jpg";
@@ -104,7 +104,7 @@ const QueueItem = ({ item,index }) => {
 					</div>
 
 				
-						<Tooltip title={`Added by: ${addedBy}`} placement="bottom">
+						<Tooltip title={`Added by: ${addedBy}`} placement="bottom" TransitionComponent={Zoom} >
 							<div className="queueItemInfo">
 								<a href={URL} target="_blank" rel="noopener noreferrer">
 									{checkTitle}
@@ -131,14 +131,14 @@ const QueueItem = ({ item,index }) => {
 				{admin && (
 					<div className="queueItemButtons">
 						<IconButton onClick={handlePlayNow} className={classes.iconButton}>
-							<Tooltip title="Play now" enterDelay={0}>
+							<Tooltip title="Play now" enterDelay={0} TransitionComponent={Zoom} >
 								<PlayArrowIcon />
 							</Tooltip>
 						</IconButton>
 
 						{index ?
 							<IconButton className={classes.iconButton} onClick={handleMoveUp} >
-							<Tooltip title={'Move up'} enterDelay={0} >
+							<Tooltip title={'Move up'} enterDelay={0} TransitionComponent={Zoom} >
 								<ArrowUpwardIcon/>
 							</Tooltip>
 							</IconButton> : false}
@@ -148,7 +148,7 @@ const QueueItem = ({ item,index }) => {
 						onClick={handleiFrame}
 						style={iFrameStyles}
 						>
-							<Tooltip enterDelay={0} title="iFrame" >
+							<Tooltip enterDelay={0} title="iFrame" TransitionComponent={Zoom} >
 								<CodeIcon/>
 							</Tooltip>
 						</IconButton>
@@ -159,7 +159,7 @@ const QueueItem = ({ item,index }) => {
 							className={classes.iconButton}
 							onClick={handleDeleteItemFromQueue}
 						>
-							<Tooltip enterDelay={0} title="Delete from queue">
+							<Tooltip enterDelay={0} title="Delete from queue" TransitionComponent={Zoom} >
 								<DeleteForeverIcon />
 							</Tooltip>
 						</IconButton>

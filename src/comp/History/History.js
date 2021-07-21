@@ -1,7 +1,7 @@
 import React from "react";
 import "./History.css";
 import HistoryIcon from "@material-ui/icons/History";
-import { IconButton, makeStyles, Tooltip } from "@material-ui/core";
+import { IconButton, makeStyles, Tooltip, Zoom } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { historyOpenToggle } from "../../redux/playerState";
 
@@ -22,7 +22,7 @@ const History = () => {
 
 	return (
 		<IconButton className={classes.historyBtn} onClick={handleToggleHistory}>
-			<Tooltip title={"History"} enterDelay={0}>
+			<Tooltip title={"History"} enterDelay={0} TransitionComponent={Zoom} >
 				<HistoryIcon />
 			</Tooltip>
 		</IconButton>

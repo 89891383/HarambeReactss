@@ -4,15 +4,10 @@ import React from "react";
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
 import { useEffect,useState } from "react";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Typography, Zoom } from "@material-ui/core";
 import Tooltip from '@material-ui/core/Tooltip';
 import { useDispatch, useSelector } from "react-redux";
 import { changeCurrentChat } from "../redux/playerState";
-// import Profile from "./Profile/Profile";
-// import History from "./History/History";
-// import Options from "./AdminPanel/Options/Options";
-
-
 
 let pingInterval;
 
@@ -37,6 +32,16 @@ const useStyles = makeStyles({
 		'100%':{
 			opacity:'0.6'
 		},
+	},
+	onlineUsers:{
+		position:'absolute',
+		pointerEvents:'none',
+		top:'11px',
+		left:'10px',
+		color:'grey',
+		backgroundColor:'#121212',
+		padding:'6px 10px',
+		borderRadius:'5px',
 	}
 })
 
@@ -57,13 +62,10 @@ const TwitchChat = () => {
 	}
 
 
-	// const [currentChat, setCurrentChat] = useState('victorowsky_');
-
 	useEffect(()=>{
 		socket.on('changeTwitchChatAnswer', (currentChatAnswer)=>{
 			if(currentChat !== currentChatAnswer ){
 				dispatch(changeCurrentChat(currentChatAnswer))
-				// setCurrentChat(currentChatAnswer)
 			}
 		})
 		socket.emit('getCurrentChat')
@@ -105,10 +107,18 @@ const TwitchChat = () => {
 
 
 	const syncStatus = isServerTime ? 
-	<Tooltip title={`SYNC ON, ${ping}ms`} enterDelay={0}>
+	<Tooltip 
+		title={`SYNC ON, ${ping}ms`} 
+		enterDelay={0} 
+		TransitionComponent={Zoom} 
+	>
 		<CheckCircleIcon className={classes.syncOn} />
 	</Tooltip> 
-	: <Tooltip title={`SYNC OFF, ${ping}ms`} enterDelay={0}>
+	: <Tooltip 
+		title={`SYNC OFF, ${ping}ms`} 
+		enterDelay={0} 
+		TransitionComponent={Zoom} 
+	  >
 		<ErrorIcon className={classes.syncOff} />
 	</Tooltip> 
 
@@ -116,17 +126,9 @@ const TwitchChat = () => {
 	return (
 			<div className="twitchChat">
 
-				{/* <div className="sideOptions">
-					{twitchUserData && <Profile />}
-					<History />
-					{admin && <Options />}
-				</div> */}
-				{/* <SideOptions/> */}
-
-
-				<span className="onlineUsers">
+				<Typography className={classes.onlineUsers}variant="body2" >
 					{onlineUsers ? `${onlineUsers} ONLINE` : "CONNECTING"}
-				</span>
+				</Typography>
 				<span className="syncStatus" onMouseEnter={handleCheckPing} onMouseLeave={()=> clearInterval(pingInterval)} >
 					{syncStatus}
 				</span>

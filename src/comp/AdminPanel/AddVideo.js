@@ -10,8 +10,37 @@ import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
 import QueueIcon from "@material-ui/icons/Queue";
 import { useSelector } from "react-redux";
+import { makeStyles, TextField, Typography } from "@material-ui/core";
+
+const useStyles = makeStyles({
+	textField:{
+		color:'white',
+		margin:'10px 0',
+		'& .MuiOutlinedInput-root': {
+			'& fieldset': {
+			  borderColor: 'white',
+			},
+			'&:hover fieldset': {
+				borderColor: '#757ce8',
+			  },
+			  '&.Mui-focused fieldset': {
+				borderColor: '#3f50b5',
+			  },
+		
+		}
+	},
+	input: {
+		color:'white',
+	
+	},
+	inputLabel:{
+		color:'white'
+	}
+})
 
 const AddVideo = ({ isAddVideo, setIsAddVideo }) => {
+
+	const classes = useStyles()
 
 	const { admin,nickname } = useSelector(state=> state.player)
 
@@ -54,32 +83,47 @@ const AddVideo = ({ isAddVideo, setIsAddVideo }) => {
 	return (
 		<Popout state={isAddVideo} setState={()=> setIsAddVideo(false)}>
 			<form className="addVideo_Form">
-				<h1>ADD VIDEO</h1>
+				<Typography variant="h4" gutterBottom >
+					Add your video to queue
+				</Typography>
 				<hr />
 				<div className="inputsDiv">
-					<label htmlFor="videoLink">Enter video URL</label>
-					<input
-						type="text"
+					<TextField 
+						label="Enter video URL"
 						value={editVideoLink}
-						placeholder={"URL"}
-						autoComplete="off"
 						onChange={(e) => {
 							setEditVideoLink(e.target.value);
 						}}
-						name="videoLink"
+						autoComplete="off"
+						color="primary"
+						inputProps={{
+							className:classes.input
+						}}
+						InputLabelProps={{
+							className:classes.inputLabel
+						}}
+						className={classes.textField}
+						variant="outlined"
 					/>
-					<label htmlFor="videoLink">Enter video title</label>
 
-					<input
-						type="text"
+					<TextField
+						label="Title"
 						value={videoTitle}
 						autoComplete="off"
-						placeholder={"TITLE"}
 						onChange={(e) => {
 							setVideoTitle(e.target.value);
 						}}
-					/>		
+						inputProps={{
+							className:classes.input
+						}}
+						InputLabelProps={{
+							className:classes.inputLabel
+						}}
+						className={classes.textField}
+						variant="outlined"
 					
+					/>	
+									
 				</div>
 
 				<button

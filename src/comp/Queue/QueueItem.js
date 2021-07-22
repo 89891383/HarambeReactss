@@ -3,7 +3,7 @@ import { DataContext } from "../../App";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import CodeIcon from '@material-ui/icons/Code';
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import { IconButton, makeStyles, Tooltip, Zoom } from "@material-ui/core";
+import { IconButton, makeStyles, Tooltip, Typography, Zoom } from "@material-ui/core";
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import "./Queue.css";
 import noImg from "./noImg.jpg";
@@ -94,7 +94,8 @@ const QueueItem = ({ item,index }) => {
 		<>
 			<div className="queueItem">
 				<div className="videoImgAndInfo_Container" 
-				style={queueItemStyle} >
+				style={queueItemStyle} 
+				>
 					<div className="videoImg">
 						<img
 							src={checkThumbnail}
@@ -105,11 +106,15 @@ const QueueItem = ({ item,index }) => {
 
 				
 						<Tooltip title={`Added by: ${addedBy}`} placement="bottom" TransitionComponent={Zoom} >
-							<div className="queueItemInfo">
-								<a href={URL} target="_blank" rel="noopener noreferrer">
+							<Typography variant="h5" noWrap>
+								<a 
+									href={URL} 
+									target="_blank" 
+									rel="noopener noreferrer"
+								>
 									{checkTitle}
 								</a>
-							</div>
+							</Typography>
 						</Tooltip>
 
 						{duration && (

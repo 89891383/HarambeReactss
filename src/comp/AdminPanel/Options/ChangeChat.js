@@ -1,4 +1,4 @@
-import { Button, IconButton, makeStyles } from '@material-ui/core';
+import { Button, IconButton, makeStyles, TextField, Typography } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import {DataContext} from '../../../App'
@@ -28,7 +28,30 @@ const useStyles = makeStyles({
         "&:hover":{
             border:'1px solid #6441a5'
         }
-    }
+    },
+    textField:{
+		color:'white',
+		margin:'10px 0',
+		'& .MuiOutlinedInput-root': {
+			'& fieldset': {
+			  borderColor: 'white',
+			},
+			'&:hover fieldset': {
+				borderColor: '#757ce8',
+			  },
+			  '&.Mui-focused fieldset': {
+				borderColor: '#3f50b5',
+			  },
+		
+		}
+	},
+    input: {
+		color:'white',
+	
+	},
+	inputLabel:{
+		color:'white'
+	}
 
 })
 
@@ -71,11 +94,23 @@ const ChangeChat = () => {
                 </IconButton>
 
 
-                <h2>Change chat:</h2>
 
+
+                <Typography variant="h4" >
+                Change chat:
+                </Typography>
 
                 <form>
-                    <input type="text" value={newChat} onChange={(e)=>{setNewChat(e.target.value)}} />
+
+                    <TextField 
+                        className={classes.textField}
+                        inputProps={{className:classes.input}}
+                        InputLabelProps={{className:classes.inputLabel}}
+                        value={newChat} 
+                        onChange={(e)=>{setNewChat(e.target.value)}}
+                        variant="outlined"
+                        label="Enter new chatroom"
+                    />
                     <button onClick={handleChangeChat} style={{display:'none'}}></button>
                 </form>
 

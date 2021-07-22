@@ -14,7 +14,7 @@ import CenterPlayButton from "./CustomPlayer/CenterPlayButton";
 
 
 const PlayerAndChat = () => {
-
+	 
 	const { isPlaying, iFrame, currentVideoLink, admin, playbackRate, isLive, areControls, duration, videoProgress, volume,nickname, maxDelay, isLoading} = useSelector(state => state.player)
 
 	const dispatch = useDispatch()

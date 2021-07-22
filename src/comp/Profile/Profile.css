@@ -17,11 +17,7 @@
 	text-decoration: none;
 	color: white;
 }
-.accountInfo img {
-	width: 50px;
-	min-height: 50px;
-	border-radius: 50%;
-}
+
 .profileIcon {
 	padding: 12px;
 	width: 48px;

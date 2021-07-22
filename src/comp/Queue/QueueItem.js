@@ -14,6 +14,9 @@ const useStyles = makeStyles({
 		color: "white",
 		transition: "0.3s",
 	},
+	typography:{
+		fontWeight:'700'
+	}
 });
 
 const QueueItem = ({ item,index }) => {
@@ -106,7 +109,11 @@ const QueueItem = ({ item,index }) => {
 
 				
 						<Tooltip title={`Added by: ${addedBy}`} placement="bottom" TransitionComponent={Zoom} >
-							<Typography variant="h5" noWrap>
+							<Typography 
+								variant="h5" 
+								noWrap
+								className={classes.typography}
+							>
 								<a 
 									href={URL} 
 									target="_blank" 

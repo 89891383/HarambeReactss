@@ -8,10 +8,7 @@ import Success from "./comp/Snackbars/Success";
 import Error from "./comp/Snackbars/Error";
 import Warning from "./comp/Snackbars/Warning";
 import TwitchChat from "./comp/TwitchChat";
-// import Options from "./comp/AdminPanel/Options/Options";
 import OptionsDialog from "./comp/AdminPanel/Options/OptionsDialog";
-// import Profile from "./comp/Profile/Profile";
-// import History from "./comp/History/History";
 import HistoryDialog from "./comp/History/HistoryDialog";
 import {  useDispatch, useSelector } from 'react-redux'
 

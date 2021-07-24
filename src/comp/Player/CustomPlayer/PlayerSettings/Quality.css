@@ -4,7 +4,7 @@
 
 .playerSettingsDialog{
     position: absolute;
-    top: 0;
+    top: 0%;
     left:0%;
     transform:translate(-25%,-100%);
     background-color: black;
@@ -24,7 +24,6 @@
 .formatOption{
 	padding: 15px 20px;
     cursor: pointer;
-    /* border-radius: 5px; */
 }
 .formatOption .current{
     background-color: red;

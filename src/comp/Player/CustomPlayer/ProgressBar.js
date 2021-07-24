@@ -8,6 +8,8 @@ const ProgressBar = ({progressRef, isTimeShow, timeToShow, isLive, currentProgre
                         
             {isTimeShow && !isLive && <ShowTime time={timeToShow} />}
             
+
+
                 {isLive ? // IF LIVE WIDTH IS ALAWYS 100%
                     <div 
                         className="currentProgress" 

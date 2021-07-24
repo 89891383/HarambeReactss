@@ -7,6 +7,7 @@ import { useClickAway } from 'react-use';
 // import Delay from './Delay';
 import { useSelector } from 'react-redux';
 import FormatOption from './FormatOption';
+import "../../../../App.css"
 
 
 const useStyles = makeStyles({
@@ -29,6 +30,9 @@ const useStyles = makeStyles({
             backgroundColor:'white',
             color:'red'
         }
+    },
+    qualityDialog:{
+        transform:'translate(-25%, -100%)'
     }
 })
 
@@ -67,12 +71,16 @@ const Quality = () => {
 
 
             
-            <CSSTransition in={isOpen} unmountOnExit timeout={300} classNames='transition' >
+            <CSSTransition 
+                in={isOpen} 
+                unmountOnExit 
+                timeout={300} 
+                classNames="transition" 
+            >
                 <div className="playerSettingsDialog" onClick={handleClose}>
-                    
-                {createFormats}
-
+                    {createFormats}
                 </div>
+            
             </CSSTransition>
             
 

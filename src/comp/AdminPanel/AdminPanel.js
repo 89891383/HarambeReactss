@@ -51,12 +51,13 @@ const AdminPanel = () => {
 						<SideOptions/>
 						
 
-						{nickname && <Button 
-							variant="outlined" 
-							color="primary"
-							disabled={isDisabled}
-							className={classes.addVideoBtn}
-							onClick={()=>setIsAddVideo(prev=> !prev)}
+						{nickname && 
+							<Button 
+								variant="outlined" 
+								color="primary"
+								disabled={isDisabled}
+								className={classes.addVideoBtn}
+								onClick={()=>setIsAddVideo(prev=> !prev)}
 							>
 								ADD VIDEO
 							</Button>}

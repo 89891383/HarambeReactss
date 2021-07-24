@@ -22,6 +22,7 @@ const Queue = () => {
 				</div>
 			) : (
 				<div className="queue">
+				
 					<div className="emptyQueueText">QUEUE IS EMPTY</div>
 				</div>
 			)}

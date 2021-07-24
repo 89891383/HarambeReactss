@@ -45,7 +45,7 @@ const HistoryDialog = () => {
 	const createHistory = history?.map((video, index) => {
 		const { URL, title } = video;
 		return (
-			<HistoryItem key={index} URL={URL} index={index}>
+			<HistoryItem key={index} URL={URL}>
 				<a href={URL} target="_blank" rel="noopener noreferrer">
 					{title ? title : URL}
 				</a>

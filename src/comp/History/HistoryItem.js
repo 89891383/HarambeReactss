@@ -1,22 +1,9 @@
-import React, { useEffect, useState } from "react";
-const HistoryItem = ({ children, URL, index }) => {
-	const [videoTitle, setVideoTitle] = useState(null);
-
-	useEffect(() => {
-		fetch(`https://noembed.com/embed?url=${URL}`)
-			.then((res) => res.json())
-			.then((res) => {
-				setVideoTitle(res.title);
-			});
-
-		return () => {
-			setVideoTitle(null);
-		};
-	}, [URL]);
+import React from "react";
+const HistoryItem = ({ children, URL }) => {
 
 	return (
 		<div className="historyItem">
-			{videoTitle ? <a href={URL}>{videoTitle}</a> : children}
+			{children}
 		</div>
 	);
 };

@@ -32,7 +32,7 @@ const AccountInfo = () => {
 
     return ( 
         <div className="accountInfo">
-            <Box className={classes.box} >
+            <Box className={classes.box}>
                 <Avatar
                     className={classes.avatar}
                     src={twitchUserData.image} 
@@ -42,7 +42,6 @@ const AccountInfo = () => {
                 </Typography>
             </Box>
             <Button2 onClick={handleLogout}>LOGOUT</Button2>
-
          </div>
      );
 }

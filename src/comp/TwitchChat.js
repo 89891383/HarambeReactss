@@ -54,7 +54,7 @@ const TwitchChat = () => {
 
 	const dispatch = useDispatch()
 
-	const {onlineUsers, isServerTime, currentChat} = useSelector(state=> state.player)
+	const {onlineUsers, isServerTime, currentChat, firstInteraction} = useSelector(state=> state.player)
 
 	const { socket } = useContext(DataContext);
 	let websiteURL = window.location.host; // HEROKU HOSTING
@@ -127,12 +127,18 @@ const TwitchChat = () => {
 	return (
 			<div className="twitchChat">
 
-				<Typography className={classes.onlineUsers}variant="body2" >
-					{onlineUsers ? `${onlineUsers} ONLINE` : "CONNECTING"}
-				</Typography>
-				<span className="syncStatus" onMouseEnter={handleCheckPing} onMouseLeave={()=> clearInterval(pingInterval)} >
+				{firstInteraction && 
+				<>
+					<Typography className={classes.onlineUsers}variant="body2" >
+						{onlineUsers ? `${onlineUsers} ONLINE` : "CONNECTING"}
+					</Typography>
+					
+					<span className="syncStatus" onMouseEnter={handleCheckPing} onMouseLeave={()=> clearInterval(pingInterval)} >
 					{syncStatus}
-				</span>
+					</span>
+				</>
+				}
+				
 				<iframe
 					style={{ border: "2px solid #121212" }}
 					title="TwitchChat"

@@ -1,14 +1,13 @@
 import { Button, IconButton, makeStyles, TextField, Typography } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
-import { CSSTransition } from 'react-transition-group';
 import {DataContext} from '../../../App'
 import CloseIcon from '@material-ui/icons/Close';
+import { Fade } from '@material-ui/core';
 
 const useStyles = makeStyles({
     btn:{
         backgroundColor:'#6441a5',
         color:'white',
-        // width:'100%'
         '&:hover':{
             borderColor:'#6441a5'
         }
@@ -86,10 +85,14 @@ const ChangeChat = () => {
 
 
         {/* INSER NEW ADMIN CONTAINER */}
-        <CSSTransition classNames="transition" in={isOpen} timeout={300} unmountOnExit>
+
+        <Fade in={isOpen} unmountOnExit timeout={300} >
             <div className="insertChat">
 
-                <IconButton className={classes.closeButton} onClick={()=> setIsOpen(false)}>
+                <IconButton 
+                    className={classes.closeButton} 
+                    onClick={()=> setIsOpen(false)}
+                >
                     <CloseIcon/>
                 </IconButton>
 
@@ -120,7 +123,7 @@ const ChangeChat = () => {
                 </Button>
 
             </div>
-        </CSSTransition>
+        </Fade>
         {/* END OF ADMIN CONTAINER */}
         </div>
      );

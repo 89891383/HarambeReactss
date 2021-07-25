@@ -1,9 +1,9 @@
+import { Fade } from "@material-ui/core";
 import { Button, makeStyles } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useContext } from "react";
-import { CSSTransition } from "react-transition-group";
+import { useClickAway } from "react-use";
 import { DataContext } from "../../../App";
-// import { CSSTransition } from "react-transition-group";
 import "./AdminList.css";
 
 const useStyles = makeStyles({
@@ -20,6 +20,12 @@ const AdminList = () => {
 
 	const [adminList, setAdminList] = useState([]);
 
+	const adminListRef = useRef(null)
+
+	useClickAway(adminListRef, ()=>{
+		setIsAdminList(false)
+	})
+
 	useEffect(() => {
 		socket.emit("getAdminList");
 
@@ -32,7 +38,7 @@ const AdminList = () => {
 		};
 	}, [socket]);
 
-	const createAdminList = adminList.map((admin) => {
+	const createAdminList = adminList?.map((admin) => {
 		return (
 			<div className="adminList_Item" key={admin}>
 				{admin}
@@ -47,24 +53,25 @@ const AdminList = () => {
 		<>
 			<div
 				className="adminList"
-				onMouseEnter={() => setIsAdminList(true)}
-				onMouseLeave={() => setIsAdminList(false)}
+				ref={adminListRef}
 			>
-				<Button variant="outlined" className={classes.adminListBtn}>
+				<Button 
+					variant="outlined" 
+					className={classes.adminListBtn}
+					onClick={() => setIsAdminList(prev=> !prev)}
+				>
 					ADMIN LIST
 				</Button>
 
-				<CSSTransition
-					in={isAdminList}
-					unmountOnExit
-					timeout={300}
-					classNames="transition"
-				>
-					<div className="adminListArray" >
-						<h3 className="h3_adminListArray">Admins:</h3>
-						{createAdminList}
+		
+				<Fade in={isAdminList} unmountOnExit timeout={300} >
+					<div>
+						<div className="adminListArray" >
+							<h3 className="h3_adminListArray">Admins:</h3>
+							{createAdminList}
+						</div>
 					</div>
-				</CSSTransition>
+				</Fade>
 			</div>
 		</>
 	);

@@ -1,3 +1,4 @@
+import { Fade } from '@material-ui/core';
 import ShowTime from './ShowTime';
 
 const ProgressBar = ({progressRef, isTimeShow, timeToShow, isLive, currentProgress, loadedSeconds, handleProgressChange, handleToggleShowTimeAbove, handleTimeToShow}) => {
@@ -5,10 +6,14 @@ const ProgressBar = ({progressRef, isTimeShow, timeToShow, isLive, currentProgre
 
         <div className="progressBar" ref={progressRef} >
                             
-                        
-            {isTimeShow && !isLive && <ShowTime time={timeToShow} />}
-            
 
+            {/* {isTimeShow && !isLive && <ShowTime time={timeToShow} />} */}
+            
+            <Fade in={isTimeShow && !isLive} unmountOnExit >
+                <div>
+                    <ShowTime time={timeToShow}  />
+                </div>
+            </Fade>
 
                 {isLive ? // IF LIVE WIDTH IS ALAWYS 100%
                     <div 

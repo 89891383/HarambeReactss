@@ -3,8 +3,8 @@ import {  useState } from "react";
 import "./Profile.css";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import { makeStyles } from "@material-ui/core";
-import { CSSTransition } from "react-transition-group";
 import AccountInfo from "./AccountInfo";
+import { Fade } from "@material-ui/core";
 
 const useStyles = makeStyles({
 	profileIcon: {
@@ -29,16 +29,15 @@ const Profile = () => {
 		>
 			<AccountBoxIcon className={classes.profileIcon} />
 
-			<CSSTransition
-				unmountOnExit
-				classNames="transition"
-				in={isHover}
-				timeout={300}
-			>
 
-				<AccountInfo/>
-		
-			</CSSTransition>
+				<Fade 
+					in={isHover}
+					unmountOnExit
+				>
+					<div>
+						<AccountInfo/>
+					</div>
+				</Fade>
 		</div>
 	);
 };

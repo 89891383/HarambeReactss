@@ -104,7 +104,7 @@ const CustomPlayer = ({playerWrapperRef}) => {
         let seconds  = Math.floor(time - (60 * minutes))
         minutes = formatTime(minutes%60)
         hours = formatTime(hours)
-        seconds = formatTime(seconds) 
+        seconds = formatTime(seconds)   
         return {seconds, minutes, hours}
     }
 
@@ -221,7 +221,9 @@ const CustomPlayer = ({playerWrapperRef}) => {
         if(!admin) return false
         const position = progressRef.current.getBoundingClientRect();
         const procents =  ((e.pageX - position.x)/position.width)
-        setTimeToShow(convertSeconds(Math.floor(procents*duration)));
+        if(procents >= 0){
+            setTimeToShow(convertSeconds(Math.floor(procents*duration)));
+        }
     }
 
 
@@ -235,7 +237,6 @@ const CustomPlayer = ({playerWrapperRef}) => {
 			socket.emit("skipVideo", {nickname});
 		}
 	};
-
 
     const timer = isLive ? 
     <span className='live'>LIVE</span> 
@@ -272,11 +273,11 @@ const CustomPlayer = ({playerWrapperRef}) => {
                {currentVideoLink &&
                     <IconButton onClick={handlePlayScreenMobile} className={classes.mobilePauseVideoButton} >
 
-                    {isPlaying ?
-                    <PauseIcon style={mobileToggleIconStyles} />
-                    : 
-                    <PlayArrowIcon style={mobileToggleIconStyles} />
-                    }
+                        {isPlaying ?
+                            <PauseIcon style={mobileToggleIconStyles} />
+                        : 
+                            <PlayArrowIcon style={mobileToggleIconStyles} />
+                        }
 
                     </IconButton>
                 }
@@ -286,16 +287,17 @@ const CustomPlayer = ({playerWrapperRef}) => {
             <div className="controls" ref={controlsRef}>
 
 
-           {!isLive &&  <ProgressBar // IF LIVE PROGRESS BAR IS OFF
-            progressRef={progressRef} 
-            isTimeShow={isTimeShow} 
-            timeToShow={timeToShow} 
-            isLive={isLive} 
-            currentProgress={currentProgress} 
-            loadedSeconds={loadedSeconds} 
-            handleProgressChange={handleProgressChange} 
-            handleToggleShowTimeAbove={handleToggleShowTimeAbove} 
-            handleTimeToShow={handleTimeToShow}
+           {!isLive &&  
+            <ProgressBar // IF LIVE PROGRESS BAR IS OFF
+                    progressRef={progressRef} 
+                    isTimeShow={isTimeShow} 
+                    timeToShow={timeToShow} 
+                    isLive={isLive} 
+                    currentProgress={currentProgress} 
+                    loadedSeconds={loadedSeconds} 
+                    handleProgressChange={handleProgressChange} 
+                    handleToggleShowTimeAbove={handleToggleShowTimeAbove} 
+                    handleTimeToShow={handleTimeToShow}
             />
             }
 

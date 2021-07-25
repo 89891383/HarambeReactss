@@ -1,3 +1,4 @@
+import { Typography } from "@material-ui/core";
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeQuality } from "../../../../redux/playerState";
@@ -30,7 +31,9 @@ const FormatOption = (item) => {
 
     return ( 
         <div className="formatOption" style={style} onClick={handleChangeQuality}>
-            {format}p
+            <Typography>
+                {format}p
+            </Typography> 
         </div>
      );
 }

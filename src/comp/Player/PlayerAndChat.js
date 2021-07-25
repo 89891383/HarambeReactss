@@ -270,8 +270,8 @@ const PlayerAndChat = () => {
 		<>
 			<div className="playerAndChat">
 
-
-				{!iFrame ?  <div 
+				{!iFrame ?  
+				<div 
 					className="player-wrapper" 
 					onMouseMove={handleShowControls} 
 					onMouseLeave={handleHideControls}
@@ -319,9 +319,14 @@ const PlayerAndChat = () => {
 						</div>} 
 
 
-						{/* IF PAUSE PLAY BUTTON IS ON CENTER OF SCREEN */}
-						<CSSTransition in={!isPlaying && currentVideoLink && !isLoading && !isMobile} classNames="transition" timeout={300} unmountOnExit>
-
+						{/* IF PAUSE PLAY BUTTON IS ON CENTER OF SCREEN |
+						 ONLY FOR DESKTOP */}
+						<CSSTransition 
+							in={!isPlaying && currentVideoLink && !isLoading && !isMobile} 
+							classNames="transition" 
+							timeout={300}
+							unmountOnExit
+						>
 							<CenterPlayButton/>	
 		 
 						</CSSTransition>
@@ -330,7 +335,7 @@ const PlayerAndChat = () => {
 				</div>
 
 				:
-			
+						//  IFRAME PLAYER
 							<AlternativePlayer />
 				}
 				

@@ -1,4 +1,4 @@
-import {  IconButton, makeStyles,  } from '@material-ui/core';
+import {  IconButton, makeStyles } from '@material-ui/core';
 import { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { DataContext } from '../../../App';
@@ -8,13 +8,15 @@ const useStyles = makeStyles({
         fontSize:'16px',
         color:'white',
         fontWeight:'700',
-        letterSpacing:'1px',
         '&:hover':{
             color:'#f94144'
         },
         '@media (max-width: 500px)':{
             display:'none'
         }
+    },
+    liveParagraph:{
+        fontWeight:'700'
     }
 })
 
@@ -33,8 +35,8 @@ const LiveButton = () => {
     }
 
     return ( 
-        <IconButton className={classes.liveButton} onClick={handleLive} >
-            LIVE
+        <IconButton className={classes.liveButton} onClick={handleLive}>
+                LIVE
         </IconButton>
      );
 }

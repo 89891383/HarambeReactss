@@ -14,24 +14,21 @@ const ProgressBar = ({progressRef, isTimeShow, timeToShow, isLive, currentProgre
                     <ShowTime time={timeToShow}  />
                 </div>
             </Fade>
+            
+            <div className="testDiv">
 
-                {isLive ? // IF LIVE WIDTH IS ALAWYS 100%
-                    <div 
-                        className="currentProgress" 
-                        style={{width:'100%'}} >
-                    </div>
-                : 
-                    <div 
-                        className="currentProgress" 
-                        style={{width:`${currentProgress < 100 ? currentProgress : 100}%`}} >
-                    </div>
-                }
-                
+         
+                <div 
+                    className="currentProgress" 
+                    style={{transform:`translateX(${currentProgress < 100 ? -100 + currentProgress : 0}%)`}}
+                >
+                </div>
+            
 
 
-
-                <div className="loadedProgress"
-                    style={{width:`${loadedSeconds < 100 ? loadedSeconds : 100}%`}}
+                <div 
+                    className="loadedProgress"
+                    style={{transform:`translateX(${loadedSeconds < 100 ? -100 + loadedSeconds : 0}%)`}}
                 >
                 </div>
                 <div 
@@ -41,6 +38,9 @@ const ProgressBar = ({progressRef, isTimeShow, timeToShow, isLive, currentProgre
                     onMouseLeave={handleToggleShowTimeAbove}
                     onMouseMove={handleTimeToShow}
                 ></div>
+            </div>
+
+                
 
         
         </div>

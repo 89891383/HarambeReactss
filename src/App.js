@@ -77,8 +77,6 @@ const App = () => {
 					<div className="playerAndControls">
 
 					{firstInteraction ? <PlayerAndChat/> : <ClickToLoad/>}
-						{/* <ClickToLoad/>
-						<PlayerAndChat /> */}
 						<div className="bottomDiv">
 							<AdminPanel />
 						</div>

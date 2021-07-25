@@ -27,8 +27,3 @@ ReactDOM.render(
 	</React.StrictMode>,
 	document.getElementById("root")
 );
-
-// const root = ReactDOM.unstable_createRoot(document.getElementById("root"));
-// root.render(<React.StrictMode>
-// 				<App />
-// 			</React.StrictMode>);

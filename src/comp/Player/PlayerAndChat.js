@@ -11,6 +11,7 @@ import AlternativePlayer from "./AlternativePlayer";
 import { useDispatch, useSelector } from "react-redux";
 import { changeiFrame, changeIsLoading, changeOnlineUsers, changePlaybackRate, changePlaying, changeServerTime, isLiveToggle, joinRoomAnswer, onProgress, playlistToggle, queueDelete, updateQueueYoutubeDL, queueMoveUpAnswer, queueUpdate, setAreControls, setDuration, successMessage, videoChangeAnswer, warningMessage, updateCurrentVideo, iFrameVideoToggle } from "../../redux/playerState";
 import CenterPlayButton from "./CustomPlayer/CenterPlayButton";
+import { isMobile } from "react-device-detect";
 
 
 const PlayerAndChat = () => {
@@ -229,7 +230,6 @@ const PlayerAndChat = () => {
 				if(duration - 2 > liveDuration || duration + 2 < liveDuration){
 					dispatch(setDuration(liveDuration))
 					synchronizeVideo(player, liveDuration - 3)
-					console.log('SYNC');
 					if(!isLive){
 						dispatch(isLiveToggle(true))
 						socket.emit('liveVideo')
@@ -320,7 +320,7 @@ const PlayerAndChat = () => {
 
 
 						{/* IF PAUSE PLAY BUTTON IS ON CENTER OF SCREEN */}
-						<CSSTransition in={!isPlaying && currentVideoLink && !isLoading} classNames="transition" timeout={300} unmountOnExit>
+						<CSSTransition in={!isPlaying && currentVideoLink && !isLoading && !isMobile} classNames="transition" timeout={300} unmountOnExit>
 
 							<CenterPlayButton/>	
 		 

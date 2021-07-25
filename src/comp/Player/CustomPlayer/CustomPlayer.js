@@ -19,6 +19,7 @@ import LiveButton from './LiveButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { hiddenChatToggle, togglePlaying } from '../../../redux/playerState';
 import Quality from './PlayerSettings/Quality';
+import { isMobile, MobileView } from "react-device-detect";
 
 
 const screenfull = require('screenfull');
@@ -57,16 +58,25 @@ const useStyles = makeStyles({
         top:'50%',
         left:'50%',
         transform:'translate(-50%,-50%)',
+    },
+
+    mobilePauseVideoButton:{
+        position:'absolute',
+        top:'50%',
+        left:'50%',
+        transform:'translate(-50%,-50%)',
+        color:'white'
     }
-
-
 })
 
 
-
-
+const mobileToggleIconStyles = {
+    fontSize: '60px',
+    textShadow:'0 0 10px black'
+}
 
 const CustomPlayer = ({playerWrapperRef}) => {
+
 
     const {isLive, isPlaying, progress, duration, playbackRate, videoProgress, admin ,hiddenChat, videoTitle, currentVideoLink,nickname,currentAvailableFormats} = useSelector(state=> state.player)
 
@@ -108,9 +118,15 @@ const CustomPlayer = ({playerWrapperRef}) => {
     const controlsRef = useRef(null)
 
     const handlePlayScreen = (e) =>{
-            if([...e.target.classList].includes("customPlayer")){
-            socket.emit('canPlay')
-            }
+        if(isMobile) return false
+
+        if([...e.target.classList].includes("customPlayer")){
+        socket.emit('canPlay')
+        }
+    }
+
+    const handlePlayScreenMobile = () =>{
+        socket.emit('canPlay')
     }
 
 
@@ -251,9 +267,23 @@ const CustomPlayer = ({playerWrapperRef}) => {
                     </div>
             }
 
+            {/* BUTTON ONLY FOR MOBILE DEVICES  */}
+            <MobileView>
+               {currentVideoLink &&
+                    <IconButton onClick={handlePlayScreenMobile} className={classes.mobilePauseVideoButton} >
+
+                    {isPlaying ?
+                    <PauseIcon style={mobileToggleIconStyles} />
+                    : 
+                    <PlayArrowIcon style={mobileToggleIconStyles} />
+                    }
+
+                    </IconButton>
+                }
+                
+            </MobileView>
+
             <div className="controls" ref={controlsRef}>
-
-
 
 
            {!isLive &&  <ProgressBar // IF LIVE PROGRESS BAR IS OFF
@@ -263,8 +293,11 @@ const CustomPlayer = ({playerWrapperRef}) => {
             isLive={isLive} 
             currentProgress={currentProgress} 
             loadedSeconds={loadedSeconds} 
-            handleProgressChange={handleProgressChange} handleToggleShowTimeAbove={handleToggleShowTimeAbove} handleTimeToShow={handleTimeToShow}
-            />}
+            handleProgressChange={handleProgressChange} 
+            handleToggleShowTimeAbove={handleToggleShowTimeAbove} 
+            handleTimeToShow={handleTimeToShow}
+            />
+            }
 
         
 

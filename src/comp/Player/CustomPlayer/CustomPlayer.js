@@ -89,7 +89,7 @@ const CustomPlayer = ({playerWrapperRef}) => {
 
     const [currentProgress, setCurrentProgress] = useState(0);
     const [isTimeShow, setIsTimeShow] = useState(false);
-    const [timeToShow, setTimeToShow] = useState(null)
+    const [timeToShow, setTimeToShow] = useState(null) // CONVERTED SECONDS
     const [loadedSeconds, setLoadedSeconds] = useState(0);
     const [secondsSkip, setSecondsSkip] = useState(false);
 
@@ -330,8 +330,7 @@ const CustomPlayer = ({playerWrapperRef}) => {
                     <div className="durationBar">
                             {timer}
                     </div>      
-                    
-
+                
 
                     <div className="fullScreen">
 

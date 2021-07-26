@@ -18,6 +18,7 @@ test('firstIntegration click', async ()=>{
     fireEvent.click(clickToStart)
 
     const currentQueueText = screen.getByText(/current queue/i)
+    
 
     expect(currentQueueText).toBeInTheDocument()    
 })

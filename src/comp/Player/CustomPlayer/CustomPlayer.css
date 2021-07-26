@@ -78,13 +78,15 @@
 }
 
 
-.testDiv{
+.progressOverflowDiv{
     position: relative;
     width: 100%;
     height: 10px;
     border-radius: 5px;
     overflow: hidden;
+    transition: 0.3s ease-in-out;
 }
+
 
 .showTime{
     display: flex;

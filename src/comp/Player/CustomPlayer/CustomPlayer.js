@@ -78,7 +78,7 @@ const mobileToggleIconStyles = {
 const CustomPlayer = ({playerWrapperRef}) => {
 
 
-    const {isLive, isPlaying, progress, duration, playbackRate, videoProgress, admin ,hiddenChat, videoTitle, currentVideoLink,nickname,currentAvailableFormats} = useSelector(state=> state.player)
+    const {isLive, isPlaying, progress, duration, playbackRate, admin ,hiddenChat, videoTitle, currentVideoLink,nickname,currentAvailableFormats} = useSelector(state=> state.player)
 
     const dispatch = useDispatch()
 
@@ -87,10 +87,6 @@ const CustomPlayer = ({playerWrapperRef}) => {
     const classes = useStyles()
 
 
-    const [currentProgress, setCurrentProgress] = useState(0);
-    const [isTimeShow, setIsTimeShow] = useState(false);
-    const [timeToShow, setTimeToShow] = useState(null) // CONVERTED SECONDS
-    const [loadedSeconds, setLoadedSeconds] = useState(0);
     const [secondsSkip, setSecondsSkip] = useState(false);
 
 
@@ -157,29 +153,9 @@ const CustomPlayer = ({playerWrapperRef}) => {
     },[dispatch, socket])
 
 
-    useEffect(()=>{
-        const loadedSeconds = videoProgress?.loadedSeconds
-        setLoadedSeconds(loadedSeconds/duration * 100)
-    },[videoProgress,duration])
 
 
 
-    const handleProgressChange = (e) =>{
-        if(!admin || !currentVideoLink || isLive) return false
-        const position = e.target.getBoundingClientRect();
-        const procents =  (e.pageX - position.x)/position.width
-        const time = convertSeconds(duration * procents)
-        const prettyTime = `${time.hours}:${time.minutes}:${time.seconds}`
-        // WARTOSC W PROCENTACH 
-        socket.emit('changeTime', {procents, nickname, prettyTime})
-    }
-
-
-    useEffect(()=>{
-        // PROGRESS BAR ANIMATION
-            setCurrentProgress(progress/duration*100)        
-        
-    },[duration,progress])
 
 
     const handleFullScreen = () =>{
@@ -200,14 +176,6 @@ const CustomPlayer = ({playerWrapperRef}) => {
     },[EscCloseFullScreen])
 
 
-
-    const progressRef = useRef(null)
-
-    const handleToggleShowTimeAbove = () =>{
-        setIsTimeShow(prev=> !prev)
-    }
-
-
     const handleTogglePlayServer = () =>{
         if(!admin){
             return dispatch(togglePlaying())
@@ -217,14 +185,7 @@ const CustomPlayer = ({playerWrapperRef}) => {
 
     }
 
-    const handleTimeToShow = (e) =>{
-        if(!admin) return false
-        const position = progressRef.current.getBoundingClientRect();
-        const procents =  ((e.pageX - position.x)/position.width)
-        if(procents >= 0){
-            setTimeToShow(convertSeconds(Math.floor(procents*duration)));
-        }
-    }
+
 
 
     const handleToggleChat = () =>{
@@ -286,19 +247,9 @@ const CustomPlayer = ({playerWrapperRef}) => {
 
             <div className="controls" ref={controlsRef}>
 
-
-           {!isLive &&  
-            <ProgressBar // IF LIVE PROGRESS BAR IS OFF
-                    progressRef={progressRef} 
-                    isTimeShow={isTimeShow} 
-                    timeToShow={timeToShow} 
-                    isLive={isLive} 
-                    currentProgress={currentProgress} 
-                    loadedSeconds={loadedSeconds} 
-                    handleProgressChange={handleProgressChange} 
-                    handleToggleShowTimeAbove={handleToggleShowTimeAbove} 
-                    handleTimeToShow={handleTimeToShow}
-            />
+            {!isLive &&  
+                <ProgressBar/>
+                // IF LIVE PROGRESS BAR IS OFF 
             }
 
         

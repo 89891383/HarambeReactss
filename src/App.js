@@ -30,9 +30,12 @@ const theme = createTheme({
 				color:'white'
 			},
 			thumb:{
-				color:'white'
+				color:'white',
+				'&:focus, &:hover, &$active': {
+					boxShadow: 'none',
+				},
 			},
-			mark:{
+			marked:{
 				color:'transparent'
 			}
 		}

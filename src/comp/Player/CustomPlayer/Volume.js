@@ -53,14 +53,14 @@ const Volume = () => {
 
     return ( 
         <div className="volumeBar" onMouseEnter={toggleSlider} onMouseLeave={toggleSlider}
-        style={isSlider ? {width:"200px"} : {width:'40px'}}
+        style={isSlider ? {width:"180px"} : {width:'40px'}}
         >
             <Box  onClick={handleMute} className={classes.box} >
                  {volume ? <VolumeUpIcon /> : <VolumeOffIcon/> }
             </Box>
             
                 {isSlider && 
-                    <div style={{width:'120px'}}>
+                    <div style={{width:'120px', display:'flex'}}>
                         <Slider min={0} max={1} step={0.01} value={volume} onChange={handleVolume} />
                     </div>
                 }

@@ -14,9 +14,28 @@ import {  useDispatch, useSelector } from 'react-redux'
 
 import { changeNickname, errorMessage, setTwitchUserData, successMessage, warningMessage } from "./redux/playerState";
 import ClickToLoad from "./comp/Player/ClickToLoad";
+import { createTheme, ThemeProvider } from "@material-ui/core";
 export const DataContext = React.createContext();
 
 const socket = io(`/`);
+
+const theme = createTheme({
+	overrides:{
+		MuiSlider:{
+			colorPrimary:'red',
+			rail:{
+				color:'white'
+			},
+			track:{
+				color:'white'
+			},
+			thumb:{
+				color:'white'
+			}
+		}
+	}
+
+})
 
 
 const App = () => {
@@ -66,6 +85,8 @@ const App = () => {
 
 
 	return (
+		<ThemeProvider theme={theme} >
+
 			<DataContext.Provider
 				value={{
 					websiteURL,		
@@ -96,6 +117,8 @@ const App = () => {
 				<Error />
 				<Warning />
 			</DataContext.Provider>
+		</ThemeProvider>
+
 	);
 };
 

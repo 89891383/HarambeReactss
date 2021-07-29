@@ -292,7 +292,7 @@ const CustomPlayer = ({playerWrapperRef}) => {
 
                     <div className="fullScreen">
 
-                        {!isLive && admin && <LiveButton/>}
+                        {!isLive &&  admin && <LiveButton/>}
 
 
                         {!isLive && ( // IF LIVE PLAYBACKRATE IS OFF

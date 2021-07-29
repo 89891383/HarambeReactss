@@ -13,6 +13,9 @@ const useStyles = makeStyles({
         transition:'300ms',
         '&:hover':{
             backgroundColor:'rgba(255, 255, 255, 0.3);'
+        },
+        "@media (max-width:600px)":{
+            display:'none'
         }
     }
 })

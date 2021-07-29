@@ -6,7 +6,7 @@ import { DataContext } from "../../App";
 import CustomPlayer from "./CustomPlayer/CustomPlayer";
 import "./PlayerAndChat.css";
 import { useIdle } from 'react-use';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, Fade } from '@material-ui/core';
 import AlternativePlayer from "./AlternativePlayer";
 import { useDispatch, useSelector } from "react-redux";
 import { changeiFrame, changeIsLoading, changeOnlineUsers, changePlaybackRate, changePlaying, changeServerTime, isLiveToggle, joinRoomAnswer, onProgress, playlistToggle, queueDelete, updateQueueYoutubeDL, queueMoveUpAnswer, queueUpdate, setAreControls, setDuration, successMessage, videoChangeAnswer, warningMessage, updateCurrentVideo, iFrameVideoToggle } from "../../redux/playerState";
@@ -321,15 +321,15 @@ const PlayerAndChat = () => {
 
 						{/* IF PAUSE PLAY BUTTON IS ON CENTER OF SCREEN |
 						 ONLY FOR DESKTOP */}
-						<CSSTransition 
+						<Fade 
 							in={!isPlaying && currentVideoLink && !isLoading && !isMobile} 
-							classNames="transition" 
 							timeout={300}
 							unmountOnExit
-						>
-							<CenterPlayButton/>	
-		 
-						</CSSTransition>
+						>	
+							<div>
+								<CenterPlayButton/>	
+						 	</div>
+						</Fade>
 
 
 				</div>

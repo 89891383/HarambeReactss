@@ -1,28 +1,25 @@
-import { IconButton, makeStyles } from '@material-ui/core';
+import { Box, Fade, makeStyles } from '@material-ui/core';
 import TimerIcon from '@material-ui/icons/Timer';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { CSSTransition } from 'react-transition-group';
 import { DataContext } from '../../../App';
 import { useClickAway } from 'react-use'
 import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles({
-    timer:{
-        width:'48px',
-        height:'48px',
-        color:'white',
+    box:{
+        padding:'5px',
+        borderRadius:'5px',
+        display:'flex',
+        transition:'300ms',
         '&:hover':{
-            color:'rgb(63,81,181)'
-        },
-        '@media (max-width: 500px)':{
-            display:'none'
+            backgroundColor:'rgba(255, 255, 255, 0.3);'
         }
     }
 })
 
-const PlaybackRate = ({playbackRate}) => {
+const PlaybackRate = () => {
 
-    const {admin} = useSelector(state=> state.player)
+    const {admin ,playbackRate} = useSelector(state=> state.player)
 
     const {socket} = useContext(DataContext)
 
@@ -64,18 +61,18 @@ const PlaybackRate = ({playbackRate}) => {
     return (
       
         <div className="playbackRate" ref={containerRef} >
-            <IconButton className={classes.timer} onClick={()=>setIsOpen(prev=> !prev)} >
+            <Box className={classes.box} onClick={()=>setIsOpen(prev=> !prev)} >
                 <TimerIcon  />
-            </IconButton>
+            </Box>
 
-            <CSSTransition in={isOpen} unmountOnExit timeout={300} classNames="transition" >
+            <Fade in={isOpen} unmountOnExit timeout={300} >
                 <div className="playbackRateChoose" onClick={handlePlaybackRate} ref={chooseRef} >
                     <div className="playbackOption">2</div>
                     <div className="playbackOption">1.5</div>
                     <div className="playbackOption">1</div>
                     <div className="playbackOption">0.5</div>   
                 </div>
-            </CSSTransition>
+            </Fade>
 
         </div> 
         

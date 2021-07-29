@@ -1,12 +1,37 @@
 import { useDispatch } from "react-redux";
 import { loadPlayer } from "../../redux/playerState";
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import { makeStyles } from "@material-ui/core";
+import { Box, Container, makeStyles, Typography } from "@material-ui/core";
 
 
 const useStyles = makeStyles({
     playIcon:{
         fontSize:'150px',
+    },
+    box:{
+        width:'fit-content',
+        padding:'5px',
+        borderRadius:'5px',
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center',
+        transition:'300ms',
+        fontWeight:'700',
+        cursor:'pointer',
+        zIndex:2,
+        '&:hover':{
+            backgroundColor:'rgba(255, 255, 255, 0.3);',
+        }
+    },
+    container:{
+        backgroundColor:'black',
+        width:'100%',
+        height:'100%',
+        display:'flex',
+        flexDirection:'column',
+        justifyContent:'center',
+        alignItems:'center',
+        gap:'10px',
     }
 })
 
@@ -20,11 +45,16 @@ const ClickToLoad = () => {
         dispatch(loadPlayer())
     }
 
-    return ( 
-        <div className="clickToLoad" onClick={handleClick}>
-            <PlayArrowIcon className={classes.playIcon} />
-            Click to start 
-        </div>
+    return (
+        <Container className={classes.container}>
+            <Box className={classes.box} onClick={handleClick}>
+                <PlayArrowIcon className={classes.playIcon} />
+            </Box>
+            <Typography variant="h4" >
+                Click to start 
+            </Typography>
+        </Container>
+       
      );
 }
  

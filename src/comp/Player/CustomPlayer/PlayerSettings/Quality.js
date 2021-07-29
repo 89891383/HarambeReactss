@@ -1,7 +1,6 @@
 import HighQualityIcon from '@material-ui/icons/HighQuality';
-import { IconButton, makeStyles } from '@material-ui/core';
+import { Box, Fade, makeStyles } from '@material-ui/core';
 import React, { useRef, useState } from 'react';
-import { CSSTransition } from 'react-transition-group';
 import "./Quality.css"
 import { useClickAway } from 'react-use';
 // import Delay from './Delay';
@@ -33,6 +32,15 @@ const useStyles = makeStyles({
     },
     qualityDialog:{
         transform:'translate(-25%, -100%)'
+    },
+    box:{
+        padding:'5px',
+        borderRadius:'5px',
+        display:'flex',
+        transition:'300ms',
+        '&:hover':{
+            backgroundColor:'rgba(255, 255, 255, 0.3);'
+        }
     }
 })
 
@@ -63,25 +71,24 @@ const Quality = () => {
 
     return ( 
         <div className="playerSettings" ref={ref}>
-            <IconButton 
-            className={classes.settingsIcon} 
+            <Box 
+            className={classes.box} 
             onClick={()=>setIsOpen(prev => !prev)}>
                 <HighQualityIcon/>
-            </IconButton>
+            </Box>
 
 
             
-            <CSSTransition 
+            <Fade 
                 in={isOpen} 
                 unmountOnExit 
                 timeout={300} 
-                classNames="transition" 
             >
                 <div className="playerSettingsDialog" onClick={handleClose}>
                     {createFormats}
                 </div>
             
-            </CSSTransition>
+            </Fade>
             
 
         </div>

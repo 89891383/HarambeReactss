@@ -76,10 +76,17 @@ const App = () => {
 				<div className="app">
 					<div className="playerAndControls">
 
-					{firstInteraction ? <PlayerAndChat/> : <ClickToLoad/>}
+					{firstInteraction ? 
+					<>
+						<PlayerAndChat/> 
+						
 						<div className="bottomDiv">
-							<AdminPanel />
+								<AdminPanel />
 						</div>
+					</>
+					
+					: <ClickToLoad/>}
+						
 					</div>
 					<HistoryDialog />
 					{!hiddenChat && <TwitchChat />}	

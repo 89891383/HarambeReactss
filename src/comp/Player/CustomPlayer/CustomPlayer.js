@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import "./CustomPlayer.css"
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
-import { IconButton, makeStyles } from '@material-ui/core';
+import { Box, makeStyles } from '@material-ui/core';
 import ShowChat from '@material-ui/icons/VisibilityOff';
 import HideChat from '@material-ui/icons/Visibility';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
@@ -65,7 +65,23 @@ const useStyles = makeStyles({
         top:'50%',
         left:'50%',
         transform:'translate(-50%,-50%)',
-        color:'white'
+        color:'white',
+        padding:'5px',
+        borderRadius:'5px',
+        display:'flex',
+        transition:'300ms',
+        '&:hover':{
+            backgroundColor:'rgba(255, 255, 255, 0.3);'
+        }
+    },
+    box:{
+        padding:'5px',
+        borderRadius:'5px',
+        display:'flex',
+        transition:'300ms',
+        '&:hover':{
+            backgroundColor:'rgba(255, 255, 255, 0.3);'
+        }
     }
 })
 
@@ -78,7 +94,7 @@ const mobileToggleIconStyles = {
 const CustomPlayer = ({playerWrapperRef}) => {
 
 
-    const {isLive, isPlaying, progress, duration, playbackRate, admin ,hiddenChat, videoTitle, currentVideoLink,nickname,currentAvailableFormats} = useSelector(state=> state.player)
+    const {isLive, isPlaying, progress, duration, admin ,hiddenChat, videoTitle, currentVideoLink,nickname,currentAvailableFormats} = useSelector(state=> state.player)
 
     const dispatch = useDispatch()
 
@@ -152,12 +168,6 @@ const CustomPlayer = ({playerWrapperRef}) => {
         }
     },[dispatch, socket])
 
-
-
-
-
-
-
     const handleFullScreen = () =>{
         screenfull.toggle()
     }
@@ -185,9 +195,6 @@ const CustomPlayer = ({playerWrapperRef}) => {
 
     }
 
-
-
-
     const handleToggleChat = () =>{
         dispatch(hiddenChatToggle())
     }
@@ -212,9 +219,9 @@ const CustomPlayer = ({playerWrapperRef}) => {
             </div>
 
             <div className="toggleChat">
-                <IconButton className={classes.toggleChat} onClick={handleToggleChat}>
-                        {!hiddenChat ? <ShowChat/> : <HideChat/>}
-                </IconButton>
+                <Box className={classes.box} onClick={handleToggleChat} >
+                    {!hiddenChat ? <ShowChat/> : <HideChat/>}
+                </Box>
             </div>
 
 
@@ -232,15 +239,15 @@ const CustomPlayer = ({playerWrapperRef}) => {
             {/* BUTTON ONLY FOR MOBILE DEVICES  */}
             <MobileView>
                {currentVideoLink &&
-                    <IconButton onClick={handlePlayScreenMobile} className={classes.mobilePauseVideoButton} >
-
-                        {isPlaying ?
-                            <PauseIcon style={mobileToggleIconStyles} />
-                        : 
-                            <PlayArrowIcon style={mobileToggleIconStyles} />
-                        }
-
-                    </IconButton>
+                    <Box
+                        onClick={handlePlayScreenMobile} 
+                        className={classes.mobilePauseVideoButton} >
+                           {isPlaying ?
+                                <PauseIcon style={mobileToggleIconStyles} />
+                            : 
+                                <PlayArrowIcon style={mobileToggleIconStyles} />
+                            }
+                    </Box>
                 }
                 
             </MobileView>
@@ -257,20 +264,20 @@ const CustomPlayer = ({playerWrapperRef}) => {
 
                 <div className="lowerControls" >
                     <div className="playButton">
-                        <IconButton className={classes.playButton} onClick={handleTogglePlayServer}>
-                            {isPlaying ?
+                            <Box  className={classes.box} onClick={handleTogglePlayServer}>
+                                {isPlaying ?
                                 <PauseIcon  /> : 
-                                <PlayArrowIcon />}
-                        </IconButton>
-                    
+                                <PlayArrowIcon />
+                                }
+                            </Box>
                     </div>
 
                     {/* SKIP ONLY FOR ADMINS */}
                     {admin && 
                         <div className="skipButton">
-                            <IconButton onClick={handleSkipVideo} className={classes.playButton}>
+                            <Box onClick={handleSkipVideo} className={classes.box}>
                                 <SkipNextIcon/>
-                            </IconButton>
+                            </Box>
                         </div>
                     }
 
@@ -289,14 +296,14 @@ const CustomPlayer = ({playerWrapperRef}) => {
 
 
                         {!isLive && ( // IF LIVE PLAYBACKRATE IS OFF
-                           <PlaybackRate playbackRate={playbackRate} /> 
+                           <PlaybackRate /> 
                         )}
 
                         {currentAvailableFormats && <Quality/>}
 
-                        <IconButton className={classes.playButton} onClick={handleFullScreen}>
+                        <Box className={classes.box} onClick={handleFullScreen}>
                             <FullscreenIcon/>
-                        </IconButton>
+                        </Box>
                     </div>
                 </div>
 

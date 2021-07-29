@@ -203,6 +203,13 @@
     transform: translate(-50%,-50%);
 }
 
+.live{
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 5px 15px;
+    color:#f94144;
+    border-radius: 5px;
+}
+
 .playerSettingsDialog .delay{
     padding: 0px 20px;
 

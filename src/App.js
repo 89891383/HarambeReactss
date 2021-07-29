@@ -31,6 +31,9 @@ const theme = createTheme({
 			},
 			thumb:{
 				color:'white'
+			},
+			mark:{
+				color:'transparent'
 			}
 		}
 	}

@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { hiddenChatToggle, togglePlaying } from '../../../redux/playerState';
 import Quality from './PlayerSettings/Quality';
 import { isMobile, MobileView } from "react-device-detect";
+import Title from './Title';
 
 
 const screenfull = require('screenfull');
@@ -94,7 +95,7 @@ const mobileToggleIconStyles = {
 const CustomPlayer = ({playerWrapperRef}) => {
 
 
-    const {isLive, isPlaying, progress, duration, admin ,hiddenChat, videoTitle, currentVideoLink,nickname,currentAvailableFormats} = useSelector(state=> state.player)
+    const {isLive, isPlaying, progress, duration, admin ,hiddenChat, currentVideoLink,nickname,currentAvailableFormats} = useSelector(state=> state.player)
 
     const dispatch = useDispatch()
 
@@ -214,9 +215,10 @@ const CustomPlayer = ({playerWrapperRef}) => {
     return ( 
         <div className="customPlayer" onClick={handlePlayScreen}>
 
-            <div className="videoTitlePlayer" title={videoTitle} >
+            {/* <div className="videoTitlePlayer" title={videoTitle} >
                 {videoTitle}
-            </div>
+            </div> */}
+            <Title/>
 
             <div className="toggleChat">
                 <Box className={classes.box} onClick={handleToggleChat} >

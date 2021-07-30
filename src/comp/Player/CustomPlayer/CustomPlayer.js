@@ -303,9 +303,11 @@ const CustomPlayer = ({playerWrapperRef}) => {
                         // IF LIVE PROGRESS BAR IS OFF 
                      }
                     
+                   {!isLive &&
                     <Typography className={classes.timer} >
                         {`${hours}:${minutes}:${seconds}`}
                     </Typography>
+                    }
 
                     <div className="fullScreen">
 

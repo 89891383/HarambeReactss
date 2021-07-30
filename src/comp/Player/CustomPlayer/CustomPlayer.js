@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import "./CustomPlayer.css"
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
-import { Box, makeStyles } from '@material-ui/core';
+import { Box, makeStyles, Typography } from '@material-ui/core';
 import ShowChat from '@material-ui/icons/VisibilityOff';
 import HideChat from '@material-ui/icons/Visibility';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
@@ -82,6 +82,12 @@ const useStyles = makeStyles({
         transition:'300ms',
         '&:hover':{
             backgroundColor:'rgba(255, 255, 255, 0.3);'
+        }
+    },
+    timer:{
+        fontWeight:'700',
+        '@media (max-width:600px)':{
+            display:'none'
         }
     }
 })
@@ -210,7 +216,9 @@ const CustomPlayer = ({playerWrapperRef}) => {
     const timer = isLive ? 
     <span className='live'>LIVE</span> 
     : 
-    `${currentTime.hours}:${currentTime.minutes}:${currentTime.seconds} / ${hours}:${minutes}:${seconds}`
+    `${currentTime.hours}:${currentTime.minutes}:${currentTime.seconds}`
+
+
 
     return ( 
         <div className="customPlayer" onClick={handlePlayScreen}>
@@ -256,10 +264,7 @@ const CustomPlayer = ({playerWrapperRef}) => {
 
             <div className="controls" ref={controlsRef}>
 
-            {!isLive &&  
-                <ProgressBar/>
-                // IF LIVE PROGRESS BAR IS OFF 
-            }
+         
 
         
 
@@ -287,10 +292,20 @@ const CustomPlayer = ({playerWrapperRef}) => {
                 
                     <Volume />
 
-                    <div className="durationBar">
-                            {timer}
-                    </div>      
+                    {/* <div className="durationBar">
+                    </div>       */}
+                    <Typography className={classes.timer}>
+                        {timer}
+                    </Typography>
                 
+                    {!isLive &&  
+                        <ProgressBar/>
+                        // IF LIVE PROGRESS BAR IS OFF 
+                     }
+                    
+                    <Typography className={classes.timer} >
+                        {`${hours}:${minutes}:${seconds}`}
+                    </Typography>
 
                     <div className="fullScreen">
 

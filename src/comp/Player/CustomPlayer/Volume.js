@@ -1,7 +1,7 @@
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 import React, {useState} from 'react';
-import { Box, makeStyles, Slider } from '@material-ui/core';
+import { Box, Fade, makeStyles, Slider } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeVolume } from '../../../redux/playerState';
 
@@ -12,9 +12,10 @@ const useStyles = makeStyles({
         borderRadius:'5px',
         display:'flex',
         transition:'300ms',
+        width:'fit-content',
         '&:hover':{
             backgroundColor:'rgba(255, 255, 255, 0.3);'
-        }
+        },
     }
 })
 
@@ -53,17 +54,18 @@ const Volume = () => {
 
     return ( 
         <div className="volumeBar" onMouseEnter={toggleSlider} onMouseLeave={toggleSlider}
-        style={isSlider ? {width:"180px"} : {width:'40px'}}
         >
             <Box  onClick={handleMute} className={classes.box} >
                  {volume ? <VolumeUpIcon /> : <VolumeOffIcon/> }
             </Box>
             
-                {isSlider && 
-                    <div style={{width:'120px', display:'flex'}}>
-                        <Slider min={0} max={1} step={0.01} value={volume} onChange={handleVolume} />
+                <Fade in={isSlider} >
+                     <div style={{position:'absolute', transform:'translate(2px, -75% )', height:'100px'}}>
+                        <Slider orientation="vertical" min={0} max={1} step={0.01} value={volume} onChange={handleVolume} />
                     </div>
-                }
+                </Fade>
+                   
+                
         </div>
      );
 }

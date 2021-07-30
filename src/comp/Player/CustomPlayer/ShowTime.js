@@ -1,3 +1,4 @@
+import { Typography } from '@material-ui/core';
 import React, { useEffect, useRef } from 'react';
 import { useState } from 'react';
 const ShowTime = ({time}) => {
@@ -16,9 +17,10 @@ const ShowTime = ({time}) => {
     },[])
 
 
-    const maxWidth = document.querySelector('.customPlayer').getBoundingClientRect().width
+    // const maxWidth = document.querySelector('.customPlayer').getBoundingClientRect().width
 
-    
+    const progressBarRect = document.querySelector('.progressBar').getBoundingClientRect()
+
 
 
     if(!time) return false
@@ -27,18 +29,23 @@ const ShowTime = ({time}) => {
 
     const {hours,minutes, seconds} = time
 
-    let calculateTranslate  = cursorX - showTimeWidth/2 - 10
+    let calculateTranslate  = cursorX - progressBarRect.x - showTimeWidth/2
 
     
-    if(showTimeWidth/2 + 2 + cursorX > maxWidth){
-        calculateTranslate = maxWidth - showTimeWidth - 15
-    }else if(cursorX < showTimeWidth/2  ){
-        calculateTranslate = -15
-    }
+    // if(showTimeWidth/2 + 2 + cursorX > maxWidth){
+    //     calculateTranslate = maxWidth - showTimeWidth - 15
+    // }else if(cursorX < showTimeWidth/2  ){
+    //     calculateTranslate = -15
+    // }
+
+    // console.log(calculateTranslate, 'CALCULATED')
+    // console.log(cursorX, 'CLIENT X')
 
     return ( 
         <div className="showTime" ref={showTimeRef} style={{transform:`translate(${calculateTranslate}px, -150%)`}} >
-            {`${hours}:${minutes}:${seconds}`}
+            <Typography>
+                {`${hours}:${minutes}:${seconds}`}
+            </Typography>
         </div>
      );
 }

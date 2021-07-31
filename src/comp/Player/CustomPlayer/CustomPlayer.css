@@ -172,6 +172,8 @@
     border-radius: 5px;
     overflow: hidden;
     box-shadow: 0 0 2px black;
+    /* background-color: transparent; */
+    /* backdrop-filter: blur(10px); */
 }
 .playbackOption{
     width: 100%;

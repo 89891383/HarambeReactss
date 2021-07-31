@@ -264,8 +264,6 @@ const PlayerAndChat = () => {
 
 	},[secondsForward,secondsBackward])
 
-	
-
 	return (
 		<>
 			<div className="playerAndChat">

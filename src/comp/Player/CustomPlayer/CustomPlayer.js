@@ -81,7 +81,7 @@ const useStyles = makeStyles({
         display:'flex',
         transition:'300ms',
         '&:hover':{
-            backgroundColor:'rgba(255, 255, 255, 0.3);'
+            backgroundColor:'rgba(255, 255, 255, 0.3)'
         }
     },
     timer:{
@@ -195,7 +195,8 @@ const CustomPlayer = ({playerWrapperRef}) => {
 
     const handleTogglePlayServer = () =>{
         if(!admin){
-            return dispatch(togglePlaying())
+            // return dispatch(togglePlaying())
+            return socket.emit('canPlay')
         }
 
         socket.emit('togglePlay')
@@ -219,13 +220,8 @@ const CustomPlayer = ({playerWrapperRef}) => {
     `${currentTime.hours}:${currentTime.minutes}:${currentTime.seconds}`
 
 
-
     return ( 
         <div className="customPlayer" onClick={handlePlayScreen}>
-
-            {/* <div className="videoTitlePlayer" title={videoTitle} >
-                {videoTitle}
-            </div> */}
             <Title/>
 
             <div className="toggleChat">

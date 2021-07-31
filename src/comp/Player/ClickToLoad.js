@@ -19,6 +19,7 @@ const useStyles = makeStyles({
         fontWeight:'700',
         cursor:'pointer',
         zIndex:2,
+        backgroundColor:'rgba(255, 255, 255, 0.15)',
         '&:hover':{
             backgroundColor:'rgba(255, 255, 255, 0.3);',
         }

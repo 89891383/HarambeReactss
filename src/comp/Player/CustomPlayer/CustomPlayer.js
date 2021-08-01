@@ -80,6 +80,7 @@ const useStyles = makeStyles({
         borderRadius:'5px',
         display:'flex',
         transition:'300ms',
+        cursor:'pointer',
         '&:hover':{
             backgroundColor:'rgba(255, 255, 255, 0.3)'
         }

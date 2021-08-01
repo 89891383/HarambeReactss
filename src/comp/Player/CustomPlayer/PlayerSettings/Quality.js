@@ -37,6 +37,7 @@ const useStyles = makeStyles({
         padding:'5px',
         borderRadius:'5px',
         display:'flex',
+        cursor:'pointer',
         transition:'300ms',
         '&:hover':{
             backgroundColor:'rgba(255, 255, 255, 0.3);'

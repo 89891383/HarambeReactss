@@ -13,6 +13,7 @@ const useStyles = makeStyles({
         display:'flex',
         transition:'300ms',
         width:'fit-content',
+        cursor:'pointer',
         '&:hover':{
             backgroundColor:'rgba(255, 255, 255, 0.3);'
         },

@@ -38,7 +38,7 @@ const theme = createTheme({
 			marked:{
 				color:'transparent'
 			}
-		}
+		},
 	}
 
 })

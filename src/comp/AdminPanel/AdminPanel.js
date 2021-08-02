@@ -1,6 +1,6 @@
 import React from "react";
 import Button2 from "../Button";
-import { Box, Button, Typography } from '@material-ui/core'
+import { Box, Button, Typography, useTheme } from '@material-ui/core'
 import "./AdminPanel.css";
 import Queue from "../Queue/Queue";
 import AddVideo from "./AddVideo";
@@ -13,9 +13,14 @@ import { changeIsAddVideo } from "../../redux/playerState";
 const useStyles = makeStyles({
 	addVideoBtn: {
 		color:'#90be6d',
+		fontWeight:'700',
 		borderColor:'#90be6d',
 		"&:hover":{
 			borderColor:'#90be6d',
+		},
+		"&:disabled":{
+			color:'#f94144',
+			borderColor:'#f94144',
 		}
 	},
 	queueCounter:{
@@ -38,10 +43,13 @@ const useStyles = makeStyles({
 		justifyContent: 'flex-end',
 		marginTop: '50px',
 		width: '95%',
-	}
+	},
+
 })
 
 const AdminPanel = () => {
+
+	const theme = useTheme()
 
 	const classes = useStyles()
 

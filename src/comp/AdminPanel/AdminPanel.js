@@ -1,6 +1,6 @@
 import React from "react";
 import Button2 from "../Button";
-import { Button } from '@material-ui/core'
+import { Box, Button, Typography } from '@material-ui/core'
 import "./AdminPanel.css";
 import Queue from "../Queue/Queue";
 import AddVideo from "./AddVideo";
@@ -17,6 +17,27 @@ const useStyles = makeStyles({
 		"&:hover":{
 			borderColor:'#90be6d',
 		}
+	},
+	queueCounter:{
+		padding: '7px 12px',
+		fontWeight:'700',
+		backgroundColor:"#121212",
+		borderRadius:'5px'
+	},
+	queueCounter_Wrapper:{
+		width: 'fit-content',
+		marginRight: 'auto',
+		display: 'flex',
+		gap: '10px',
+	},
+	adminPanel:{
+		color: 'white',
+		display: 'flex',
+		flexWrap: 'wrap',
+		alignItems: 'center',
+		justifyContent: 'flex-end',
+		marginTop: '50px',
+		width: '95%',
 	}
 })
 
@@ -46,11 +67,15 @@ const AdminPanel = () => {
 			<AddVideo />
 		
 					{/* ADDING VIDEO PANEL */}
-					<div className="adminPanel"> 
-							<h3 className="currentQueue_Counter"> 
-								<span className="queueCounter">{videoQueue.length}</span> Current
-								queue:
-							</h3>
+					<Box className={classes.adminPanel}> 
+							<Box className={classes.queueCounter_Wrapper}> 
+								<Box className={classes.queueCounter} >
+									{videoQueue.length}
+								</Box>
+								<Typography variant="h6">
+									Current queue:
+								</Typography>
+							</Box>
 								{/* QUEUE_H3 CSS IS IN Queue.css */}
 
 
@@ -73,7 +98,7 @@ const AdminPanel = () => {
 							<Button2 onClick={handleTwitchLogin}> LOGIN WITH TWITCH</Button2>
 						)}
 
-					</div>
+					</Box>
 					<Queue />
 				</>
 	);

@@ -102,7 +102,7 @@ const mobileToggleIconStyles = {
 const CustomPlayer = ({playerWrapperRef}) => {
 
 
-    const {isLive, isPlaying, progress, duration, admin ,hiddenChat, currentVideoLink,nickname,currentAvailableFormats} = useSelector(state=> state.player)
+    const {isLive, isPlaying, progress, duration, admin ,hiddenChat, currentVideoLink,nickname,currentAvailableFormats,videoQueue} = useSelector(state=> state.player)
 
     const dispatch = useDispatch()
 
@@ -210,7 +210,7 @@ const CustomPlayer = ({playerWrapperRef}) => {
 
     
     const handleSkipVideo = () => {
-		if (admin) {
+		if (admin && videoQueue.length > 0) {
 			socket.emit("skipVideo", {nickname});
 		}
 	};

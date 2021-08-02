@@ -9,8 +9,9 @@ import SkipButton from "./SkipButton";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
 import QueueIcon from "@material-ui/icons/Queue";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { makeStyles, TextField, Typography } from "@material-ui/core";
+import { changeIsAddVideo } from "../../redux/playerState";
 
 const useStyles = makeStyles({
 	textField:{
@@ -38,13 +39,15 @@ const useStyles = makeStyles({
 	}
 })
 
-const AddVideo = ({ isAddVideo, setIsAddVideo }) => {
+const AddVideo = () => {
 
 	const classes = useStyles()
 
-	const { admin,nickname } = useSelector(state=> state.player)
+	const { admin,nickname, isAddVideo } = useSelector(state=> state.player)
 
 	const { socket } = useContext(DataContext);
+
+	const dispatch = useDispatch()
 
 	const [editVideoLink, setEditVideoLink] = useState("");
 	const [videoTitle, setVideoTitle] = useState("");
@@ -63,7 +66,7 @@ const AddVideo = ({ isAddVideo, setIsAddVideo }) => {
 			});
 			setVideoTitle("");
 			setEditVideoLink("");
-			setIsAddVideo(false);
+			dispatch(changeIsAddVideo(false))
 		}
 	};
 
@@ -76,12 +79,12 @@ const AddVideo = ({ isAddVideo, setIsAddVideo }) => {
 			});
 			setEditVideoLink("");
 			setVideoTitle("");
-			setIsAddVideo(false);
+			dispatch(changeIsAddVideo(false))
 		}
 	};
 
 	return (
-		<Popout state={isAddVideo} setState={()=> setIsAddVideo(false)}>
+		<Popout state={isAddVideo} setState={()=> dispatch(changeIsAddVideo(false))}>
 			<form className="addVideo_Form">
 				<Typography variant="h4" gutterBottom >
 					Add your video to queue

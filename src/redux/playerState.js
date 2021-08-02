@@ -28,6 +28,7 @@ const initialState = {
     isWarning: false,
     warningMessage: "",
     isDialogOpen: false,
+    isAddVideo: false,
     isHistoryOpen: false,
     hiddenChat: false,
     liveDuration: null,
@@ -288,7 +289,13 @@ export const counterSlice = createSlice({
                 video.iFrame = iFrame
             }
         })
-    }
+    },
+
+    changeIsAddVideo: (state, action) =>{
+        const {payload} = action
+
+        state.isAddVideo = payload
+    },
 
 
 
@@ -297,6 +304,6 @@ export const counterSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {  
-    changePlaying,changeiFrame,changePlaybackRate,changeCurrentVideoLink,changeVideoQueue,changeServerTime,changePlaylistOpen,joinRoomAnswer,changeOnlineUsers,setTwitchUserData,successMessage,errorMessage,warningMessage,videoChangeAnswer,queueUpdate,queueMoveUpAnswer,queueDelete,playlistToggle,isLiveToggle,setDuration,setAreControls,setVideoProgress,changeLiveDuration,changeProgress,changeIsLoading,changeVolume,changeCurrentChat,togglePlaying,changeVideoTitle,hiddenChatToggle,changeNickname,dialogOpenToggle,historyOpenToggle,changeIsError,changeIsSuccess,changeIsWarning,onProgress,changeMaxDelay,updateQueueYoutubeDL,changeQuality,updateCurrentVideo,loadPlayer,iFrameVideoToggle } = counterSlice.actions
+    changePlaying,changeiFrame,changePlaybackRate,changeCurrentVideoLink,changeVideoQueue,changeServerTime,changePlaylistOpen,joinRoomAnswer,changeOnlineUsers,setTwitchUserData,successMessage,errorMessage,warningMessage,videoChangeAnswer,queueUpdate,queueMoveUpAnswer,queueDelete,playlistToggle,isLiveToggle,setDuration,setAreControls,setVideoProgress,changeLiveDuration,changeProgress,changeIsLoading,changeVolume,changeCurrentChat,togglePlaying,changeVideoTitle,hiddenChatToggle,changeNickname,dialogOpenToggle,historyOpenToggle,changeIsError,changeIsSuccess,changeIsWarning,onProgress,changeMaxDelay,updateQueueYoutubeDL,changeQuality,updateCurrentVideo,loadPlayer,iFrameVideoToggle,changeIsAddVideo } = counterSlice.actions
 
 export default counterSlice.reducer

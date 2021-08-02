@@ -1,13 +1,13 @@
 import React from "react";
-import { useState } from "react";
 import Button2 from "../Button";
 import { Button } from '@material-ui/core'
 import "./AdminPanel.css";
 import Queue from "../Queue/Queue";
 import AddVideo from "./AddVideo";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/styles";
 import SideOptions from '../SideOptions';
+import { changeIsAddVideo } from "../../redux/playerState";
 
 
 const useStyles = makeStyles({
@@ -24,10 +24,12 @@ const AdminPanel = () => {
 
 	const classes = useStyles()
 
+	const dispatch = useDispatch()
+
 	const {admin, nickname, isPlaylistOpen,videoQueue} = useSelector(state=> state.player)
 
 
-	const [isAddVideo, setIsAddVideo] = useState(false);
+	// const [isAddVideo, setIsAddVideo] = useState(false);
 
 	const handleTwitchLogin = () => {
 		window.location.href = `/auth/twitch`; //DECLARED IN APP
@@ -35,9 +37,13 @@ const AdminPanel = () => {
 
 	const isDisabled = admin ? false : !isPlaylistOpen;
 
+	const handleOpenAddVideo = () =>{
+		dispatch(changeIsAddVideo(true))
+	}
+
 	return (
 		<>
-			<AddVideo isAddVideo={isAddVideo} setIsAddVideo={setIsAddVideo} />
+			<AddVideo />
 		
 					{/* ADDING VIDEO PANEL */}
 					<div className="adminPanel"> 
@@ -57,7 +63,7 @@ const AdminPanel = () => {
 								color="primary"
 								disabled={isDisabled}
 								className={classes.addVideoBtn}
-								onClick={()=>setIsAddVideo(prev=> !prev)}
+								onClick={handleOpenAddVideo}
 							>
 								ADD VIDEO
 							</Button>}

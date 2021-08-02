@@ -210,7 +210,7 @@ const CustomPlayer = ({playerWrapperRef}) => {
 
     
     const handleSkipVideo = () => {
-		if (admin && videoQueue.length > 0) {
+		if (admin) {
 			socket.emit("skipVideo", {nickname});
 		}
 	};

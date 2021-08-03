@@ -97,7 +97,10 @@ const AddVideo = () => {
 	};
 
 	return (
-		<Popout state={isAddVideo} setState={()=> dispatch(changeIsAddVideo(false))}>
+		<Popout 
+		state={isAddVideo} 
+		setState={()=> dispatch(changeIsAddVideo(false))}
+		>
 			<form className="addVideo_Form">
 				<Typography variant="h4" gutterBottom >
 					Add your video to queue

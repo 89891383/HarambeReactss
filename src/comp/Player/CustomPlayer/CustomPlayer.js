@@ -25,6 +25,7 @@ import Title from './Title';
 
 const screenfull = require('screenfull');
 
+
 const useStyles = makeStyles({
     playButton:{
         height:'100%',
@@ -192,6 +193,7 @@ const CustomPlayer = ({playerWrapperRef}) => {
         document.removeEventListener('fullscreenchange',EscCloseFullScreen )
         }
     },[EscCloseFullScreen])
+
 
 
     const handleTogglePlayServer = () =>{

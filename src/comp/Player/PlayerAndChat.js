@@ -18,6 +18,8 @@ const PlayerAndChat = () => {
 	 
 	const { isPlaying, iFrame, currentVideoLink, admin, playbackRate, isLive, areControls, duration, videoProgress, volume,nickname, maxDelay, isLoading} = useSelector(state => state.player)
 
+	const isTwitch = currentVideoLink?.includes('twitch.tv')
+
 	const dispatch = useDispatch()
 
 	const currentRoom = "main";
@@ -310,7 +312,7 @@ const PlayerAndChat = () => {
 				
 					<CSSTransition 
 							unmountOnExit 
-							in={areControls}
+							in={areControls && !isTwitch}
 							timeout={200} 
 							classNames='controls'>
 							<CustomPlayer
@@ -328,7 +330,7 @@ const PlayerAndChat = () => {
 						{/* IF PAUSE PLAY BUTTON IS ON CENTER OF SCREEN |
 						 ONLY FOR DESKTOP */}
 						<Fade 
-							in={!isPlaying && currentVideoLink && !isLoading && !isMobile} 
+							in={!isPlaying && currentVideoLink && !isLoading && !isMobile && !isTwitch} 
 							timeout={300}
 							unmountOnExit
 						>	

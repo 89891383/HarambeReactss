@@ -10,6 +10,7 @@ const useStyles = makeStyles({
         width:'350px',
         aspectRatio:'16/9',
         zIndex:10,
+        resize:'both',
         "@media (max-width:600px)":{
             display:"none"
         },
@@ -49,15 +50,32 @@ const TwitchCam = () => {
 
     const currentPage = window.location.hostname
 
+    const handleStart = () =>{
+      const app = document.querySelector('.app')
+      app.style.pointerEvents = 'none'
+    }
+
+    
+    const handleStop = () =>{
+        const app = document.querySelector('.app')
+        app.style.pointerEvents = ''
+    }
+
+    // SET POINTER EVENTS TO NONE
+
     return (
-            <Draggable bounds={'parent'} >  
+            <Draggable bounds={'parent'} 
+            onStart={handleStart}
+            onStop={handleStop}
+            >  
                 <Box className={classes.box} >
 
                 <iframe 
                 src={`https://player.twitch.tv/?channel=${currentChat}&parent=${currentPage}`} 
                 frameBorder="0"
                 scrolling="no"
-                title='cam'
+                allowFullScreen
+                title='twitch cam'
                 className={classes.iframe}
                 ></iframe>
 

@@ -7,6 +7,9 @@ import { Box, Container, makeStyles, Typography } from "@material-ui/core";
 const useStyles = makeStyles({
     playIcon:{
         fontSize:'150px',
+        "@media(max-width:600px)":{
+            fontSize:'80px',
+        }
     },
     box:{
         width:'fit-content',
@@ -19,10 +22,11 @@ const useStyles = makeStyles({
         fontWeight:'700',
         cursor:'pointer',
         zIndex:2,
+
         backgroundColor:'rgba(255, 255, 255, 0.15)',
         '&:hover':{
             backgroundColor:'rgba(255, 255, 255, 0.3);',
-        }
+        },
     },
     container:{
         backgroundColor:'black',
@@ -33,6 +37,7 @@ const useStyles = makeStyles({
         justifyContent:'center',
         alignItems:'center',
         gap:'10px',
+        padding:'25px'
     }
 })
 

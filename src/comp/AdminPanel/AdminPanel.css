@@ -2,17 +2,6 @@
 	display: flex;
 	justify-content: center;
 }
-.optionButtons {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	flex-wrap: wrap;
-}
-.controlButtons {
-	display: flex;
-	align-items: center;
-}
-
 .delayInfoContainer {
 	display: flex;
 	width: 100%;

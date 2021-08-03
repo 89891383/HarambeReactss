@@ -3,14 +3,11 @@ import { useContext, useState } from "react";
 import { DataContext } from "../../App";
 import Popout from "../Popout";
 import "./AdminPanel.css";
-import QueueButton from "./QueueButton";
-import PlayButton from "./PlayButton";
-import SkipButton from "./SkipButton";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
 import QueueIcon from "@material-ui/icons/Queue";
 import { useDispatch, useSelector } from "react-redux";
-import { makeStyles, TextField, Typography } from "@material-ui/core";
+import { Button, ButtonGroup, makeStyles, TextField, Typography } from "@material-ui/core";
 import { changeIsAddVideo } from "../../redux/playerState";
 
 const useStyles = makeStyles({
@@ -36,6 +33,18 @@ const useStyles = makeStyles({
 	},
 	inputLabel:{
 		color:'white'
+	},
+	button:{
+		color:'white',
+		fontWeight:'500',
+		borderColor:"white",
+		"&:hover":{
+			borderColor:'white'
+		}
+	},
+	groupButton:{
+		display:'flex',
+		justifyContent:'center'
 	}
 })
 
@@ -137,23 +146,41 @@ const AddVideo = () => {
 					}}
 					type="submit"
 				></button>
-				<div className="optionButtons">
-					<div className="controlButtons">
-						{admin && (
-							<PlayButton onClick={handleAddVideo} title="Play">
-								<PlayArrowIcon />
-							</PlayButton>
-						)}
-						<QueueButton onClick={handleAddVideoToQueue} title={"Add to queue"}>
-							<QueueIcon />
-						</QueueButton>
-						{admin && (
-							<SkipButton onClick={handleSkipVideo} title={"Skip video"}>
-								<SkipNextIcon />
-							</SkipButton>
-						)}
-					</div>
-				</div>
+	
+						<ButtonGroup variant="outlined"
+						className={classes.groupButton} >
+
+							{ admin && 
+							<Button 
+							onClick={handleAddVideo} 
+							startIcon={<PlayArrowIcon/>} 
+							className={classes.button}
+							>
+								PLAY NOW
+							</Button>
+							}
+
+							<Button 
+							startIcon={<QueueIcon/>}
+							onClick={handleAddVideoToQueue} 
+							className={classes.button}
+
+							>
+								ADD TO QUEUE 
+							</Button>
+
+							{admin && 
+							<Button 
+							startIcon={<SkipNextIcon/>} 
+							onClick={handleSkipVideo}
+							className={classes.button}
+
+							>
+								SKIP VIDEO
+							</Button>
+							}
+						</ButtonGroup>
+				
 			</form>
 		</Popout>
 	);

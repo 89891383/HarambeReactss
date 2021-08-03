@@ -1,6 +1,6 @@
 import React from "react";
 import Button2 from "../Button";
-import { Box, Button, Typography, useTheme } from '@material-ui/core'
+import { Box, Button, Typography } from '@material-ui/core'
 import "./AdminPanel.css";
 import Queue from "../Queue/Queue";
 import AddVideo from "./AddVideo";
@@ -48,8 +48,6 @@ const useStyles = makeStyles({
 })
 
 const AdminPanel = () => {
-
-	const theme = useTheme()
 
 	const classes = useStyles()
 

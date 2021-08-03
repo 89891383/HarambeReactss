@@ -40,6 +40,9 @@ const useStyles = makeStyles({
 		borderColor:"white",
 		"&:hover":{
 			borderColor:'white'
+		},
+		"@media(max-width:600px)":{
+			fontSize:'10px'
 		}
 	},
 	groupButton:{

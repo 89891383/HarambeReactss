@@ -9,7 +9,7 @@ import { useIdle } from 'react-use';
 import { CircularProgress, Fade } from '@material-ui/core';
 import AlternativePlayer from "./AlternativePlayer";
 import { useDispatch, useSelector } from "react-redux";
-import { changeiFrame, changeIsLoading, changeOnlineUsers, changePlaybackRate, changePlaying, changeServerTime, isLiveToggle, joinRoomAnswer, onProgress, playlistToggle, queueDelete, updateQueueYoutubeDL, queueMoveUpAnswer, queueUpdate, setAreControls, setDuration, successMessage, videoChangeAnswer, warningMessage, updateCurrentVideo, iFrameVideoToggle } from "../../redux/playerState";
+import { changeiFrame, changeIsLoading, changeOnlineUsers, changePlaybackRate, changePlaying, changeServerTime, isLiveToggle, joinRoomAnswer, onProgress, playlistToggle, queueDelete, updateQueueYoutubeDL, queueMoveUpAnswer, queueUpdate, setAreControls, setDuration, successMessage, videoChangeAnswer, warningMessage, updateCurrentVideo, iFrameVideoToggle, changeTwitchCam } from "../../redux/playerState";
 import CenterPlayButton from "./CustomPlayer/CenterPlayButton";
 import { isMobile } from "react-device-detect";
 
@@ -78,7 +78,9 @@ const PlayerAndChat = () => {
 			(serverAnswer) => {
 
 				dispatch(joinRoomAnswer(serverAnswer))
+
 				const {timer} = serverAnswer
+
 
 				synchronizeVideo(player, timer)
 			}
@@ -147,6 +149,11 @@ const PlayerAndChat = () => {
 			dispatch(changeiFrame(iFrameAnswer))
 		})
 
+		socket.on('isTwitchCamToggleAnswer', ({isTwitchCam})=>{
+			dispatch(changeTwitchCam(isTwitchCam))
+		})
+
+
 		socket.on('liveVideoAnswer', ()=>{
 			dispatch(isLiveToggle(true))
 		})
@@ -175,6 +182,7 @@ const PlayerAndChat = () => {
 			socket.off('updateQueueYoutubeDL')
 			socket.off('updateCurrentVideoYoutubeDL')
 			socket.off('iFrameVideoToggleAnswer')
+			socket.off('isTwitchCamToggleAnswer')
 		};
 		// eslint-disable-next-line
 	}, [currentRoom, admin, socket, maxDelay, nickname,isPlaying]);

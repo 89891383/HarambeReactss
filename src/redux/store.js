@@ -5,7 +5,7 @@ const checkLocalhost = window.location.hostname === 'localhost'
 
 export const store = configureStore({
   reducer: {
-    player: playerReducer
+    player: playerReducer,
   },
   devTools: checkLocalhost
 })

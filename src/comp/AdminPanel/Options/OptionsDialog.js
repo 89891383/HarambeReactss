@@ -9,6 +9,7 @@ import AdminList from "./AdminList";
 import ChangeChat from "./ChangeChat";
 import { useDispatch, useSelector } from "react-redux";
 import { dialogOpenToggle } from "../../../redux/playerState";
+import { Typography } from "@material-ui/core";
 
 const OptionsDialog = () => {
 	const {
@@ -17,7 +18,8 @@ const OptionsDialog = () => {
 	
 	const dispatch = useDispatch()
 
-	const {isServerTime, isDialogOpen, isPlaylistOpen, iFrame,nickname,} = useSelector(state=> state.player)
+	const {isServerTime, isDialogOpen, isPlaylistOpen, iFrame,nickname,isTwitchCam} = useSelector(state=> state.player)
+
 
 	const optionsRef = useRef(null);
 
@@ -34,18 +36,35 @@ const OptionsDialog = () => {
 		socket.emit('iFrameToggle', {nickname})
 	}
 
+	const isTwitchCamToggle = () =>{
+		socket.emit('isTwitchCamToggle', {nickname})
+	}
+
 	return (
 		<Popout state={isDialogOpen} setState={()=> dispatch(dialogOpenToggle(false))}>
 			<div className="optionsDialog" ref={optionsRef}>
 				<OneOption checked={isServerTime} onChange={serverTimeToggle}>
-					<span>Server time </span>
+					<Typography>
+						Server time
+					</Typography>
 				</OneOption>
+
 				<OneOption checked={isPlaylistOpen} onChange={serverPlaylistToggle}>
-					<span>Playlist open</span>
+					<Typography>
+						Playlist open
+					</Typography>
 				</OneOption>
 
 				<OneOption checked={iFrame} onChange={iFrameToggle}>
-					<span>iFrame</span>
+						<Typography>
+							iFrame
+						</Typography>
+				</OneOption>
+
+				<OneOption checked={isTwitchCam} onChange={isTwitchCamToggle}>
+						<Typography>
+							Twitch Cam
+						</Typography>
 				</OneOption>
 
 				<ChangeChat/>

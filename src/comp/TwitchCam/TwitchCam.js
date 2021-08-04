@@ -10,9 +10,9 @@ const useStyles = makeStyles({
         width:'350px',
         aspectRatio:'16/9',
         zIndex:2,
-        resize:'both',
         borderRadius:'5px',
         overflow:'hidden',
+        resize:'both',
         "@media (max-width:600px)":{
             display:"none"
         },
@@ -40,7 +40,12 @@ const useStyles = makeStyles({
         "&:hover":{
             opacity:'1'
         },
-
+    },
+    resize:{
+        position:'absolute',
+        top:'100%',
+        left:'100%',
+        transform:'translate(-100%,-100%)'
     }
 })
 
@@ -84,6 +89,8 @@ const TwitchCam = () => {
                 <Box className={classes.drag} >
                     <ControlCameraIcon/>
                 </Box>
+
+
 
                 </Box>
             </Draggable>

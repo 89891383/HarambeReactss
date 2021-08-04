@@ -99,6 +99,7 @@
 	display: flex;
 	width: fit-content;
 	padding: 15px;
+	gap: 10px;
 }
 
 .queueItemDuration{

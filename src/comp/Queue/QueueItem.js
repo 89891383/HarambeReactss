@@ -3,7 +3,7 @@ import { DataContext } from "../../App";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import CodeIcon from '@material-ui/icons/Code';
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import { IconButton, makeStyles, Tooltip, Typography, Zoom } from "@material-ui/core";
+import { Box, IconButton, makeStyles, Tooltip, Typography, Zoom } from "@material-ui/core";
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import "./Queue.css";
 import noImg from "./noImg.jpg";
@@ -16,7 +16,17 @@ const useStyles = makeStyles({
 	},
 	typography:{
 		fontWeight:'700'
-	}
+	},
+	box:{
+        padding:'5px',
+        borderRadius:'5px',
+        display:'flex',
+        transition:'300ms',
+        cursor:'pointer',
+        '&:hover':{
+            backgroundColor:'rgba(255, 255, 255, 0.3)'
+        }
+    },
 });
 
 const QueueItem = ({ item,index }) => {
@@ -142,39 +152,39 @@ const QueueItem = ({ item,index }) => {
 
 				{admin && (
 					<div className="queueItemButtons">
-						<IconButton onClick={handlePlayNow} className={classes.iconButton}>
+						<Box onClick={handlePlayNow} className={classes.box}>
 							<Tooltip title="Play now" enterDelay={0} TransitionComponent={Zoom} >
 								<PlayArrowIcon />
 							</Tooltip>
-						</IconButton>
+						</Box>
 
 						{index ?
-							<IconButton className={classes.iconButton} onClick={handleMoveUp} >
+							<Box className={classes.box} onClick={handleMoveUp} >
 							<Tooltip title={'Move up'} enterDelay={0} TransitionComponent={Zoom} >
 								<ArrowUpwardIcon/>
 							</Tooltip>
-							</IconButton> : false}
+							</Box> : false}
 
-						<IconButton 
-						classes={classes.iconButton} 
+						<Box 
+						className={classes.box} 
 						onClick={handleiFrame}
 						style={iFrameStyles}
 						>
 							<Tooltip enterDelay={0} title="iFrame" TransitionComponent={Zoom} >
 								<CodeIcon/>
 							</Tooltip>
-						</IconButton>
+						</Box>
 
 
 
-						<IconButton
-							className={classes.iconButton}
+						<Box
+							className={classes.box}
 							onClick={handleDeleteItemFromQueue}
 						>
 							<Tooltip enterDelay={0} title="Delete from queue" TransitionComponent={Zoom} >
 								<DeleteForeverIcon />
 							</Tooltip>
-						</IconButton>
+						</Box>
 					</div>
 				)}
 			</div>

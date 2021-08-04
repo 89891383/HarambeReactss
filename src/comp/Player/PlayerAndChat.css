@@ -3,6 +3,7 @@
 	flex-direction: column;
 	background-color: #121212;
 	height: 100vh;
+	z-index: 0;
 	position: relative;
 }
 .videoTitle {

@@ -298,6 +298,7 @@ const PlayerAndChat = () => {
 							playing={isPlaying}
 							className="react-player"
 							url={currentVideoLink}
+							style={isTwitch ? {} : {pointerEvents:'none'}}
 							width="100%"
 							height="100%"
 							controls={false}

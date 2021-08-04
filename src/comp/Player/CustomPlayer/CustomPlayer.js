@@ -21,6 +21,7 @@ import { hiddenChatToggle, togglePlaying } from '../../../redux/playerState';
 import Quality from './PlayerSettings/Quality';
 import { isMobile, MobileView } from "react-device-detect";
 import Title from './Title';
+import TwitchCamToggle from './TwitchCamToggle';
 
 
 const screenfull = require('screenfull');
@@ -227,10 +228,11 @@ const CustomPlayer = ({playerWrapperRef}) => {
         <div className="customPlayer" onClick={handlePlayScreen}>
             <Title/>
 
-            <div className="toggleChat">
+            <div className="topPlayerOptions">
                 <Box className={classes.box} onClick={handleToggleChat} >
                     {!hiddenChat ? <ShowChat/> : <HideChat/>}
                 </Box>
+                {admin && <TwitchCamToggle/>}
             </div>
 
 

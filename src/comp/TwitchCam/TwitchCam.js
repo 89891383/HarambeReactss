@@ -9,7 +9,7 @@ const useStyles = makeStyles({
         position:'absolute',
         width:'350px',
         aspectRatio:'16/9',
-        zIndex:10,
+        zIndex:2,
         resize:'both',
         "@media (max-width:600px)":{
             display:"none"

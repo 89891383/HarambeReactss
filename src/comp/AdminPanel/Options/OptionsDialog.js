@@ -18,7 +18,7 @@ const OptionsDialog = () => {
 	
 	const dispatch = useDispatch()
 
-	const {isServerTime, isDialogOpen, isPlaylistOpen, iFrame,nickname,isTwitchCam} = useSelector(state=> state.player)
+	const {isServerTime, isDialogOpen, isPlaylistOpen, iFrame,nickname} = useSelector(state=> state.player)
 
 
 	const optionsRef = useRef(null);
@@ -36,9 +36,6 @@ const OptionsDialog = () => {
 		socket.emit('iFrameToggle', {nickname})
 	}
 
-	const isTwitchCamToggle = () =>{
-		socket.emit('isTwitchCamToggle', {nickname})
-	}
 
 	return (
 		<Popout state={isDialogOpen} setState={()=> dispatch(dialogOpenToggle(false))}>
@@ -58,12 +55,6 @@ const OptionsDialog = () => {
 				<OneOption checked={iFrame} onChange={iFrameToggle}>
 						<Typography>
 							iFrame
-						</Typography>
-				</OneOption>
-
-				<OneOption checked={isTwitchCam} onChange={isTwitchCamToggle}>
-						<Typography>
-							Twitch Cam
 						</Typography>
 				</OneOption>
 

@@ -39,6 +39,7 @@ body {
 	position: relative;
 	width: 400px;
 	height: 100vh;
+	z-index: 1;
 }
 
 

@@ -11,6 +11,8 @@ const useStyles = makeStyles({
         aspectRatio:'16/9',
         zIndex:2,
         resize:'both',
+        borderRadius:'5px',
+        overflow:'hidden',
         "@media (max-width:600px)":{
             display:"none"
         },

@@ -61,7 +61,7 @@ const Volume = () => {
             </Box>
             
                 <Fade in={isSlider} >
-                     <div style={{position:'absolute', transform:'translate(2px, -75% )', height:'100px'}}>
+                     <div style={{position:'absolute',width:'34px', transform:'translate(0px, -75% )', height:'100px'}}>
                         <Slider orientation="vertical" min={0} max={1} step={0.01} value={volume} onChange={handleVolume} />
                     </div>
                 </Fade>

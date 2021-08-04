@@ -92,6 +92,15 @@ const useStyles = makeStyles({
         '@media (max-width:600px)':{
             display:'none'
         }
+    },
+    topInfo:{
+        display:'flex',
+        alignItems:'center',
+        position:'absolute',
+        top:'0',
+        left:'0',
+        width:'100%',
+        padding:'15px'
     }
 })
 
@@ -226,15 +235,18 @@ const CustomPlayer = ({playerWrapperRef}) => {
 
     return ( 
         <div className="customPlayer" onClick={handlePlayScreen}>
-            <Title/>
 
-            <div className="topPlayerOptions">
-                <Box className={classes.box} onClick={handleToggleChat} >
-                    {!hiddenChat ? <ShowChat/> : <HideChat/>}
+            {/* TOP INFO */}
+            <Box className={classes.topInfo} >
+                <Title/>
+                <Box style={{display:'flex', gap:'10px', marginLeft:'auto'}} >
+                    {admin && <TwitchCamToggle/>}
+                    <Box className={classes.box} onClick={handleToggleChat} >
+                        {!hiddenChat ? <ShowChat/> : <HideChat/>}
+                    </Box>
                 </Box>
-                {admin && <TwitchCamToggle/>}
-            </div>
-
+            
+            </Box>
 
             {secondsSkip && 
                 <div className="secondsSkip">

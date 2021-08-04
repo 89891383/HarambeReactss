@@ -1,5 +1,5 @@
 .accountInfo {
-	position: relative;
+	position: absolute;
 	color: white;
 	display: flex;
 	flex-direction: column;
@@ -18,8 +18,4 @@
 	color: white;
 }
 
-.profileIcon {
-	padding: 12px;
-	width: 48px;
-	height: 48px;
-}
+

@@ -2,7 +2,7 @@ import React from "react";
 import {  useState } from "react";
 import "./Profile.css";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
-import { makeStyles } from "@material-ui/core";
+import { Box, makeStyles } from "@material-ui/core";
 import AccountInfo from "./AccountInfo";
 import { Fade } from "@material-ui/core";
 
@@ -10,6 +10,16 @@ const useStyles = makeStyles({
 	profileIcon: {
 		color: "white",
 	},
+	box:{
+        padding:'5px',
+        borderRadius:'5px',
+        display:'flex',
+        transition:'300ms',
+        cursor:'pointer',
+        '&:hover':{
+            backgroundColor:'rgba(255, 255, 255, 0.3)'
+        }
+    },
 });
 
 const Profile = () => {
@@ -27,7 +37,10 @@ const Profile = () => {
 			onClick={()=> setIsHover(prev => !prev)}
 
 		>
-			<AccountBoxIcon className={classes.profileIcon} />
+			<Box className={classes.box}>
+				<AccountBoxIcon />
+			</Box>
+			
 
 
 				<Fade 

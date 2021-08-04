@@ -1,7 +1,7 @@
 import React from "react";
 import "./History.css";
 import HistoryIcon from "@material-ui/icons/History";
-import { IconButton, makeStyles, Tooltip, Zoom } from "@material-ui/core";
+import { Box, makeStyles, Tooltip, Zoom } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { historyOpenToggle } from "../../redux/playerState";
 
@@ -9,6 +9,17 @@ const useStyles = makeStyles({
 	historyBtn: {
 		color: "white",
 	},
+	box:{
+        padding:'5px',
+        borderRadius:'5px',
+        display:'flex',
+        transition:'300ms',
+		height:'fit-content',
+        cursor:'pointer',
+        '&:hover':{
+            backgroundColor:'rgba(255, 255, 255, 0.3)'
+        }
+    },
 });
 
 const History = () => {
@@ -21,11 +32,11 @@ const History = () => {
 	};
 
 	return (
-		<IconButton className={classes.historyBtn} onClick={handleToggleHistory}>
+		<Box className={classes.box} onClick={handleToggleHistory}>
 			<Tooltip title={"History"} enterDelay={0} TransitionComponent={Zoom} >
 				<HistoryIcon />
 			</Tooltip>
-		</IconButton>
+		</Box>
 	);
 };
 

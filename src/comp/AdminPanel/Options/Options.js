@@ -1,14 +1,21 @@
 import React from "react";
 import "./Options.css";
 import SettingsIcon from "@material-ui/icons/Settings";
-import { IconButton, makeStyles, Tooltip, Zoom } from "@material-ui/core";
+import { Box, makeStyles, Tooltip, Zoom } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { dialogOpenToggle } from "../../../redux/playerState";
 
 const useStyles = makeStyles({
-	settingsButton: {
-		color: "white",
-	},
+	box:{
+        padding:'5px',
+        borderRadius:'5px',
+        display:'flex',
+        transition:'300ms',
+        cursor:'pointer',
+        '&:hover':{
+            backgroundColor:'rgba(255, 255, 255, 0.3)'
+        }
+    },
 });
 
 const Options = () => {
@@ -24,20 +31,19 @@ const Options = () => {
 
 	return (
 		<div className="options">
-			<IconButton
-				className={classes.settingsButton}
+			<Box
+				className={classes.box}
 				onClick={handleToggleDialog}
 			>
 				<Tooltip
 					title="Settings"
 					placement="bottom"
-					className={classes.toolTip}
 					enterDelay={0}
 					TransitionComponent={Zoom}
 				>
 					<SettingsIcon />
 				</Tooltip>
-			</IconButton>
+			</Box>
 		</div>
 	);
 };

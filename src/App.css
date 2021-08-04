@@ -66,6 +66,9 @@ body {
 .sideOptions {
 	display: flex;
 	flex-direction: row-reverse;
+	gap: 10px;
+	margin-right: 10px;
+	/* height: 40px; */
 }
 
 @media (max-width: 720px) {

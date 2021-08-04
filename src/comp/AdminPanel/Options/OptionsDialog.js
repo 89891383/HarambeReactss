@@ -18,22 +18,22 @@ const OptionsDialog = () => {
 	
 	const dispatch = useDispatch()
 
-	const {isServerTime, isDialogOpen, isPlaylistOpen, iFrame,nickname} = useSelector(state=> state.player)
+	const {isServerTime, isDialogOpen, isPlaylistOpen, iFrame} = useSelector(state=> state.player)
 
 
 	const optionsRef = useRef(null);
 
 
 	const serverTimeToggle = () => {
-		socket.emit("serverTimeToggle", { isServerTime, nickname });
+		socket.emit("serverTimeToggle");
 	};
 
 	const serverPlaylistToggle = () => {
-		socket.emit("playlistToggle", { isOpen: !isPlaylistOpen, nickname });
+		socket.emit("playlistToggle", { isOpen: !isPlaylistOpen });
 	};
 
 	const iFrameToggle = () =>{
-		socket.emit('iFrameToggle', {nickname})
+		socket.emit('iFrameToggle')
 	}
 
 

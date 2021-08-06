@@ -43,6 +43,9 @@ const useStyles = makeStyles({
 		padding:'6px 10px',
 		borderRadius:'5px',
 		fontWeight: '700'
+	},
+	disconnected:{
+		color:'#f94144',
 	}
 })
 
@@ -54,7 +57,7 @@ const TwitchChat = () => {
 
 	const dispatch = useDispatch()
 
-	const {onlineUsers, isServerTime, currentChat, firstInteraction} = useSelector(state=> state.player)
+	const {onlineUsers, isServerTime, currentChat, firstInteraction,disconnected} = useSelector(state=> state.player)
 
 	const { socket } = useContext(DataContext);
 	let websiteURL = window.location.host; // HEROKU HOSTING
@@ -123,6 +126,16 @@ const TwitchChat = () => {
 		<ErrorIcon className={classes.syncOff} />
 	</Tooltip> 
 
+	const disconnectedStatus = () =>{
+		return (
+		<Tooltip title="DISCONNECTED! RELOAD PAGE" >
+			<ErrorIcon className={classes.disconnected} />
+		</Tooltip>
+		)}
+
+
+
+
 	
 	return (
 			<div className="twitchChat">
@@ -134,7 +147,7 @@ const TwitchChat = () => {
 					</Typography>
 					
 					<span className="syncStatus" onMouseEnter={handleCheckPing} onMouseLeave={()=> clearInterval(pingInterval)} >
-					{syncStatus}
+						{disconnected ? disconnectedStatus() : syncStatus}
 					</span>
 				</>
 				}

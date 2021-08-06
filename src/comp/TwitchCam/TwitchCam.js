@@ -1,7 +1,6 @@
 import { Box, makeStyles } from "@material-ui/core";
 import Draggable from 'react-draggable';
 import ControlCameraIcon from '@material-ui/icons/ControlCamera';
-// import { ResizableBox } from 'react-resizable';
 import { useSelector } from "react-redux";
 
 const useStyles = makeStyles({
@@ -12,7 +11,7 @@ const useStyles = makeStyles({
         zIndex:2,
         borderRadius:'5px',
         overflow:'hidden',
-        resize:'both',
+        // resize:'horizontal',
         "@media (max-width:600px)":{
             display:"none"
         },
@@ -74,6 +73,7 @@ const TwitchCam = () => {
             <Draggable bounds={'parent'} 
             onStart={handleStart}
             onStop={handleStop}
+            handle={'#drag'}
             >  
                 <Box className={classes.box} >
 
@@ -86,7 +86,7 @@ const TwitchCam = () => {
                 className={classes.iframe}
                 ></iframe>
 
-                <Box className={classes.drag} >
+                <Box id="drag" className={classes.drag} >
                     <ControlCameraIcon/>
                 </Box>
 

@@ -3,7 +3,7 @@ import { DataContext } from "../../App";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import CodeIcon from '@material-ui/icons/Code';
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import { Box, IconButton, makeStyles, Tooltip, Typography, Zoom } from "@material-ui/core";
+import { Box, makeStyles, Tooltip, Typography, Zoom } from "@material-ui/core";
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import "./Queue.css";
 import noImg from "./noImg.jpg";

@@ -38,7 +38,7 @@ const initialState = {
     videoTitle: null,
     currentAvailableFormats: [],
     twitchCam: false,
-
+    disconnected:false,
 }
 
 export const counterSlice = createSlice({
@@ -304,6 +304,12 @@ export const counterSlice = createSlice({
         state.isAddVideo = payload
     },
 
+    handleDisconnect: (state)=>{
+        state.disconnected = true
+        state.errorMessage = 'DISCONNECTED! RELOAD PAGE'
+        state.isError = true
+    },
+
 
 
   },
@@ -311,6 +317,6 @@ export const counterSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {  
-    changePlaying,changeiFrame,changePlaybackRate,changeCurrentVideoLink,changeVideoQueue,changeServerTime,changePlaylistOpen,joinRoomAnswer,changeOnlineUsers,setTwitchUserData,successMessage,errorMessage,warningMessage,videoChangeAnswer,queueUpdate,queueMoveUpAnswer,queueDelete,playlistToggle,isLiveToggle,setDuration,setAreControls,setVideoProgress,changeLiveDuration,changeProgress,changeIsLoading,changeVolume,changeCurrentChat,togglePlaying,changeVideoTitle,hiddenChatToggle,changeNickname,dialogOpenToggle,historyOpenToggle,changeIsError,changeIsSuccess,changeIsWarning,onProgress,changeMaxDelay,updateQueueYoutubeDL,changeQuality,updateCurrentVideo,loadPlayer,iFrameVideoToggle,changeIsAddVideo,changeTwitchCam } = counterSlice.actions
+    changePlaying,changeiFrame,changePlaybackRate,changeCurrentVideoLink,changeVideoQueue,changeServerTime,changePlaylistOpen,joinRoomAnswer,changeOnlineUsers,setTwitchUserData,successMessage,errorMessage,warningMessage,videoChangeAnswer,queueUpdate,queueMoveUpAnswer,queueDelete,playlistToggle,isLiveToggle,setDuration,setAreControls,setVideoProgress,changeLiveDuration,changeProgress,changeIsLoading,changeVolume,changeCurrentChat,togglePlaying,changeVideoTitle,hiddenChatToggle,changeNickname,dialogOpenToggle,historyOpenToggle,changeIsError,changeIsSuccess,changeIsWarning,onProgress,changeMaxDelay,updateQueueYoutubeDL,changeQuality,updateCurrentVideo,loadPlayer,iFrameVideoToggle,changeIsAddVideo,changeTwitchCam,handleDisconnect } = counterSlice.actions
 
 export default counterSlice.reducer

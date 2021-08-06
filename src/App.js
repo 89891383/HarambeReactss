@@ -12,7 +12,7 @@ import OptionsDialog from "./comp/AdminPanel/Options/OptionsDialog";
 import HistoryDialog from "./comp/History/HistoryDialog";
 import {  useDispatch, useSelector } from 'react-redux'
 
-import { changeNickname, errorMessage, setTwitchUserData, successMessage, warningMessage } from "./redux/playerState";
+import { changeNickname, errorMessage, handleDisconnect, setTwitchUserData, successMessage, warningMessage } from "./redux/playerState";
 import ClickToLoad from "./comp/Player/ClickToLoad";
 import { createTheme, ThemeProvider } from "@material-ui/core";
 import TwitchCam from "./comp/TwitchCam/TwitchCam";
@@ -84,10 +84,15 @@ const App = () => {
 		socket.on('warning', ({message})=>{
 			dispatch(warningMessage(message))
 		})
+		socket.on('disconnect', ()=>{
+			dispatch(handleDisconnect())
+		})
+
 		return () => {
 			socket.off("success");
 			socket.off("error");
 			socket.off('warning')
+			socket.off('disconnect')
 		};
 	}, [dispatch]);
 

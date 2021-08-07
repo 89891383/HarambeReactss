@@ -12,13 +12,14 @@ import OptionsDialog from "./comp/AdminPanel/Options/OptionsDialog";
 import HistoryDialog from "./comp/History/HistoryDialog";
 import {  useDispatch, useSelector } from 'react-redux'
 
-import { changeNickname, errorMessage, handleDisconnect, setTwitchUserData, successMessage, warningMessage } from "./redux/playerState";
+import { changeNickname, errorMessage, handleDisconnect, handleReconnect, setTwitchUserData, successMessage, warningMessage } from "./redux/playerState";
 import ClickToLoad from "./comp/Player/ClickToLoad";
 import { createTheme, ThemeProvider } from "@material-ui/core";
 import TwitchCam from "./comp/TwitchCam/TwitchCam";
 export const DataContext = React.createContext();
 
 const socket = io(`/`);
+
 
 const theme = createTheme({
 	overrides:{
@@ -88,11 +89,16 @@ const App = () => {
 			dispatch(handleDisconnect())
 		})
 
+		socket.io.on('reconnect', ()=>{
+			dispatch(handleReconnect())
+		})
+
 		return () => {
 			socket.off("success");
 			socket.off("error");
 			socket.off('warning')
 			socket.off('disconnect')
+			socket.off('reconnect')
 		};
 	}, [dispatch]);
 

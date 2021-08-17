@@ -6,6 +6,15 @@ const Queue = () => {
 
 	const { videoQueue } = useSelector(state=> state.player)
 
+	if(videoQueue.length === 0){
+		return (
+			<div className="queue">
+				<div className="emptyQueueText">QUEUE IS EMPTY</div>
+			</div>
+		)
+	}
+
+
 	const queueList = videoQueue.map((item, index) => {
 		return (
 			<CSSTransition key={index} timeout={300} classNames="transition">
@@ -15,18 +24,11 @@ const Queue = () => {
 	});
 
 	return (
-		<>
-			{queueList.length > 0 ? (
-				<div className="queue">
-					<TransitionGroup className="queue_List">{queueList}</TransitionGroup>
-				</div>
-			) : (
-				<div className="queue">
-				
-					<div className="emptyQueueText">QUEUE IS EMPTY</div>
-				</div>
-			)}
-		</>
+		<div className="queue">
+			<TransitionGroup className="queue_List">
+				{queueList}
+			</TransitionGroup>
+		</div>
 	);
 };
 

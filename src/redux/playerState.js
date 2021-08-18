@@ -8,7 +8,7 @@ const initialState = {
     twitchUserData: null,
     progress: 0,
     duration : 0,
-    volume: 0.1,
+    volume: 1,
     areControls: false,
     playbackRate: 1,
     isLoading: false,

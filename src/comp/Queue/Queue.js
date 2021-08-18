@@ -18,7 +18,7 @@ const Queue = () => {
 	const queueList = videoQueue.map((item, index) => {
 		return (
 			<CSSTransition key={index} timeout={300} classNames="transition">
-				<QueueItem item={item} index={index} key={index} />
+				<QueueItem item={item} index={index} key={item.id} />
 			</CSSTransition>
 		);
 	});

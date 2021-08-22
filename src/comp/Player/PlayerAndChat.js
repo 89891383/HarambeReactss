@@ -324,7 +324,7 @@ const PlayerAndChat = () => {
 						
 						{/* LOADING IS OUT OF CUSTOM PLAYER TO BE SEEN IF IT IS HIDDEN */}
 						{isLoading && currentVideoLink && <div 	className="loading">
-						<CircularProgress size={60} />
+						<CircularProgress style={{color:'white'}} size={60} />
 						</div>} 
 
 

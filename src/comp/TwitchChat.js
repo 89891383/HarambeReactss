@@ -57,6 +57,7 @@ const TwitchChat = () => {
 
 	const dispatch = useDispatch()
 
+
 	const {onlineUsers, isServerTime, currentChat, firstInteraction,disconnected} = useSelector(state=> state.player)
 
 	const { socket } = useContext(DataContext);
@@ -110,6 +111,7 @@ const TwitchChat = () => {
 	},[socket])
 
 
+
 	const syncStatus = isServerTime ? 
 	<Tooltip 
 		title={`SYNC ON, ${ping}ms`} 
@@ -132,9 +134,6 @@ const TwitchChat = () => {
 			<ErrorIcon className={classes.disconnected} />
 		</Tooltip>
 		)}
-
-
-
 
 	
 	return (

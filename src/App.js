@@ -24,7 +24,6 @@ const socket = io(`/`);
 const theme = createTheme({
 	overrides:{
 		MuiSlider:{
-			colorPrimary:'red',
 			rail:{
 				color:'white'
 			},
@@ -41,6 +40,7 @@ const theme = createTheme({
 				color:'transparent'
 			}
 		},
+
 	}
 
 })

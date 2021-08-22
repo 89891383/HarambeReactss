@@ -3,8 +3,8 @@ import "./CustomPlayer.css"
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
 import { Box, makeStyles, Typography } from '@material-ui/core';
-import ShowChat from '@material-ui/icons/VisibilityOff';
-import HideChat from '@material-ui/icons/Visibility';
+import ShowChat from '@material-ui/icons/SpeakerNotesOff';
+import HideChat from '@material-ui/icons/Chat';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import { useContext } from 'react';
 import { DataContext } from '../../../App';

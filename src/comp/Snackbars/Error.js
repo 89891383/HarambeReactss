@@ -19,31 +19,31 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CustomizedSnackbars() {
+	const { isError, errorMessage } = useSelector((state) => state.player);
 
-	const {isError, errorMessage} = useSelector(state=> state.player)
+	const dispatch = useDispatch();
 
-	const dispatch = useDispatch()
-
-	// const { isError, setIsError, errorMessage } = useContext(DataContext);
 	const classes = useStyles();
 
 	const handleClose = (event, reason) => {
 		if (reason === "clickaway") {
 			return;
 		}
-		dispatch(changeIsError(false))
+		dispatch(changeIsError(false));
 	};
 
 	return (
 		<div className={classes.root}>
-			<Snackbar open={isError} autoHideDuration={2000} 
-			anchorOrigin={{horizontal:'left', vertical:'top'}}  onClose={handleClose}>
+			<Snackbar
+				open={isError}
+				autoHideDuration={2000}
+				anchorOrigin={{ horizontal: "left", vertical: "top" }}
+				onClose={handleClose}
+			>
 				<Alert onClose={handleClose} severity="error">
 					{errorMessage}
 				</Alert>
 			</Snackbar>
-
-			{/* <Alert severity="success">This is a success message!</Alert> */}
 		</div>
 	);
 }

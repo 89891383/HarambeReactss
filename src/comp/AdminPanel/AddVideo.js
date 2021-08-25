@@ -7,67 +7,70 @@ import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
 import QueueIcon from "@material-ui/icons/Queue";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, ButtonGroup, makeStyles, TextField, Typography } from "@material-ui/core";
+import {
+	Button,
+	ButtonGroup,
+	makeStyles,
+	TextField,
+	Typography,
+} from "@material-ui/core";
 import { changeIsAddVideo } from "../../redux/playerState";
 
 const useStyles = makeStyles({
-	textField:{
-		color:'white',
-		margin:'10px 0',
-		'& .MuiOutlinedInput-root': {
-			'& fieldset': {
-			  borderColor: 'white',
+	textField: {
+		color: "white",
+		margin: "10px 0",
+		"& .MuiOutlinedInput-root": {
+			"& fieldset": {
+				borderColor: "white",
 			},
-			'&:hover fieldset': {
-				borderColor: '#757ce8',
-			  },
-			  '&.Mui-focused fieldset': {
-				borderColor: '#3f50b5',
-			  },
-		
-		}
+			"&:hover fieldset": {
+				borderColor: "#757ce8",
+			},
+			"&.Mui-focused fieldset": {
+				borderColor: "#3f50b5",
+			},
+		},
 	},
 	input: {
-		color:'white',
-	
+		color: "white",
 	},
-	inputLabel:{
-		color:'white'
+	inputLabel: {
+		color: "white",
 	},
-	button:{
-		color:'white',
-		fontWeight:'500',
-		borderColor:"white",
-		"&:hover":{
-			borderColor:'white'
+	button: {
+		color: "white",
+		fontWeight: "500",
+		borderColor: "white",
+		"&:hover": {
+			borderColor: "white",
 		},
-		"@media(max-width:600px)":{
-			fontSize:'10px'
-		}
+		"@media(max-width:600px)": {
+			fontSize: "10px",
+		},
 	},
-	groupButton:{
-		marginTop:'15px',
-		display:'flex',
-		justifyContent:'center'
-	}
-})
+	groupButton: {
+		marginTop: "15px",
+		display: "flex",
+		justifyContent: "center",
+	},
+});
 
 const AddVideo = () => {
+	const classes = useStyles();
 
-	const classes = useStyles()
-
-	const { admin,nickname, isAddVideo } = useSelector(state=> state.player)
+	const { admin, nickname, isAddVideo } = useSelector((state) => state.player);
 
 	const { socket } = useContext(DataContext);
 
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 
 	const [editVideoLink, setEditVideoLink] = useState("");
 	const [videoTitle, setVideoTitle] = useState("");
 
 	const handleSkipVideo = () => {
 		if (admin) {
-			socket.emit("skipVideo", {nickname});
+			socket.emit("skipVideo", { nickname });
 		}
 	};
 
@@ -79,7 +82,7 @@ const AddVideo = () => {
 			});
 			setVideoTitle("");
 			setEditVideoLink("");
-			dispatch(changeIsAddVideo(false))
+			dispatch(changeIsAddVideo(false));
 		}
 	};
 
@@ -92,22 +95,22 @@ const AddVideo = () => {
 			});
 			setEditVideoLink("");
 			setVideoTitle("");
-			dispatch(changeIsAddVideo(false))
+			dispatch(changeIsAddVideo(false));
 		}
 	};
 
 	return (
-		<Popout 
-		state={isAddVideo} 
-		setState={()=> dispatch(changeIsAddVideo(false))}
+		<Popout
+			state={isAddVideo}
+			setState={() => dispatch(changeIsAddVideo(false))}
 		>
 			<form className="addVideo_Form">
-				<Typography variant="h4" gutterBottom >
+				<Typography variant="h4" gutterBottom>
 					Add your video to queue
 				</Typography>
 				<hr />
 				<div className="inputsDiv">
-					<TextField 
+					<TextField
 						label="Enter video URL"
 						value={editVideoLink}
 						onChange={(e) => {
@@ -116,10 +119,10 @@ const AddVideo = () => {
 						autoComplete="off"
 						color="primary"
 						inputProps={{
-							className:classes.input
+							className: classes.input,
 						}}
 						InputLabelProps={{
-							className:classes.inputLabel
+							className: classes.inputLabel,
 						}}
 						className={classes.textField}
 						variant="outlined"
@@ -133,16 +136,14 @@ const AddVideo = () => {
 							setVideoTitle(e.target.value);
 						}}
 						inputProps={{
-							className:classes.input
+							className: classes.input,
 						}}
 						InputLabelProps={{
-							className:classes.inputLabel
+							className: classes.inputLabel,
 						}}
 						className={classes.textField}
 						variant="outlined"
-					
-					/>	
-									
+					/>
 				</div>
 
 				<button
@@ -153,41 +154,36 @@ const AddVideo = () => {
 					}}
 					type="submit"
 				></button>
-	
-						<ButtonGroup variant="outlined"
-						className={classes.groupButton} >
 
-							{ admin && 
-							<Button 
-							onClick={handleAddVideo} 
-							startIcon={<PlayArrowIcon/>} 
+				<ButtonGroup variant="outlined" className={classes.groupButton}>
+					{admin && (
+						<Button
+							onClick={handleAddVideo}
+							startIcon={<PlayArrowIcon />}
 							className={classes.button}
-							>
-								PLAY NOW
-							</Button>
-							}
+						>
+							PLAY NOW
+						</Button>
+					)}
 
-							<Button 
-							startIcon={<QueueIcon/>}
-							onClick={handleAddVideoToQueue} 
-							className={classes.button}
+					<Button
+						startIcon={<QueueIcon />}
+						onClick={handleAddVideoToQueue}
+						className={classes.button}
+					>
+						ADD TO QUEUE
+					</Button>
 
-							>
-								ADD TO QUEUE 
-							</Button>
-
-							{admin && 
-							<Button 
-							startIcon={<SkipNextIcon/>} 
+					{admin && (
+						<Button
+							startIcon={<SkipNextIcon />}
 							onClick={handleSkipVideo}
 							className={classes.button}
-
-							>
-								SKIP VIDEO
-							</Button>
-							}
-						</ButtonGroup>
-				
+						>
+							SKIP VIDEO
+						</Button>
+					)}
+				</ButtonGroup>
 			</form>
 		</Popout>
 	);

@@ -4,38 +4,31 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeQuality } from "../../../../redux/playerState";
 
 const FormatOption = (item) => {
+	const { format, url } = item.item;
 
+	const dispatch = useDispatch();
 
-    const { format, url } = item.item
+	const { currentVideoLink } = useSelector((state) => state.player);
 
-    const dispatch = useDispatch()
+	const ref = useRef(null);
 
-    const { currentVideoLink } = useSelector(state=> state.player)
+	if (!format || !url) return false;
 
-    const ref = useRef(null)
+	if (currentVideoLink === url) {
+		ref?.current?.classList.add("current");
+	}
 
-    if(!format || !url) return false
+	const style = currentVideoLink === url ? { backgroundColor: "#121212" } : {};
 
-    if(currentVideoLink === url){
-            ref?.current?.classList.add('current')
-    }
+	const handleChangeQuality = () => {
+		dispatch(changeQuality(url));
+	};
 
-    const style = currentVideoLink === url ? { backgroundColor:"#121212" } : {}
-    
-    
-    const handleChangeQuality = () =>{
-        dispatch(changeQuality(url))
-    }
+	return (
+		<div className="formatOption" style={style} onClick={handleChangeQuality}>
+			<Typography>{format}p</Typography>
+		</div>
+	);
+};
 
-
-
-    return ( 
-        <div className="formatOption" style={style} onClick={handleChangeQuality}>
-            <Typography>
-                {format}p
-            </Typography> 
-        </div>
-     );
-}
- 
 export default FormatOption;

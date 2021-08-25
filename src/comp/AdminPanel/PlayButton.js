@@ -22,7 +22,7 @@ export default function OutlinedButtons({ onClick, style, children, title }) {
 	const classes = useStyles();
 
 	return (
-		<Tooltip title={title} arrow enterDelay={1000} TransitionComponent={Zoom} >
+		<Tooltip title={title} arrow enterDelay={1000} TransitionComponent={Zoom}>
 			<div className={classes.root}>
 				<Button
 					onClick={onClick && onClick}

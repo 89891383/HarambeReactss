@@ -19,30 +19,29 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CustomizedSnackbars() {
-
-	const { isWarning, warningMessage } = useSelector(state=> state.player);
+	const { isWarning, warningMessage } = useSelector((state) => state.player);
 	const classes = useStyles();
 
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 
 	const handleClose = (event, reason) => {
 		if (reason === "clickaway") {
 			return;
 		}
-		dispatch(changeIsWarning(false))
+		dispatch(changeIsWarning(false));
 	};
-
 
 	return (
 		<div className={classes.root}>
-			<Snackbar 
-			open={isWarning} 
-			autoHideDuration={2000} 
-		 	anchorOrigin={{horizontal:'left', vertical:'top'}} 
-			 onClose={handleClose}>
-					 <Alert onClose={handleClose} severity="warning">
-						{warningMessage}
-					</Alert> 
+			<Snackbar
+				open={isWarning}
+				autoHideDuration={2000}
+				anchorOrigin={{ horizontal: "left", vertical: "top" }}
+				onClose={handleClose}
+			>
+				<Alert onClose={handleClose} severity="warning">
+					{warningMessage}
+				</Alert>
 			</Snackbar>
 		</div>
 	);

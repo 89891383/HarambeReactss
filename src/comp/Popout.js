@@ -1,14 +1,14 @@
 import React from "react";
 import { useRef } from "react";
 import { CSSTransition } from "react-transition-group";
-import { useClickAway } from "react-use"
+import { useClickAway } from "react-use";
 import "./Popout.css";
 const Popout = ({ children, state, setState }) => {
 	const popoutRef = useRef(null);
 
-	useClickAway(popoutRef, ()=>{
+	useClickAway(popoutRef, () => {
 		setState(); // CLOSE
-	})
+	});
 
 	return (
 		<CSSTransition

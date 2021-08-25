@@ -10,9 +10,17 @@ import Warning from "./comp/Snackbars/Warning";
 import TwitchChat from "./comp/TwitchChat";
 import OptionsDialog from "./comp/AdminPanel/Options/OptionsDialog";
 import HistoryDialog from "./comp/History/HistoryDialog";
-import {  useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 
-import { changeNickname, errorMessage, handleDisconnect, handleReconnect, setTwitchUserData, successMessage, warningMessage } from "./redux/playerState";
+import {
+	changeNickname,
+	errorMessage,
+	handleDisconnect,
+	handleReconnect,
+	setTwitchUserData,
+	successMessage,
+	warningMessage,
+} from "./redux/playerState";
 import ClickToLoad from "./comp/Player/ClickToLoad";
 import { createTheme, ThemeProvider } from "@material-ui/core";
 import TwitchCam from "./comp/TwitchCam/TwitchCam";
@@ -20,41 +28,36 @@ export const DataContext = React.createContext();
 
 const socket = io(`/`);
 
-
 const theme = createTheme({
-	overrides:{
-		MuiSlider:{
-			rail:{
-				color:'white'
+	overrides: {
+		MuiSlider: {
+			rail: {
+				color: "white",
 			},
-			track:{
-				color:'white'
+			track: {
+				color: "white",
 			},
-			thumb:{
-				color:'white',
-				'&:focus, &:hover, &$active': {
-					boxShadow: 'none',
+			thumb: {
+				color: "white",
+				"&:focus, &:hover, &$active": {
+					boxShadow: "none",
 				},
 			},
-			marked:{
-				color:'transparent'
-			}
+			marked: {
+				color: "transparent",
+			},
 		},
-
-	}
-
-})
-
+	},
+});
 
 const App = () => {
-
 	const history = useHistory();
 
-	const { hiddenChat,firstInteraction,isTwitchCam } = useSelector(state => state.player)
+	const { hiddenChat, firstInteraction, isTwitchCam } = useSelector(
+		(state) => state.player
+	);
 
-
-	const dispatch = useDispatch()
-
+	const dispatch = useDispatch();
 
 	// const twitchStreamer = "main";
 	const websiteURL = window.location.origin;
@@ -66,85 +69,73 @@ const App = () => {
 			.then((res) => res.json())
 			.then((res) => {
 				if (res.profile) {
-					dispatch(setTwitchUserData(res.profile))
-					dispatch(changeNickname(res.profile.login.toLowerCase()))
+					dispatch(setTwitchUserData(res.profile));
+					dispatch(changeNickname(res.profile.login.toLowerCase()));
 				}
 			});
 	}, [dispatch]);
 
-
-
-
 	useEffect(() => {
 		socket.on("success", ({ message }) => {
-			dispatch(successMessage(message))
+			dispatch(successMessage(message));
 		});
 		socket.on("error", ({ message }) => {
-			dispatch(errorMessage(message))
+			dispatch(errorMessage(message));
 		});
-		socket.on('warning', ({message})=>{
-			dispatch(warningMessage(message))
-		})
-		socket.on('disconnect', ()=>{
-			dispatch(handleDisconnect())
-		})
+		socket.on("warning", ({ message }) => {
+			dispatch(warningMessage(message));
+		});
+		socket.on("disconnect", () => {
+			dispatch(handleDisconnect());
+		});
 
-		socket.io.on('reconnect', ()=>{
-			dispatch(handleReconnect())
-		})
+		socket.io.on("reconnect", () => {
+			dispatch(handleReconnect());
+		});
 
 		return () => {
 			socket.off("success");
 			socket.off("error");
-			socket.off('warning')
-			socket.off('disconnect')
-			socket.off('reconnect')
+			socket.off("warning");
+			socket.off("disconnect");
+			socket.off("reconnect");
 		};
 	}, [dispatch]);
-	
-
 
 	return (
-		<ThemeProvider theme={theme} >
-
+		<ThemeProvider theme={theme}>
 			<DataContext.Provider
 				value={{
-					websiteURL,		
+					websiteURL,
 					socket,
 					history,
 				}}
 			>
 				<div className="app">
 					<div className="playerAndControls">
+						{firstInteraction ? (
+							<>
+								<PlayerAndChat />
 
-					{firstInteraction ? 
-					<>
-						<PlayerAndChat/> 
-						
-						<div className="bottomDiv">
-								<AdminPanel />
-						</div>
-
-
-					</>
-					
-					: <ClickToLoad/>}
-						
+								<div className="bottomDiv">
+									<AdminPanel />
+								</div>
+							</>
+						) : (
+							<ClickToLoad />
+						)}
 					</div>
 					<HistoryDialog />
-					{!hiddenChat && <TwitchChat />}	
+					{!hiddenChat && <TwitchChat />}
 					<OptionsDialog />
 
-					{isTwitchCam && firstInteraction && <TwitchCam/>}
-
-
+					{isTwitchCam && firstInteraction && <TwitchCam />}
 				</div>
 				<Success />
 				<Error />
 				<Warning />
 			</DataContext.Provider>
 		</ThemeProvider>
-
 	);
 };
 

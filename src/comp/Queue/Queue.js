@@ -3,17 +3,15 @@ import QueueItem from "./QueueItem";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { useSelector } from "react-redux";
 const Queue = () => {
+	const { videoQueue } = useSelector((state) => state.player);
 
-	const { videoQueue } = useSelector(state=> state.player)
-
-	if(videoQueue.length === 0){
+	if (videoQueue.length === 0) {
 		return (
 			<div className="queue">
 				<div className="emptyQueueText">QUEUE IS EMPTY</div>
 			</div>
-		)
+		);
 	}
-
 
 	const queueList = videoQueue.map((item, index) => {
 		return (
@@ -25,9 +23,7 @@ const Queue = () => {
 
 	return (
 		<div className="queue">
-			<TransitionGroup className="queue_List">
-				{queueList}
-			</TransitionGroup>
+			<TransitionGroup className="queue_List">{queueList}</TransitionGroup>
 		</div>
 	);
 };

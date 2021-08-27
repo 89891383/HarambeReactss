@@ -21,6 +21,9 @@ const useStyles = makeStyles({
 			color: "#f94144",
 			borderColor: "#f94144",
 		},
+		"@media (max-width:460px)": {
+			marginRight: "17px",
+		},
 	},
 	queueCounter: {
 		padding: "7px 12px",

@@ -1,4 +1,5 @@
 import { Avatar, Box, makeStyles, Typography } from "@material-ui/core";
+import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import Button2 from "../Button";
 
@@ -26,10 +27,22 @@ const AccountInfo = () => {
 		window.location.href = `/twitch/logout`;
 	};
 
+	const accountRef = useRef(null);
+
+	useEffect(() => {
+		const size = accountRef.current.getBoundingClientRect();
+		const pageWidth = window.innerWidth;
+		const rightBorder = size.x + size.width;
+		if (rightBorder > pageWidth) {
+			accountRef.current.style.left = `100%`;
+			accountRef.current.style.transform = `translate(-102%, -132%)`;
+		}
+	}, [accountRef]);
+
 	const { twitchUserData } = useSelector((state) => state.player);
 
 	return (
-		<div className="accountInfo">
+		<div className="accountInfo" ref={accountRef}>
 			<Box className={classes.box}>
 				<Avatar className={classes.avatar} src={twitchUserData.image} />
 				<Typography variant="body1">{twitchUserData.login}</Typography>

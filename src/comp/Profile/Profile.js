@@ -7,9 +7,6 @@ import AccountInfo from "./AccountInfo";
 import { Fade } from "@material-ui/core";
 
 const useStyles = makeStyles({
-	profileIcon: {
-		color: "white",
-	},
 	box: {
 		padding: "5px",
 		borderRadius: "5px",

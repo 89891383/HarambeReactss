@@ -30,7 +30,6 @@
 	display: flex;
 	flex-direction: column;
 	gap: 5px;
-	box-shadow: 0 0 5px black;
 }
 
 .inputsDiv {
@@ -51,7 +50,7 @@
 .manageIcons {
 	display: flex;
 }
-.isLive{
+.isLive {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -59,7 +58,7 @@
 	border-radius: 5px;
 }
 
-.player-wrapper{
+.player-wrapper {
 	position: relative;
 	overflow: hidden;
 }

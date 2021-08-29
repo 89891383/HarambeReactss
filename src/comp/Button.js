@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function OutlinedButtons({
-	text,
 	onClick,
 	style,
 	children,

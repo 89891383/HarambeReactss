@@ -92,6 +92,9 @@ body {
 @media screen and (orientation: landscape) and (max-width: 1000px) {
 	.twitchChat {
 		width: 300px;
+		/* height: 130vh;
+		overflow-y: hidden;
+		transform: translateY(20vh); */
 	}
 }
 

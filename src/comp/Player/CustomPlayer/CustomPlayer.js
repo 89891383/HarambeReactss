@@ -206,11 +206,10 @@ const CustomPlayer = ({ playerWrapperRef }) => {
 
 	const handleTogglePlayServer = () => {
 		if (!admin) {
-			// return dispatch(togglePlaying())
 			return socket.emit("canPlay");
 		}
 
-		socket.emit("togglePlay");
+		socket.emit("togglePlay", nickname);
 	};
 
 	const handleToggleChat = () => {

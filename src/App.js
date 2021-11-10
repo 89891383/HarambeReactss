@@ -29,6 +29,9 @@ export const DataContext = React.createContext();
 const socket = io(`/`);
 
 const theme = createTheme({
+	palette: {
+		type: "dark",
+	},
 	overrides: {
 		MuiSlider: {
 			rail: {

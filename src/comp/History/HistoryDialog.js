@@ -34,15 +34,14 @@ const HistoryDialog = () => {
 
 	const [history, setHistory] = useState(null);
 	useEffect(() => {
+		if (isHistoryOpen) {
+			socket.emit("getPlaylistHistory");
+		}
 		socket.on("getPlaylistHistoryAnswer", ({ history }) => {
 			if (history) {
 				setHistory(history.reverse());
 			}
 		});
-
-		if (isHistoryOpen) {
-			socket.emit("getPlaylistHistory");
-		}
 
 		return () => {
 			socket.off("getPlaylistHistoryAnswer");

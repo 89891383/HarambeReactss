@@ -118,12 +118,6 @@ const AddVideo = () => {
 						}}
 						autoComplete="off"
 						color="primary"
-						inputProps={{
-							className: classes.input,
-						}}
-						InputLabelProps={{
-							className: classes.inputLabel,
-						}}
 						className={classes.textField}
 						variant="outlined"
 					/>
@@ -134,12 +128,6 @@ const AddVideo = () => {
 						autoComplete="off"
 						onChange={(e) => {
 							setVideoTitle(e.target.value);
-						}}
-						inputProps={{
-							className: classes.input,
-						}}
-						InputLabelProps={{
-							className: classes.inputLabel,
 						}}
 						className={classes.textField}
 						variant="outlined"

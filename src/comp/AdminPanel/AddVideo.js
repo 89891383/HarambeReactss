@@ -1,7 +1,6 @@
 import React from "react";
 import { useContext, useState } from "react";
 import { DataContext } from "../../App";
-import Popout from "../Popout";
 import "./AdminPanel.css";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
@@ -59,7 +58,7 @@ const useStyles = makeStyles({
 const AddVideo = () => {
 	const classes = useStyles();
 
-	const { admin, nickname, isAddVideo } = useSelector((state) => state.player);
+	const { admin, nickname } = useSelector((state) => state.player);
 
 	const { socket } = useContext(DataContext);
 
@@ -100,80 +99,75 @@ const AddVideo = () => {
 	};
 
 	return (
-		<Popout
-			state={isAddVideo}
-			setState={() => dispatch(changeIsAddVideo(false))}
-		>
-			<form className="addVideo_Form">
-				<Typography variant="h4" gutterBottom>
-					Add your video to queue
-				</Typography>
-				<hr />
-				<div className="inputsDiv">
-					<TextField
-						label="Enter video URL"
-						value={editVideoLink}
-						onChange={(e) => {
-							setEditVideoLink(e.target.value);
-						}}
-						autoComplete="off"
-						color="primary"
-						className={classes.textField}
-						variant="outlined"
-					/>
-
-					<TextField
-						label="Title"
-						value={videoTitle}
-						autoComplete="off"
-						onChange={(e) => {
-							setVideoTitle(e.target.value);
-						}}
-						className={classes.textField}
-						variant="outlined"
-					/>
-				</div>
-
-				<button
-					style={{ display: "none" }}
-					onClick={(e) => {
-						e.preventDefault();
-						handleAddVideoToQueue();
+		<form className="addVideo_Form">
+			<Typography variant="h4" gutterBottom>
+				Add your video to queue
+			</Typography>
+			<hr />
+			<div className="inputsDiv">
+				<TextField
+					label="Enter video URL"
+					value={editVideoLink}
+					onChange={(e) => {
+						setEditVideoLink(e.target.value);
 					}}
-					type="submit"
-				></button>
+					autoComplete="off"
+					color="primary"
+					className={classes.textField}
+					variant="outlined"
+				/>
 
-				<ButtonGroup variant="outlined" className={classes.groupButton}>
-					{admin && (
-						<Button
-							onClick={handleAddVideo}
-							startIcon={<PlayArrowIcon />}
-							className={classes.button}
-						>
-							PLAY NOW
-						</Button>
-					)}
+				<TextField
+					label="Title"
+					value={videoTitle}
+					autoComplete="off"
+					onChange={(e) => {
+						setVideoTitle(e.target.value);
+					}}
+					className={classes.textField}
+					variant="outlined"
+				/>
+			</div>
 
+			<button
+				style={{ display: "none" }}
+				onClick={(e) => {
+					e.preventDefault();
+					handleAddVideoToQueue();
+				}}
+				type="submit"
+			></button>
+
+			<ButtonGroup variant="outlined" className={classes.groupButton}>
+				{admin && (
 					<Button
-						startIcon={<QueueIcon />}
-						onClick={handleAddVideoToQueue}
+						onClick={handleAddVideo}
+						startIcon={<PlayArrowIcon />}
 						className={classes.button}
 					>
-						ADD TO QUEUE
+						PLAY NOW
 					</Button>
+				)}
 
-					{admin && (
-						<Button
-							startIcon={<SkipNextIcon />}
-							onClick={handleSkipVideo}
-							className={classes.button}
-						>
-							SKIP VIDEO
-						</Button>
-					)}
-				</ButtonGroup>
-			</form>
-		</Popout>
+				<Button
+					startIcon={<QueueIcon />}
+					onClick={handleAddVideoToQueue}
+					className={classes.button}
+				>
+					ADD TO QUEUE
+				</Button>
+
+				{admin && (
+					<Button
+						startIcon={<SkipNextIcon />}
+						onClick={handleSkipVideo}
+						className={classes.button}
+					>
+						SKIP VIDEO
+					</Button>
+				)}
+			</ButtonGroup>
+		</form>
 	);
 };
 

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/styles";
 import SideOptions from "../SideOptions";
 import { changeIsAddVideo } from "../../redux/playerState";
+import Popout from "../Popout";
 
 const useStyles = makeStyles({
 	addVideoBtn: {
@@ -53,9 +54,8 @@ const AdminPanel = () => {
 
 	const dispatch = useDispatch();
 
-	const { admin, nickname, isPlaylistOpen, videoQueue } = useSelector(
-		(state) => state.player
-	);
+	const { admin, nickname, isPlaylistOpen, videoQueue, isAddVideo } =
+		useSelector((state) => state.player);
 
 	const handleTwitchLogin = () => {
 		window.location.href = `/auth/twitch`; //DECLARED IN APP
@@ -69,7 +69,12 @@ const AdminPanel = () => {
 
 	return (
 		<>
-			<AddVideo />
+			<Popout
+				state={isAddVideo}
+				setState={() => dispatch(changeIsAddVideo(false))}
+			>
+				<AddVideo />
+			</Popout>
 
 			{/* ADDING VIDEO PANEL */}
 			<Box className={classes.adminPanel}>

@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../App";
 import React from "react";
-import Popout from "../Popout";
 import HistoryItem from "./HistoryItem";
 import {
 	CircularProgress,
@@ -11,8 +10,7 @@ import {
 	Zoom,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { useDispatch, useSelector } from "react-redux";
-import { historyOpenToggle } from "../../redux/playerState";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles({
 	clearHistory: {
@@ -26,17 +24,13 @@ const useStyles = makeStyles({
 const HistoryDialog = () => {
 	const classes = useStyles();
 
-	const dispatch = useDispatch();
-
-	const { admin, isHistoryOpen } = useSelector((state) => state.player);
+	const { admin } = useSelector((state) => state.player);
 
 	const { socket } = useContext(DataContext);
 
 	const [history, setHistory] = useState(null);
 	useEffect(() => {
-		if (isHistoryOpen) {
-			socket.emit("getPlaylistHistory");
-		}
+		socket.emit("getPlaylistHistory");
 		socket.on("getPlaylistHistoryAnswer", ({ history }) => {
 			if (history) {
 				setHistory(history.reverse());
@@ -46,7 +40,7 @@ const HistoryDialog = () => {
 		return () => {
 			socket.off("getPlaylistHistoryAnswer");
 		};
-	}, [socket, isHistoryOpen]);
+	}, [socket]);
 
 	const createHistory = history?.map((video, index) => {
 		const { URL, title } = video;
@@ -71,30 +65,25 @@ const HistoryDialog = () => {
 	);
 
 	return (
-		<Popout
-			state={isHistoryOpen}
-			setState={() => dispatch(historyOpenToggle(false))}
-		>
-			<div className="historyContainer">
-				{admin && (
-					<IconButton
-						className={classes.clearHistory}
-						onClick={handleClearHistory}
+		<div className="historyContainer">
+			{admin && (
+				<IconButton
+					className={classes.clearHistory}
+					onClick={handleClearHistory}
+				>
+					<Tooltip
+						title={"Clear history"}
+						enterDelay={0}
+						TransitionComponent={Zoom}
 					>
-						<Tooltip
-							title={"Clear history"}
-							enterDelay={0}
-							TransitionComponent={Zoom}
-						>
-							<DeleteIcon />
-						</Tooltip>
-					</IconButton>
-				)}
+						<DeleteIcon />
+					</Tooltip>
+				</IconButton>
+			)}
 
-				<h2>Last played:</h2>
-				{createHistory ? checkIsEmpty : <CircularProgress />}
-			</div>
-		</Popout>
+			<h2>Last played:</h2>
+			{createHistory ? checkIsEmpty : <CircularProgress />}
+		</div>
 	);
 };
 

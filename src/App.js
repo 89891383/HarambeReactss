@@ -14,11 +14,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
 	changeNickname,
-	dialogOpenToggle,
 	errorMessage,
 	handleDisconnect,
 	handleReconnect,
-	historyOpenToggle,
 	setTwitchUserData,
 	successMessage,
 	warningMessage,
@@ -27,6 +25,7 @@ import ClickToLoad from "./comp/Player/ClickToLoad";
 import { createTheme, ThemeProvider } from "@material-ui/core";
 import TwitchCam from "./comp/TwitchCam/TwitchCam";
 import Popout from "./comp/Popout";
+import { dialogOpenToggle, historyOpenToggle } from "./redux/popoutsSlice";
 export const DataContext = React.createContext();
 
 const socket = io(`/`);
@@ -59,17 +58,14 @@ const theme = createTheme({
 const App = () => {
 	const history = useHistory();
 
-	const {
-		hiddenChat,
-		firstInteraction,
-		isTwitchCam,
-		isHistoryOpen,
-		isDialogOpen,
-	} = useSelector((state) => state.player);
+	const { hiddenChat, firstInteraction, isTwitchCam } = useSelector(
+		(state) => state.player
+	);
+
+	const { isHistoryOpen, isDialogOpen } = useSelector((state) => state.popouts);
 
 	const dispatch = useDispatch();
 
-	// const twitchStreamer = "main";
 	const websiteURL = window.location.origin;
 
 	// APP, ADMINPANEL, PLAYERANDCHAT, PACKAGE.JSON

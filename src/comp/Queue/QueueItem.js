@@ -4,6 +4,7 @@ import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import CodeIcon from "@material-ui/icons/Code";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import { Box, makeStyles, Tooltip, Typography, Zoom } from "@material-ui/core";
+import Rating from "@material-ui/lab/Rating";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import "./Queue.css";
 import noImg from "./noImg.jpg";
@@ -27,12 +28,35 @@ const useStyles = makeStyles({
 			backgroundColor: "rgba(255, 255, 255, 0.3)",
 		},
 	},
+	rating: {
+		// "@media (max-width:1000px)": {
+		// 	display: "none",
+		// },
+	},
+	imdbInfoBox: {
+		display: "flex",
+		alignItems: "center",
+		gap: "15px",
+		"@media (max-width:1000px)": {
+			display: "none",
+		},
+	},
 });
 
 const QueueItem = ({ item, index }) => {
 	const classes = useStyles();
 
-	const { URL, title, addedBy, thumbnail, duration, noData, iFrame, id } = item;
+	const {
+		URL,
+		title,
+		addedBy,
+		thumbnail,
+		duration,
+		noData,
+		iFrame,
+		id,
+		rating,
+	} = item;
 
 	const formatTime = (time) => {
 		return time < 10 ? `0${time}` : time;
@@ -128,7 +152,18 @@ const QueueItem = ({ item, index }) => {
 
 					{duration && <div className="queueItemDuration">{checkDuration}</div>}
 
-					{noData && <div className="queueItemDuration">No data</div>}
+					{noData && !rating && (
+						<div className="queueItemDuration">No data</div>
+					)}
+					<Box className={classes.imdbInfoBox}>
+						{rating >= 0 && (
+							<Rating
+								className={classes.rating}
+								readOnly
+								value={Math.floor(rating / 2)}
+							/>
+						)}
+					</Box>
 				</div>
 
 				{admin && (

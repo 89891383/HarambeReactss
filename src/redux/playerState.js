@@ -27,9 +27,6 @@ const initialState = {
 	errorMessage: "",
 	isWarning: false,
 	warningMessage: "",
-	isDialogOpen: false,
-	isAddVideo: false,
-	isHistoryOpen: false,
 	hiddenChat: false,
 	liveDuration: null,
 	currentChat: "victorowsky_",
@@ -263,13 +260,6 @@ export const counterSlice = createSlice({
 		changeCurrentChat: (state, action) => {
 			state.currentChat = action.payload;
 		},
-		dialogOpenToggle: (state, action) => {
-			state.isDialogOpen = action.payload;
-		},
-		historyOpenToggle: (state, action) => {
-			state.isHistoryOpen = action.payload;
-			// state.isHistoryOpen = !state.isHistoryOpen
-		},
 		changeIsError: (state, action) => {
 			state.isError = action.payload;
 		},
@@ -303,12 +293,6 @@ export const counterSlice = createSlice({
 					video.iFrame = iFrame;
 				}
 			});
-		},
-
-		changeIsAddVideo: (state, action) => {
-			const { payload } = action;
-
-			state.isAddVideo = payload;
 		},
 
 		handleDisconnect: (state) => {
@@ -358,8 +342,6 @@ export const {
 	changeVideoTitle,
 	hiddenChatToggle,
 	changeNickname,
-	dialogOpenToggle,
-	historyOpenToggle,
 	changeIsError,
 	changeIsSuccess,
 	changeIsWarning,
@@ -370,7 +352,7 @@ export const {
 	updateCurrentVideo,
 	loadPlayer,
 	iFrameVideoToggle,
-	changeIsAddVideo,
+
 	changeTwitchCam,
 	handleDisconnect,
 	handleReconnect,

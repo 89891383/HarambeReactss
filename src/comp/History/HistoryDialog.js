@@ -3,21 +3,38 @@ import { DataContext } from "../../App";
 import React from "react";
 import HistoryItem from "./HistoryItem";
 import {
+	Box,
 	CircularProgress,
-	IconButton,
 	makeStyles,
 	Tooltip,
+	Typography,
 	Zoom,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useSelector } from "react-redux";
 
 const useStyles = makeStyles({
-	clearHistory: {
+	box: {
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		width: "100%",
+		position: "relative",
+	},
+	deleteIcon: {
+		padding: "5px",
+		borderRadius: "5px",
+		display: "flex",
+		transition: "300ms",
+		height: "fit-content",
+		cursor: "pointer",
 		color: "white",
+		marginLeft: "auto",
 		position: "absolute",
-		right: "2%",
-		top: "2%",
+		right: "0%",
+		"&:hover": {
+			backgroundColor: "rgba(255, 255, 255, 0.3)",
+		},
 	},
 });
 
@@ -28,7 +45,7 @@ const HistoryDialog = () => {
 
 	const { socket } = useContext(DataContext);
 
-	const [history, setHistory] = useState(null);
+	const [history, setHistory] = useState([]);
 	useEffect(() => {
 		socket.emit("getPlaylistHistory");
 		socket.on("getPlaylistHistoryAnswer", ({ history }) => {
@@ -66,22 +83,22 @@ const HistoryDialog = () => {
 
 	return (
 		<div className="historyContainer">
-			{admin && (
-				<IconButton
-					className={classes.clearHistory}
-					onClick={handleClearHistory}
-				>
-					<Tooltip
-						title={"Clear history"}
-						enterDelay={0}
-						TransitionComponent={Zoom}
-					>
-						<DeleteIcon />
-					</Tooltip>
-				</IconButton>
-			)}
+			<Box className={classes.box}>
+				<Typography variant="h4">Last played:</Typography>
+				{admin && (
+					<Box className={classes.deleteIcon} onClick={handleClearHistory}>
+						<Tooltip
+							title={"Clear history"}
+							enterDelay={0}
+							TransitionComponent={Zoom}
+						>
+							<DeleteIcon />
+						</Tooltip>
+					</Box>
+				)}
+			</Box>
 
-			<h2>Last played:</h2>
+			{/* <h2></h2> */}
 			{createHistory ? checkIsEmpty : <CircularProgress />}
 		</div>
 	);

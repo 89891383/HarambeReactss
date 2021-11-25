@@ -7,29 +7,21 @@ import SkipNextIcon from "@material-ui/icons/SkipNext";
 import QueueIcon from "@material-ui/icons/Queue";
 import { useDispatch, useSelector } from "react-redux";
 import {
+	Box,
 	Button,
 	ButtonGroup,
+	Checkbox,
+	Fade,
+	FormControlLabel,
 	makeStyles,
 	TextField,
 	Typography,
 } from "@material-ui/core";
-import { changeIsAddVideo } from "../../redux/playerState";
+import { changeIsAddVideo } from "../../redux/popoutsSlice";
 
 const useStyles = makeStyles({
 	textField: {
-		color: "white",
 		margin: "10px 0",
-		"& .MuiOutlinedInput-root": {
-			"& fieldset": {
-				borderColor: "white",
-			},
-			"&:hover fieldset": {
-				borderColor: "#757ce8",
-			},
-			"&.Mui-focused fieldset": {
-				borderColor: "#3f50b5",
-			},
-		},
 	},
 	input: {
 		color: "white",
@@ -53,6 +45,15 @@ const useStyles = makeStyles({
 		display: "flex",
 		justifyContent: "center",
 	},
+	imdbBox: {
+		display: "flex",
+		justifyContent: "start",
+		alignItems: "center",
+		height: "40px",
+	},
+	imdbTextField: {
+		marginLeft: "auto",
+	},
 });
 
 const AddVideo = () => {
@@ -66,6 +67,8 @@ const AddVideo = () => {
 
 	const [editVideoLink, setEditVideoLink] = useState("");
 	const [videoTitle, setVideoTitle] = useState("");
+	const [isImdb, setIsImdb] = useState(false);
+	const [imdbID, setImdbID] = useState("");
 
 	const handleSkipVideo = () => {
 		if (admin) {
@@ -91,6 +94,7 @@ const AddVideo = () => {
 				videoLink: editVideoLink,
 				nickname,
 				videoTitle,
+				imdbID,
 			});
 			setEditVideoLink("");
 			setVideoTitle("");
@@ -127,6 +131,30 @@ const AddVideo = () => {
 					className={classes.textField}
 					variant="outlined"
 				/>
+				{admin && (
+					<Box className={classes.imdbBox}>
+						<FormControlLabel
+							control={
+								<Checkbox
+									color="primary"
+									onChange={() => setIsImdb((prev) => !prev)}
+									value={isImdb}
+								/>
+							}
+							label="IMDB"
+						/>
+						<Fade in={isImdb} unmountOnExit timeout={300}>
+							<TextField
+								className={classes.imdbTextField}
+								variant="outlined"
+								label="Imdb move ID"
+								placeholder="tt0068646"
+								value={imdbID}
+								onChange={(e) => setImdbID(e.target.value)}
+							/>
+						</Fade>
+					</Box>
+				)}
 			</div>
 
 			<button

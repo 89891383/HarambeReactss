@@ -3,7 +3,7 @@ import "./History.css";
 import HistoryIcon from "@material-ui/icons/History";
 import { Box, makeStyles, Tooltip, Zoom } from "@material-ui/core";
 import { useDispatch } from "react-redux";
-import { historyOpenToggle } from "../../redux/playerState";
+import { historyOpenToggle } from "../../redux/popoutsSlice";
 
 const useStyles = makeStyles({
 	historyBtn: {

@@ -55,6 +55,23 @@ const useStyles = makeStyles({
 	imdbTextField: {
 		marginLeft: "auto",
 	},
+	inputBox: {
+		display: "flex",
+		flexDirection: "column",
+		gap: "10px",
+		justifyContent: "center",
+		flexWrap: "wrap",
+	},
+	addVideoForm: {
+		width: "90vw",
+		maxWidth: "500px",
+		padding: "30px",
+		backgroundColor: "#121212",
+		borderRadius: "10px",
+		display: "flex",
+		flexDirection: "column",
+		gap: "5px",
+	},
 });
 
 const AddVideo = () => {
@@ -100,14 +117,14 @@ const AddVideo = () => {
 
 	return (
 		<form
-			className="addVideo_Form"
+			className={classes.addVideoForm}
 			onSubmit={handleSubmit(handleAddVideoToQueue)}
 		>
 			<Typography variant="h4" gutterBottom>
 				Add your video to queue
 			</Typography>
 			<hr />
-			<div className="inputsDiv">
+			<Box className={classes.inputBox}>
 				<Controller
 					name="videoLink"
 					control={control}
@@ -150,7 +167,7 @@ const AddVideo = () => {
 							)}
 						/>
 						<Fade in={watch("isImdb")} unmountOnExit timeout={300}>
-							<div style={{ marginLeft: "auto" }}>
+							<Box style={{ marginLeft: "auto" }}>
 								<Controller
 									name="imdbID"
 									control={control}
@@ -164,11 +181,11 @@ const AddVideo = () => {
 										/>
 									)}
 								/>
-							</div>
+							</Box>
 						</Fade>
 					</Box>
 				)}
-			</div>
+			</Box>
 
 			<button style={{ display: "none" }} type="submit"></button>
 

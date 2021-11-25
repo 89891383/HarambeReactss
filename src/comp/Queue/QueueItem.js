@@ -156,7 +156,7 @@ const QueueItem = ({ item, index }) => {
 						<div className="queueItemDuration">No data</div>
 					)}
 					<Box className={classes.imdbInfoBox}>
-						{rating >= 0 && (
+						{rating && (
 							<Rating
 								className={classes.rating}
 								readOnly

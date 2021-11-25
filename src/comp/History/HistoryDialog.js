@@ -64,7 +64,7 @@ const HistoryDialog = () => {
 		return (
 			<HistoryItem key={index} URL={URL}>
 				<a href={URL} target="_blank" rel="noopener noreferrer">
-					{title ? title : URL}
+					<Typography noWrap>{title ? title : URL}</Typography>
 				</a>
 			</HistoryItem>
 		);
@@ -97,8 +97,6 @@ const HistoryDialog = () => {
 					</Box>
 				)}
 			</Box>
-
-			{/* <h2></h2> */}
 			{createHistory ? checkIsEmpty : <CircularProgress />}
 		</div>
 	);

@@ -1,10 +1,11 @@
 import React from "react";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { DataContext } from "../../App";
 import "./AdminPanel.css";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
 import QueueIcon from "@material-ui/icons/Queue";
+import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	Box,
@@ -61,115 +62,120 @@ const AddVideo = () => {
 
 	const { admin, nickname } = useSelector((state) => state.player);
 
+	const { control, handleSubmit, watch } = useForm({
+		defaultValues: {
+			videoLink: "",
+			videoTitle: "",
+			isImdb: false,
+			imdbID: "",
+		},
+	});
+
 	const { socket } = useContext(DataContext);
-
-	const dispatch = useDispatch();
-
-	const [editVideoLink, setEditVideoLink] = useState("");
-	const [videoTitle, setVideoTitle] = useState("");
-	const [isImdb, setIsImdb] = useState(false);
-	const [imdbID, setImdbID] = useState("");
 
 	const handleSkipVideo = () => {
 		if (admin) {
 			socket.emit("skipVideo", { nickname });
 		}
 	};
+	const dispatch = useDispatch();
 
-	const handleAddVideo = () => {
-		if (editVideoLink) {
+	const handleAddVideo = (data) => {
+		if (data.videoLink) {
+			const { videoLink, videoTitle } = data;
 			socket.emit("videoChange", {
-				currentVideoLink: editVideoLink,
+				videoLink,
 				videoTitle,
 			});
-			setVideoTitle("");
-			setEditVideoLink("");
 			dispatch(changeIsAddVideo(false));
 		}
 	};
 
-	const handleAddVideoToQueue = () => {
-		if (editVideoLink) {
-			socket.emit("queueUpdate", {
-				videoLink: editVideoLink,
-				nickname,
-				videoTitle,
-				imdbID,
-			});
-			setEditVideoLink("");
-			setVideoTitle("");
+	const handleAddVideoToQueue = (data) => {
+		if (data.videoLink) {
+			socket.emit("queueUpdate", { ...data, nickname });
 			dispatch(changeIsAddVideo(false));
 		}
 	};
 
 	return (
-		<form className="addVideo_Form">
+		<form
+			className="addVideo_Form"
+			onSubmit={handleSubmit(handleAddVideoToQueue)}
+		>
 			<Typography variant="h4" gutterBottom>
 				Add your video to queue
 			</Typography>
 			<hr />
 			<div className="inputsDiv">
-				<TextField
-					label="Enter video URL"
-					value={editVideoLink}
-					onChange={(e) => {
-						setEditVideoLink(e.target.value);
-					}}
-					autoComplete="off"
-					color="primary"
-					className={classes.textField}
-					variant="outlined"
+				<Controller
+					name="videoLink"
+					control={control}
+					render={({ field }) => (
+						<TextField
+							label="Enter video URL"
+							autoComplete="off"
+							color="primary"
+							variant="outlined"
+							className={classes.textField}
+							{...field}
+						/>
+					)}
 				/>
-
-				<TextField
-					label="Title"
-					value={videoTitle}
-					autoComplete="off"
-					onChange={(e) => {
-						setVideoTitle(e.target.value);
-					}}
-					className={classes.textField}
-					variant="outlined"
+				<Controller
+					name="videoTitle"
+					control={control}
+					render={({ field }) => (
+						<TextField
+							label="Title"
+							autoComplete="off"
+							color="primary"
+							variant="outlined"
+							className={classes.textField}
+							{...field}
+						/>
+					)}
 				/>
 				{admin && (
 					<Box className={classes.imdbBox}>
-						<FormControlLabel
-							control={
-								<Checkbox
-									color="primary"
-									onChange={() => setIsImdb((prev) => !prev)}
-									value={isImdb}
+						<Controller
+							name="isImdb"
+							control={control}
+							render={({ field }) => (
+								<FormControlLabel
+									{...field}
+									control={<Checkbox color="primary" />}
+									label="IMDB"
 								/>
-							}
-							label="IMDB"
+							)}
 						/>
-						<Fade in={isImdb} unmountOnExit timeout={300}>
-							<TextField
-								className={classes.imdbTextField}
-								variant="outlined"
-								label="Imdb move ID"
-								placeholder="tt0068646"
-								value={imdbID}
-								onChange={(e) => setImdbID(e.target.value)}
-							/>
+						<Fade in={watch("isImdb")} unmountOnExit timeout={300}>
+							<div style={{ marginLeft: "auto" }}>
+								<Controller
+									name="imdbID"
+									control={control}
+									render={({ field }) => (
+										<TextField
+											{...field}
+											className={classes.imdbTextField}
+											variant="outlined"
+											label="Imdb move ID"
+											placeholder="tt0068646"
+										/>
+									)}
+								/>
+							</div>
 						</Fade>
 					</Box>
 				)}
 			</div>
 
-			<button
-				style={{ display: "none" }}
-				onClick={(e) => {
-					e.preventDefault();
-					handleAddVideoToQueue();
-				}}
-				type="submit"
-			></button>
+			<button style={{ display: "none" }} type="submit"></button>
 
 			<ButtonGroup variant="outlined" className={classes.groupButton}>
 				{admin && (
 					<Button
-						onClick={handleAddVideo}
+						onClick={handleSubmit(handleAddVideo)}
 						startIcon={<PlayArrowIcon />}
 						className={classes.button}
 					>
@@ -179,7 +185,7 @@ const AddVideo = () => {
 
 				<Button
 					startIcon={<QueueIcon />}
-					onClick={handleAddVideoToQueue}
+					onClick={handleSubmit(handleAddVideoToQueue)}
 					className={classes.button}
 				>
 					ADD TO QUEUE

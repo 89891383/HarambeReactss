@@ -75,6 +75,12 @@ const useStyles = makeStyles({
 	},
 });
 
+const linkRegExpCheck = (link) => {
+	return link.match(
+		/(https?:\/\/)?(www\.)?[a-zA-Z]+\.[a-zA-Z]+\/?[a-zA-Z0-9?=-]*/
+	);
+};
+
 const AddVideo = () => {
 	const classes = useStyles();
 
@@ -99,9 +105,9 @@ const AddVideo = () => {
 	const dispatch = useDispatch();
 
 	const handleAddVideo = (data) => {
-		const regExpCheck = data.videoLink.match(
-			/(https?:\/\/)?(www\.)?[a-zA-Z]+\.[a-zA-Z]+\/?[a-zA-Z0-9?=-]*/
-		);
+		const { videoLink } = data;
+
+		const regExpCheck = linkRegExpCheck(videoLink);
 
 		if (data.videoLink && Boolean(regExpCheck)) {
 			const { videoLink, videoTitle } = data;
@@ -111,20 +117,27 @@ const AddVideo = () => {
 			});
 			dispatch(changeIsAddVideo(false));
 		} else {
-			dispatch(errorMessage("Your link is not correct!"));
+			dispatch(errorMessage("YOUR LINK IS NOT CORRECT!"));
 		}
 	};
 
 	const handleAddVideoToQueue = (data) => {
-		const regExpCheck = data.videoLink.match(
-			/(https?:\/\/)?(www\.)?[a-zA-Z]+\.[a-zA-Z]+\/?[a-zA-Z0-9?=-]*/
-		);
+		const { isImdb, imdbID, videoLink } = data;
+
+		const regExpCheck = linkRegExpCheck(videoLink);
+
+		if (isImdb) {
+			const imdbRegExp = imdbID.match(/tt[0-9]+/);
+			if (!Boolean(imdbRegExp)) {
+				return dispatch(errorMessage("ImdbID IS WRONG!"));
+			}
+		}
 
 		if (data.videoLink && Boolean(regExpCheck)) {
 			socket.emit("queueUpdate", { ...data, nickname });
 			dispatch(changeIsAddVideo(false));
 		} else {
-			dispatch(errorMessage("Your link is not correct!"));
+			dispatch(errorMessage("YOUR LINK IS NOT CORRECT!"));
 		}
 	};
 

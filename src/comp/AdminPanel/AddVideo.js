@@ -19,6 +19,7 @@ import {
 	Typography,
 } from "@material-ui/core";
 import { changeIsAddVideo } from "../../redux/popoutsSlice";
+import { errorMessage } from "../../redux/playerState";
 
 const useStyles = makeStyles({
 	textField: {
@@ -109,6 +110,8 @@ const AddVideo = () => {
 				videoTitle,
 			});
 			dispatch(changeIsAddVideo(false));
+		} else {
+			dispatch(errorMessage("Your link is not correct!"));
 		}
 	};
 
@@ -120,6 +123,8 @@ const AddVideo = () => {
 		if (data.videoLink && Boolean(regExpCheck)) {
 			socket.emit("queueUpdate", { ...data, nickname });
 			dispatch(changeIsAddVideo(false));
+		} else {
+			dispatch(errorMessage("Your link is not correct!"));
 		}
 	};
 

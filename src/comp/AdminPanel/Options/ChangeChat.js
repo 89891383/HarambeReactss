@@ -1,7 +1,6 @@
 import {
 	Box,
 	Button,
-	IconButton,
 	makeStyles,
 	TextField,
 	Typography,
@@ -10,6 +9,7 @@ import React, { useContext, useState } from "react";
 import { DataContext } from "../../../App";
 import CloseIcon from "@material-ui/icons/Close";
 import { Fade } from "@material-ui/core";
+import { useForm, Controller } from "react-hook-form";
 
 const useStyles = makeStyles({
 	btn: {
@@ -70,21 +70,28 @@ const useStyles = makeStyles({
 const ChangeChat = () => {
 	const { socket } = useContext(DataContext);
 
-	const [isOpen, setIsOpen] = useState(false);
+	const defaultValues = {
+		defaultValues: {
+			newChat: "",
+		},
+	};
 
-	const [newChat, setNewChat] = useState("");
+	const { control, handleSubmit, reset } = useForm({ defaultValues });
+
+	const [isOpen, setIsOpen] = useState(false);
 
 	const openChangeAdmin = () => {
 		setIsOpen((prev) => !prev);
 	};
 
-	const handleChangeChat = (e) => {
-		e.preventDefault();
+	const handleChangeChat = (data, event) => {
+		const { newChat } = data;
+		// e.preventDefault();
 		if (newChat) {
 			socket.emit("changeTwitchChat", newChat);
-			setNewChat("");
 		}
 		setIsOpen(false);
+		reset(defaultValues);
 	};
 
 	const classes = useStyles();
@@ -99,8 +106,6 @@ const ChangeChat = () => {
 				Change chat
 			</Button>
 
-			{/* INSER NEW ADMIN CONTAINER */}
-
 			<Fade in={isOpen} unmountOnExit timeout={300}>
 				<div className="insertChat">
 					<Box className={classes.closeButton} onClick={() => setIsOpen(false)}>
@@ -108,29 +113,32 @@ const ChangeChat = () => {
 					</Box>
 
 					<Typography variant="h4">Change chat:</Typography>
-
 					<form>
-						<TextField
-							className={classes.textField}
-							value={newChat}
-							onChange={(e) => {
-								setNewChat(e.target.value);
-							}}
-							variant="outlined"
-							label="Enter new chatroom"
+						<Controller
+							name="newChat"
+							control={control}
+							render={({ field }) => (
+								<TextField
+									{...field}
+									variant="outlined"
+									label="Enter new chatroom"
+								/>
+							)}
 						/>
 						<button
-							onClick={handleChangeChat}
+							onClick={handleSubmit(handleChangeChat)}
 							style={{ display: "none" }}
 						></button>
 					</form>
 
-					<Button className={classes.changeButton} onClick={handleChangeChat}>
+					<Button
+						className={classes.changeButton}
+						onClick={handleSubmit(handleChangeChat)}
+					>
 						Change chat
 					</Button>
 				</div>
 			</Fade>
-			{/* END OF ADMIN CONTAINER */}
 		</div>
 	);
 };

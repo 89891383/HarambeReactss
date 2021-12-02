@@ -98,7 +98,11 @@ const AddVideo = () => {
 	const dispatch = useDispatch();
 
 	const handleAddVideo = (data) => {
-		if (data.videoLink) {
+		const regExpCheck = data.videoLink.match(
+			/(https?:\/\/)?(www\.)?[a-zA-Z]+\.[a-zA-Z]+\/?[a-zA-Z0-9?=-]*/
+		);
+
+		if (data.videoLink && Boolean(regExpCheck)) {
 			const { videoLink, videoTitle } = data;
 			socket.emit("videoChange", {
 				videoLink,
@@ -109,7 +113,11 @@ const AddVideo = () => {
 	};
 
 	const handleAddVideoToQueue = (data) => {
-		if (data.videoLink) {
+		const regExpCheck = data.videoLink.match(
+			/(https?:\/\/)?(www\.)?[a-zA-Z]+\.[a-zA-Z]+\/?[a-zA-Z0-9?=-]*/
+		);
+
+		if (data.videoLink && Boolean(regExpCheck)) {
 			socket.emit("queueUpdate", { ...data, nickname });
 			dispatch(changeIsAddVideo(false));
 		}

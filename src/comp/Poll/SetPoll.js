@@ -67,6 +67,10 @@ const useStyles = makeStyles({
 		flexDirection: "column",
 		gap: "20px",
 	},
+	btnBox: {
+		display: "flex",
+		gap: "15px",
+	},
 });
 
 const SetPoll = () => {
@@ -129,16 +133,17 @@ const SetPoll = () => {
 					style={{ display: "none" }}
 				></button>
 			</form>
-
-			<Button
-				className={classes.changeButton}
-				onClick={handleSubmit(handleSetPoll)}
-			>
-				Set poll
-			</Button>
-			<Button className={classes.changeButton} onClick={handleClosePoll}>
-				Close poll
-			</Button>
+			<Box className={classes.btnBox}>
+				<Button
+					className={classes.changeButton}
+					onClick={handleSubmit(handleSetPoll)}
+				>
+					Set poll
+				</Button>
+				<Button className={classes.changeButton} onClick={handleClosePoll}>
+					Close poll
+				</Button>
+			</Box>
 		</Box>
 	);
 };

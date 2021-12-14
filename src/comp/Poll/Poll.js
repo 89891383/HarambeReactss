@@ -1,8 +1,15 @@
-import { Box, Button, makeStyles, Slide, Typography } from "@material-ui/core";
+import {
+	Box,
+	Button,
+	LinearProgress,
+	makeStyles,
+	Slide,
+	Typography,
+} from "@material-ui/core";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DataContext } from "../../App";
-import { setPoll } from "../../redux/pollSlice";
+import { setPoll, setPollTime } from "../../redux/pollSlice";
 
 const useStyles = makeStyles({
 	pollBox: {
@@ -30,10 +37,14 @@ const useStyles = makeStyles({
 		display: "flex",
 		gap: "5px",
 	},
+	progressBar: {
+		height: "4px",
+		width: "100%",
+	},
 });
 
 const Vote = () => {
-	const { isPoll, pollMessage, yesVotes, noVotes } = useSelector(
+	const { isPoll, pollMessage, yesVotes, noVotes, time } = useSelector(
 		(state) => state.vote
 	);
 	const { nickname } = useSelector((state) => state.player);
@@ -51,8 +62,13 @@ const Vote = () => {
 			dispatch(setPoll(poll));
 		});
 
+		socket.on("pollCountDown", (time) => {
+			dispatch(setPollTime(time));
+		});
+
 		return () => {
 			socket.off("pollAnswer");
+			socket.off("pollCountDown");
 		};
 	}, [dispatch, socket]);
 
@@ -71,6 +87,11 @@ const Vote = () => {
 						No ({noVotes})
 					</Button>
 				</Box>
+				<LinearProgress
+					className={classes.progressBar}
+					variant="determinate"
+					value={(time / 60) * 100}
+				/>
 			</Box>
 		</Slide>
 	);

@@ -70,6 +70,8 @@ const useStyles = makeStyles({
 	btnBox: {
 		display: "flex",
 		gap: "15px",
+		width: "300px",
+		justifyContent: "center",
 	},
 });
 
@@ -94,7 +96,7 @@ const SetPoll = () => {
 	const handleSetPoll = (data) => {
 		const { pollMessage } = data;
 		if (pollMessage) {
-			socket.emit("createPoll", { message: pollMessage });
+			socket.emit("createPoll", { message: pollMessage, nickname });
 		}
 		reset(defaultValues);
 		dispatch(pollOpenToggle(false));
@@ -114,7 +116,7 @@ const SetPoll = () => {
 			</Box>
 
 			<Typography variant="h4">Set poll message</Typography>
-			<form>
+			<form style={{ width: "100%" }}>
 				<Controller
 					name="pollMessage"
 					control={control}

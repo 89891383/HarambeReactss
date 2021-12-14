@@ -25,7 +25,13 @@ import ClickToLoad from "./comp/Player/ClickToLoad";
 import { createTheme, ThemeProvider } from "@material-ui/core";
 import TwitchCam from "./comp/TwitchCam/TwitchCam";
 import Popout from "./comp/Popout";
-import { dialogOpenToggle, historyOpenToggle } from "./redux/popoutsSlice";
+import {
+	dialogOpenToggle,
+	historyOpenToggle,
+	pollOpenToggle,
+} from "./redux/popoutsSlice";
+import Poll from "./comp/Poll/Poll";
+import SetPoll from "./comp/Poll/SetPoll";
 export const DataContext = React.createContext();
 
 const socket = io(`/`);
@@ -62,7 +68,9 @@ const App = () => {
 		(state) => state.player
 	);
 
-	const { isHistoryOpen, isDialogOpen } = useSelector((state) => state.popouts);
+	const { isHistoryOpen, isDialogOpen, isPollOpen } = useSelector(
+		(state) => state.popouts
+	);
 
 	const dispatch = useDispatch();
 
@@ -108,6 +116,11 @@ const App = () => {
 		};
 	}, [dispatch]);
 
+	// useEffect(() => {
+	// 	socket.emit("createPoll", { message: "Czy demonzz to debil?" });
+	// 	console.log("createPoll");
+	// }, []);
+
 	return (
 		<ThemeProvider theme={theme}>
 			<DataContext.Provider
@@ -148,8 +161,16 @@ const App = () => {
 						<OptionsDialog />
 					</Popout>
 
+					<Popout
+						state={isPollOpen}
+						setState={() => dispatch(pollOpenToggle(false))}
+					>
+						<SetPoll />
+					</Popout>
+
 					{isTwitchCam && firstInteraction && <TwitchCam />}
 				</div>
+				<Poll />
 				<Success />
 				<Error />
 				<Warning />

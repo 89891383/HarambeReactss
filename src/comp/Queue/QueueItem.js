@@ -28,11 +28,6 @@ const useStyles = makeStyles({
 			backgroundColor: "rgba(255, 255, 255, 0.3)",
 		},
 	},
-	rating: {
-		// "@media (max-width:1000px)": {
-		// 	display: "none",
-		// },
-	},
 	imdbInfoBox: {
 		display: "flex",
 		alignItems: "center",
@@ -41,11 +36,36 @@ const useStyles = makeStyles({
 			display: "none",
 		},
 	},
+	live: {
+		color: "#f94144",
+		borderColor: "#f94144",
+	},
+	queueItemDuration: {
+		position: "absolute",
+		backgroundColor: "black",
+		borderRadius: "5px",
+		padding: "5px",
+		fontSize: "15px",
+		transform: "translate(162px, 100%)",
+		border: "1px solid black",
+		opacity: "0",
+		animation: `$durationFadeIn ease-in 0.3s forwards`,
+		color: (isLive) => (isLive ? "#f94144" : "white"),
+		borderColor: (isLive) => (isLive ? "rgba(249, 65, 68, 0.5)" : "black"),
+	},
+	"@keyframes durationFadeIn": {
+		from: {
+			opacity: "0",
+			transform: "translate(175px, 100%)",
+		},
+		to: {
+			opacity: 1,
+			transform: "translate(162px, 100%)",
+		},
+	},
 });
 
 const QueueItem = ({ item, index }) => {
-	const classes = useStyles();
-
 	const {
 		URL,
 		title,
@@ -57,6 +77,9 @@ const QueueItem = ({ item, index }) => {
 		id,
 		rating,
 	} = item;
+
+	const isLive = duration === "LIVE";
+	const classes = useStyles(isLive);
 
 	const formatTime = (time) => {
 		return time < 10 ? `0${time}` : time;
@@ -121,18 +144,11 @@ const QueueItem = ({ item, index }) => {
 
 	const checkTitle = title || URL;
 
-	const checkDuration =
-		duration === "LIVE" ? (
-			<span className="live" style={{ padding: 0 }}>
-				LIVE
-			</span>
-		) : (
-			`${hours}:${minutes}:${seconds}`
-		);
+	const checkDuration = isLive ? "LIVE" : `${hours}:${minutes}:${seconds}`;
 
 	return (
 		<>
-			<div className="queueItem">
+			<Box className="queueItem">
 				<div className="videoImgAndInfo_Container" style={queueItemStyle}>
 					<div className="videoImg">
 						<img src={checkThumbnail} alt="" srcSet="" />
@@ -150,19 +166,15 @@ const QueueItem = ({ item, index }) => {
 						</Typography>
 					</Tooltip>
 
-					{duration && <div className="queueItemDuration">{checkDuration}</div>}
+					{duration && (
+						<Box className={classes.queueItemDuration}>{checkDuration}</Box>
+					)}
 
 					{noData && !rating && (
-						<div className="queueItemDuration">No data</div>
+						<Box className={classes.queueItemDuration}>No data</Box>
 					)}
 					<Box className={classes.imdbInfoBox}>
-						{rating && (
-							<Rating
-								className={classes.rating}
-								readOnly
-								value={Math.floor(rating / 2)}
-							/>
-						)}
+						{rating && <Rating readOnly value={Math.floor(rating / 2)} />}
 					</Box>
 				</div>
 
@@ -213,7 +225,7 @@ const QueueItem = ({ item, index }) => {
 						</Box>
 					</div>
 				)}
-			</div>
+			</Box>
 		</>
 	);
 };

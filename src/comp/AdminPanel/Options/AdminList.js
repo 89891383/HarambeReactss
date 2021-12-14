@@ -1,4 +1,4 @@
-import { Fade } from "@material-ui/core";
+import { Box, Fade, Typography } from "@material-ui/core";
 import { Button, makeStyles } from "@material-ui/core";
 import React, { useEffect, useRef, useState } from "react";
 import { useContext } from "react";
@@ -11,6 +11,38 @@ const useStyles = makeStyles({
 		color: "white",
 		borderColor: "white",
 	},
+	adminListArray: {
+		display: "flex",
+		flexDirection: "column",
+		gap: "5px",
+		alignItems: "center",
+		zIndex: "100",
+		minWidth: "100%",
+		maxHeight: "200px",
+		scrollbarWidth: "5px",
+		overflow: "scroll",
+		position: "absolute",
+		left: "0",
+		top: "0",
+		transform: "translateY(-100%)",
+		padding: "15px",
+		backgroundColor: "black",
+		borderRadius: "5px",
+		boxShadow: "0 0 5px black",
+		transformOrigin: "center",
+		scrollbarColor: "auto",
+	},
+	adminListItem: {
+		borderRadius: "4px",
+		padding: "5px",
+		width: "100%",
+		fontWeight: "700",
+	},
+	adminList: {
+		width: "fitContent",
+		position: "relative",
+		padding: "15px",
+	},
 });
 
 const AdminList = () => {
@@ -20,11 +52,11 @@ const AdminList = () => {
 
 	const [adminList, setAdminList] = useState([]);
 
-	const adminListRef = useRef(null)
+	const adminListRef = useRef(null);
 
-	useClickAway(adminListRef, ()=>{
-		setIsAdminList(false)
-	})
+	useClickAway(adminListRef, () => {
+		setIsAdminList(false);
+	});
 
 	useEffect(() => {
 		socket.emit("getAdminList");
@@ -40,39 +72,32 @@ const AdminList = () => {
 
 	const createAdminList = adminList?.map((admin) => {
 		return (
-			<div className="adminList_Item" key={admin}>
+			<Typography className={classes.adminListItem} key={admin}>
 				{admin}
-			</div>
+			</Typography>
 		);
 	});
 
 	const [isAdminList, setIsAdminList] = useState(false);
 
-
 	return (
 		<>
-			<div
-				className="adminList"
-				ref={adminListRef}
-			>
-				<Button 
-					variant="outlined" 
+			<Box className={classes.adminList} ref={adminListRef}>
+				<Button
+					variant="outlined"
 					className={classes.adminListBtn}
-					onClick={() => setIsAdminList(prev=> !prev)}
+					onClick={() => setIsAdminList((prev) => !prev)}
 				>
 					ADMIN LIST
 				</Button>
 
-		
-				<Fade in={isAdminList} unmountOnExit timeout={300} >
-					<div>
-						<div className="adminListArray" >
-							<h3 className="h3_adminListArray">Admins:</h3>
-							{createAdminList}
-						</div>
-					</div>
+				<Fade in={isAdminList} unmountOnExit timeout={300}>
+					<Box className={classes.adminListArray}>
+						<Typography variant="h5">Admins:</Typography>
+						{createAdminList}
+					</Box>
 				</Fade>
-			</div>
+			</Box>
 		</>
 	);
 };

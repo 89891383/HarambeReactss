@@ -65,6 +65,30 @@ const useStyles = makeStyles({
 	inputLabel: {
 		color: "white",
 	},
+	insertChat: {
+		position: "absolute",
+		top: "50%",
+		left: "50%",
+		transform: " translate(-50%, -50%)",
+		backgroundColor: "#121212",
+		width: "100%",
+		height: " 100%",
+		zIndex: "2",
+		borderRadius: "5px",
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "center",
+		flexDirection: "column",
+		gap: "20px",
+	},
+	oneOption: {
+		display: "flex",
+		justifyContent: "space-around",
+		alignItems: "center",
+		padding: "20px",
+		backgroundColor: "#0f0f0f",
+		borderRadius: "5px",
+	},
 });
 
 const ChangeChat = () => {
@@ -84,9 +108,8 @@ const ChangeChat = () => {
 		setIsOpen((prev) => !prev);
 	};
 
-	const handleChangeChat = (data, event) => {
+	const handleChangeChat = (data) => {
 		const { newChat } = data;
-		// e.preventDefault();
 		if (newChat) {
 			socket.emit("changeTwitchChat", newChat);
 		}
@@ -97,7 +120,7 @@ const ChangeChat = () => {
 	const classes = useStyles();
 
 	return (
-		<div className="oneOption">
+		<Box className={classes.oneOption}>
 			<Button
 				onClick={openChangeAdmin}
 				className={classes.btn}
@@ -107,12 +130,12 @@ const ChangeChat = () => {
 			</Button>
 
 			<Fade in={isOpen} unmountOnExit timeout={300}>
-				<div className="insertChat">
+				<Box className={classes.insertChat}>
 					<Box className={classes.closeButton} onClick={() => setIsOpen(false)}>
 						<CloseIcon />
 					</Box>
 
-					<Typography variant="h4">Change chat:</Typography>
+					<Typography variant="h4">Change chat</Typography>
 					<form>
 						<Controller
 							name="newChat"
@@ -120,6 +143,7 @@ const ChangeChat = () => {
 							render={({ field }) => (
 								<TextField
 									{...field}
+									autoComplete="off"
 									variant="outlined"
 									label="Enter new chatroom"
 								/>
@@ -137,9 +161,9 @@ const ChangeChat = () => {
 					>
 						Change chat
 					</Button>
-				</div>
+				</Box>
 			</Fade>
-		</div>
+		</Box>
 	);
 };
 

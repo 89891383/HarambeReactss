@@ -45,6 +45,7 @@ const OptionsDialog = () => {
 			</OneOption>
 
 			<ChangeChat />
+
 			<div
 				style={{
 					display: "flex",

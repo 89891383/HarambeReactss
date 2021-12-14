@@ -4,6 +4,7 @@ const initialState = {
 	isAddVideo: false,
 	isHistoryOpen: false,
 	isDialogOpen: false,
+	isPollOpen: false,
 };
 
 const popoutsSlice = createSlice({
@@ -21,9 +22,16 @@ const popoutsSlice = createSlice({
 		dialogOpenToggle: (state, action) => {
 			state.isDialogOpen = action.payload;
 		},
+		pollOpenToggle: (state, action) => {
+			state.isPollOpen = action.payload;
+		},
 	},
 });
 
-export const { changeIsAddVideo, historyOpenToggle, dialogOpenToggle } =
-	popoutsSlice.actions;
+export const {
+	changeIsAddVideo,
+	historyOpenToggle,
+	dialogOpenToggle,
+	pollOpenToggle,
+} = popoutsSlice.actions;
 export default popoutsSlice.reducer;

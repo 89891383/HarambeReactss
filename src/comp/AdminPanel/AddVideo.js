@@ -64,7 +64,7 @@ const useStyles = makeStyles({
 		flexWrap: "wrap",
 	},
 	addVideoForm: {
-		width: "90vw",
+		width: "98vw",
 		maxWidth: "500px",
 		padding: "30px",
 		backgroundColor: "#121212",

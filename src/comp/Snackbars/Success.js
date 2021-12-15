@@ -4,6 +4,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { changeIsSuccess } from "../../redux/playerState";
+import { Box, Slide } from "@material-ui/core";
 
 function Alert(props) {
 	return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -33,17 +34,20 @@ export default function CustomizedSnackbars() {
 	};
 
 	return (
-		<div className={classes.root}>
+		<Box className={classes.root}>
 			<Snackbar
 				open={isSuccess}
 				autoHideDuration={2000}
 				anchorOrigin={{ horizontal: "left", vertical: "top" }}
 				onClose={handleClose}
+				TransitionComponent={Slide}
 			>
-				<Alert onClose={handleClose} severity="success">
-					{successMessage}
-				</Alert>
+				<Box>
+					<Alert onClose={handleClose} severity="success">
+						{successMessage}
+					</Alert>
+				</Box>
 			</Snackbar>
-		</div>
+		</Box>
 	);
 }

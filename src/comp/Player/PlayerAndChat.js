@@ -1,12 +1,10 @@
 import React, { useCallback, useContext } from "react";
 import { useEffect, useRef } from "react";
 import ReactPlayer from "react-player/lazy";
-import { CSSTransition } from "react-transition-group";
 import { DataContext } from "../../App";
 import CustomPlayer from "./CustomPlayer/CustomPlayer";
-import "./PlayerAndChat.css";
 import { useIdle } from "react-use";
-import { CircularProgress, Fade } from "@material-ui/core";
+import { Box, CircularProgress, Fade } from "@material-ui/core";
 import AlternativePlayer from "./AlternativePlayer";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -35,6 +33,38 @@ import {
 } from "../../redux/playerState";
 import CenterPlayButton from "./CustomPlayer/CenterPlayButton";
 import { isMobile } from "react-device-detect";
+import { makeStyles } from "@material-ui/styles";
+
+const useStyles = makeStyles({
+	player: {
+		display: "flex",
+		flexDirection: "column",
+		backgroundColor: "#121212",
+		height: "100%",
+		zIndex: "0",
+		position: "relative",
+		"@media(max-width:720px)": {
+			height: "60vw",
+		},
+	},
+	playerWrapper: {
+		height: "100%",
+		width: "100%",
+		minHeight: "225px",
+	},
+	reactPlayer: {
+		position: "relative",
+		top: "0",
+		left: "0",
+		pointerEvents: (isTwitch) => isTwitch && "none",
+	},
+	loading: {
+		position: "absolute",
+		top: "50%",
+		left: "50%",
+		transform: "translate(-50%,-50%)",
+	},
+});
 
 const PlayerAndChat = () => {
 	const {
@@ -54,6 +84,8 @@ const PlayerAndChat = () => {
 	} = useSelector((state) => state.player);
 
 	const isTwitch = currentVideoLink?.includes("twitch.tv");
+
+	const classes = useStyles(isTwitch);
 
 	const dispatch = useDispatch();
 
@@ -295,81 +327,80 @@ const PlayerAndChat = () => {
 		};
 	}, [secondsForward, secondsBackward]);
 
+	if (iFrame)
+		return (
+			//  IFRAME PLAYER
+			<Box className={classes.player}>
+				<AlternativePlayer />
+			</Box>
+		);
+
 	return (
 		<>
-			<div className="playerAndChat">
-				{!iFrame ? (
-					<div
-						className="player-wrapper"
-						onMouseMove={handleShowControls}
-						onMouseLeave={handleHideControls}
-						ref={playerWrapperRef}
-					>
-						<ReactPlayer
-							ref={player}
-							onDuration={videoDuration}
-							onProgress={(e) => {
-								if (videoProgress !== e && isPlaying) {
-									setLiveDuration(e); // FUNCTION
-								}
-								if (!isLive) {
-									dispatch(onProgress(e));
-								}
-							}}
-							playing={isPlaying}
-							className="react-player"
-							url={currentVideoLink}
-							style={isTwitch ? {} : { pointerEvents: "none" }}
-							width="100%"
-							height="100%"
-							controls={false}
-							muted={false}
-							volume={volume}
-							playbackRate={playbackRate}
-							onReady={() => dispatch(changeIsLoading(false))}
-							onBuffer={() => dispatch(changeIsLoading(true))}
-							onBufferEnd={() => dispatch(changeIsLoading(false))}
-						/>
-
-						<CSSTransition
-							unmountOnExit
-							in={areControls && !isTwitch}
-							timeout={200}
-							classNames="controls"
-						>
-							<CustomPlayer playerWrapperRef={playerWrapperRef} />
-						</CSSTransition>
-
-						{/* LOADING IS OUT OF CUSTOM PLAYER TO BE SEEN IF IT IS HIDDEN */}
-						{isLoading && currentVideoLink && (
-							<div className="loading">
-								<CircularProgress style={{ color: "white" }} size={60} />
-							</div>
-						)}
-
-						{/* IF PAUSE PLAY BUTTON IS ON CENTER OF SCREEN |
-						 ONLY FOR DESKTOP */}
-						<Fade
-							in={
-								!isPlaying &&
-								currentVideoLink &&
-								!isLoading &&
-								!isMobile &&
-								!isTwitch
+			<Box className={classes.player}>
+				<Box
+					className={classes.playerWrapper}
+					onMouseMove={handleShowControls}
+					onMouseLeave={handleHideControls}
+					ref={playerWrapperRef}
+				>
+					<ReactPlayer
+						ref={player}
+						onDuration={videoDuration}
+						onProgress={(e) => {
+							if (videoProgress !== e && isPlaying) {
+								setLiveDuration(e); // FUNCTION
 							}
-							timeout={300}
-							unmountOnExit
-						>
-							<div>
-								<CenterPlayButton />
-							</div>
-						</Fade>
-					</div>
-				) : (
-					//  IFRAME PLAYER
-					<AlternativePlayer />
-				)}
-			</div>
+							if (!isLive) {
+								dispatch(onProgress(e));
+							}
+						}}
+						playing={isPlaying}
+						className={classes.reactPlayer}
+						url={currentVideoLink}
+						width="100%"
+						height="100%"
+						controls={false}
+						muted={false}
+						volume={volume}
+						playbackRate={playbackRate}
+						onReady={() => dispatch(changeIsLoading(false))}
+						onBuffer={() => dispatch(changeIsLoading(true))}
+						onBufferEnd={() => dispatch(changeIsLoading(false))}
+					/>
+
+					<Fade in={areControls && !isTwitch} timeout={300}>
+						<Box>
+							<CustomPlayer playerWrapperRef={playerWrapperRef} />
+						</Box>
+					</Fade>
+
+					{/* LOADING IS OUT OF CUSTOM PLAYER TO BE SEEN IF IT IS HIDDEN */}
+					<Fade in={isLoading && currentVideoLink} unmountOnExit>
+						<Box className={classes.loading}>
+							<CircularProgress style={{ color: "white" }} size={60} />
+						</Box>
+					</Fade>
+
+					{/* IF PAUSE PLAY BUTTON IS ON CENTER OF SCREEN |
+						 ONLY FOR DESKTOP */}
+					<Fade
+						in={
+							!isPlaying &&
+							currentVideoLink &&
+							!isLoading &&
+							!isMobile &&
+							!isTwitch
+						}
+						timeout={300}
+						unmountOnExit
+					>
+						<Box>
+							<CenterPlayButton />
+						</Box>
+					</Fade>
+				</Box>
+			</Box>
 		</>
 	);
 };

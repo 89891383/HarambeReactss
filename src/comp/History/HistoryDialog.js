@@ -1,15 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { DataContext } from "../../App";
 import React from "react";
+import { changeHistory } from "../../redux/playerState";
 import HistoryItem from "./HistoryItem";
-import {
-	Box,
-	CircularProgress,
-	makeStyles,
-	Tooltip,
-	Typography,
-	Zoom,
-} from "@material-ui/core";
+import { Box, makeStyles, Tooltip, Typography, Zoom } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useSelector } from "react-redux";
 
@@ -29,35 +24,72 @@ const useStyles = makeStyles({
 		height: "fit-content",
 		cursor: "pointer",
 		color: "white",
-		marginLeft: "auto",
+		marginRight: "auto",
 		position: "absolute",
-		right: "0%",
+		left: "0",
+		top: "0",
 		"&:hover": {
 			backgroundColor: "rgba(255, 255, 255, 0.3)",
 		},
+	},
+	historyContainer: {
+		width: "98vw",
+		margin: "0 auto",
+		maxWidth: "500px",
+		height: "90vh",
+		maxHeight: "400px",
+		backgroundColor: "#121212",
+		display: "flex",
+		flexDirection: "column",
+		padding: "30px 20px",
+		alignItems: "center",
+		gap: "10px",
+		overflow: "scroll",
+		borderRadius: "5px",
+		position: "relative",
+	},
+	emptyHistoryTypo: {
+		position: "absolute",
+		top: "50%",
+		left: "50%",
+		transform: "translate(-50%,-50%)",
+		backgroundColor: "#0f0f0f",
+		padding: "15px",
+		width: "80%",
+		borderRadius: "10px",
+		color: "#242424",
+		fontWeight: "700",
 	},
 });
 
 const HistoryDialog = () => {
 	const classes = useStyles();
 
-	const { admin } = useSelector((state) => state.player);
+	const { admin, history } = useSelector((state) => state.player);
 
 	const { socket } = useContext(DataContext);
 
-	const [history, setHistory] = useState([]);
+	const dispatch = useDispatch();
+
 	useEffect(() => {
 		socket.emit("getPlaylistHistory");
 		socket.on("getPlaylistHistoryAnswer", ({ history }) => {
-			if (history) {
-				setHistory(history.reverse());
-			}
+			dispatch(changeHistory(history.reverse()));
 		});
-
 		return () => {
 			socket.off("getPlaylistHistoryAnswer");
 		};
-	}, [socket]);
+	}, [socket, dispatch]);
+
+	if (!history.length) {
+		return (
+			<Box className={classes.historyContainer}>
+				<Typography variant="h3" className={classes.emptyHistoryTypo}>
+					HISTORY IS EMPTY
+				</Typography>
+			</Box>
+		);
+	}
 
 	const createHistory = history?.map((video, index) => {
 		const { URL, title } = video;
@@ -75,14 +107,8 @@ const HistoryDialog = () => {
 		socket.emit("clearHistory");
 	};
 
-	const checkIsEmpty = createHistory?.length ? (
-		createHistory
-	) : (
-		<span className="emptyHistoryText">HISTORY IS EMPTY</span>
-	);
-
 	return (
-		<div className="historyContainer">
+		<Box className={classes.historyContainer}>
 			<Box className={classes.box}>
 				<Typography variant="h4">Last played:</Typography>
 				{admin && (
@@ -97,8 +123,8 @@ const HistoryDialog = () => {
 					</Box>
 				)}
 			</Box>
-			{createHistory ? checkIsEmpty : <CircularProgress />}
-		</div>
+			{createHistory}
+		</Box>
 	);
 };
 

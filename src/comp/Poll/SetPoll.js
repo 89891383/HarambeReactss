@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/styles";
 import { useContext } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { DataContext } from "../../App";
-import CloseIcon from "@material-ui/icons/Close";
 import { useDispatch, useSelector } from "react-redux";
 import { pollOpenToggle } from "../../redux/popoutsSlice";
 
@@ -13,22 +12,6 @@ const useStyles = makeStyles({
 		color: "white",
 		"&:hover": {
 			borderColor: "#6441a5",
-		},
-	},
-	closeButton: {
-		position: "absolute",
-		top: "5%",
-		right: "5%",
-		color: "white",
-		padding: "5px",
-		borderRadius: "5px",
-		display: "flex",
-		transition: "300ms",
-		height: "fit-content",
-		cursor: "pointer",
-		marginLeft: "auto",
-		"&:hover": {
-			backgroundColor: "rgba(255, 255, 255, 0.3)",
 		},
 	},
 	changeButton: {
@@ -108,13 +91,6 @@ const SetPoll = () => {
 
 	return (
 		<Box className={classes.box}>
-			<Box
-				className={classes.closeButton}
-				onClick={() => dispatch(pollOpenToggle(false))}
-			>
-				<CloseIcon />
-			</Box>
-
 			<Typography variant="h4">Set poll message</Typography>
 			<form style={{ width: "100%" }}>
 				<Controller

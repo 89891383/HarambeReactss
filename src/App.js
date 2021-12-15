@@ -11,7 +11,6 @@ import TwitchChat from "./comp/TwitchChat";
 import OptionsDialog from "./comp/AdminPanel/Options/OptionsDialog";
 import HistoryDialog from "./comp/History/HistoryDialog";
 import { useDispatch, useSelector } from "react-redux";
-
 import {
 	changeNickname,
 	errorMessage,
@@ -22,7 +21,7 @@ import {
 	warningMessage,
 } from "./redux/playerState";
 import ClickToLoad from "./comp/Player/ClickToLoad";
-import { createTheme, ThemeProvider } from "@material-ui/core";
+import { createTheme, ThemeProvider, makeStyles, Box } from "@material-ui/core";
 import TwitchCam from "./comp/TwitchCam/TwitchCam";
 import Popout from "./comp/Popout";
 import {
@@ -61,6 +60,40 @@ const theme = createTheme({
 	},
 });
 
+const useStyles = makeStyles({
+	app: {
+		display: "flex",
+		textAlign: "center",
+		justifyItems: "center",
+		width: "100%",
+		height: "100vh",
+		color: "white",
+		"@media(max-width:720px)": {
+			display: "flex",
+			flexDirection: "column",
+			height: "fit-content",
+		},
+	},
+	player: {
+		width: "100%",
+		height: "100vh",
+		overflow: "scroll",
+		position: "relative",
+		"@media(max-width:720px)": {
+			height: "fit-content",
+			overflow: "scroll",
+		},
+	},
+	bottomDiv: {
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "center",
+		alignItems: "center",
+		position: "relative",
+		gap: "10px",
+	},
+});
+
 const App = () => {
 	const history = useHistory();
 
@@ -73,6 +106,8 @@ const App = () => {
 	);
 
 	const dispatch = useDispatch();
+
+	const classes = useStyles();
 
 	const websiteURL = window.location.origin;
 
@@ -116,11 +151,6 @@ const App = () => {
 		};
 	}, [dispatch]);
 
-	// useEffect(() => {
-	// 	socket.emit("createPoll", { message: "Czy demonzz to debil?" });
-	// 	console.log("createPoll");
-	// }, []);
-
 	return (
 		<ThemeProvider theme={theme}>
 			<DataContext.Provider
@@ -130,20 +160,20 @@ const App = () => {
 					history,
 				}}
 			>
-				<div className="app">
-					<div className="playerAndControls">
+				<Box className={classes.app}>
+					<Box className={classes.player}>
 						{firstInteraction ? (
 							<>
 								<PlayerAndChat />
 
-								<div className="bottomDiv">
+								<Box className={classes.bottomDiv}>
 									<AdminPanel />
-								</div>
+								</Box>
 							</>
 						) : (
 							<ClickToLoad />
 						)}
-					</div>
+					</Box>
 
 					<Popout
 						state={isHistoryOpen}
@@ -169,7 +199,7 @@ const App = () => {
 					</Popout>
 
 					{isTwitchCam && firstInteraction && <TwitchCam />}
-				</div>
+				</Box>
 				<Poll />
 				<Success />
 				<Error />

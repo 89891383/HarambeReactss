@@ -36,6 +36,7 @@ const initialState = {
 	currentAvailableFormats: [],
 	twitchCam: false,
 	disconnected: false,
+	history: [],
 };
 
 export const counterSlice = createSlice({
@@ -306,6 +307,9 @@ export const counterSlice = createSlice({
 			state.successMessage = "RECONNECTED!";
 			state.isSuccess = true;
 		},
+		changeHistory: (state, action) => {
+			state.history = action.payload;
+		},
 	},
 });
 
@@ -352,7 +356,7 @@ export const {
 	updateCurrentVideo,
 	loadPlayer,
 	iFrameVideoToggle,
-
+	changeHistory,
 	changeTwitchCam,
 	handleDisconnect,
 	handleReconnect,

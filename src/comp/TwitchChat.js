@@ -4,7 +4,7 @@ import React from "react";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import ErrorIcon from "@material-ui/icons/Error";
 import { useEffect, useState } from "react";
-import { makeStyles, Typography, Zoom } from "@material-ui/core";
+import { makeStyles, Typography, Zoom, Box } from "@material-ui/core";
 import Tooltip from "@material-ui/core/Tooltip";
 import { useDispatch, useSelector } from "react-redux";
 import { changeCurrentChat } from "../redux/playerState";
@@ -45,6 +45,25 @@ const useStyles = makeStyles({
 	},
 	disconnected: {
 		color: "#f94144",
+	},
+	syncStatus: {
+		position: "absolute",
+		padding: "5px",
+		top: "10px",
+		right: "40px",
+	},
+	twitchChat: {
+		position: "relative",
+		width: "400px",
+		height: "100vh",
+		zIndex: "1",
+		"@media (max-width: 720px)": {
+			height: "550px",
+			width: "100%",
+		},
+		"@media screen and (orientation: landscape) and (max-width: 1000px)": {
+			width: "300px",
+		},
 	},
 });
 
@@ -136,20 +155,20 @@ const TwitchChat = () => {
 	};
 
 	return (
-		<div className="twitchChat">
+		<Box className={classes.twitchChat}>
 			{firstInteraction && (
 				<>
 					<Typography className={classes.onlineUsers} variant="body2">
 						{onlineUsers ? `${onlineUsers} ONLINE` : "CONNECTING"}
 					</Typography>
 
-					<span
-						className="syncStatus"
+					<Typography
+						className={classes.syncStatus}
 						onMouseEnter={handleCheckPing}
 						onMouseLeave={() => clearInterval(pingInterval)}
 					>
 						{disconnected ? disconnectedStatus() : syncStatus}
-					</span>
+					</Typography>
 				</>
 			)}
 
@@ -161,7 +180,7 @@ const TwitchChat = () => {
 				height="100%"
 				width="100%"
 			></iframe>
-		</div>
+		</Box>
 	);
 };
 

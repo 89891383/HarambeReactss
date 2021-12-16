@@ -4,21 +4,16 @@ import io from "socket.io-client";
 import "./App.css";
 import AdminPanel from "./comp/AdminPanel/AdminPanel";
 import PlayerAndChat from "./comp/Player/PlayerAndChat";
-import Success from "./comp/Snackbars/Success";
-import Error from "./comp/Snackbars/Error";
-import Warning from "./comp/Snackbars/Warning";
+import Alert from "./comp/Snackbars/Alert";
 import TwitchChat from "./comp/TwitchChat";
 import OptionsDialog from "./comp/AdminPanel/Options/OptionsDialog";
 import HistoryDialog from "./comp/History/HistoryDialog";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	changeNickname,
-	errorMessage,
 	handleDisconnect,
 	handleReconnect,
 	setTwitchUserData,
-	successMessage,
-	warningMessage,
 } from "./redux/playerState";
 import ClickToLoad from "./comp/Player/ClickToLoad";
 import { createTheme, ThemeProvider, makeStyles, Box } from "@material-ui/core";
@@ -31,6 +26,7 @@ import {
 } from "./redux/popoutsSlice";
 import Poll from "./comp/Poll/Poll";
 import SetPoll from "./comp/Poll/SetPoll";
+import { setAlert } from "./redux/alertSlice";
 export const DataContext = React.createContext();
 
 const socket = io(`/`);
@@ -125,14 +121,8 @@ const App = () => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		socket.on("success", ({ message }) => {
-			dispatch(successMessage(message));
-		});
-		socket.on("error", ({ message }) => {
-			dispatch(errorMessage(message));
-		});
-		socket.on("warning", ({ message }) => {
-			dispatch(warningMessage(message));
+		socket.on("alert", (payload) => {
+			dispatch(setAlert(payload));
 		});
 		socket.on("disconnect", () => {
 			dispatch(handleDisconnect());
@@ -143,9 +133,7 @@ const App = () => {
 		});
 
 		return () => {
-			socket.off("success");
-			socket.off("error");
-			socket.off("warning");
+			socket.off("alert");
 			socket.off("disconnect");
 			socket.off("reconnect");
 		};
@@ -201,9 +189,7 @@ const App = () => {
 					{isTwitchCam && firstInteraction && <TwitchCam />}
 				</Box>
 				<Poll />
-				<Success />
-				<Error />
-				<Warning />
+				<Alert />
 			</DataContext.Provider>
 		</ThemeProvider>
 	);

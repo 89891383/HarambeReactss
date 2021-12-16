@@ -19,7 +19,7 @@ import {
 	Typography,
 } from "@material-ui/core";
 import { changeIsAddVideo } from "../../redux/popoutsSlice";
-import { errorMessage } from "../../redux/playerState";
+import { setAlert } from "../../redux/alertSlice";
 
 const useStyles = makeStyles({
 	textField: {
@@ -117,7 +117,9 @@ const AddVideo = () => {
 			});
 			dispatch(changeIsAddVideo(false));
 		} else {
-			dispatch(errorMessage("YOUR LINK IS NOT CORRECT!"));
+			dispatch(
+				setAlert({ message: "YOUR LINK IS NOT CORRECT!", type: "error" })
+			);
 		}
 	};
 
@@ -129,7 +131,9 @@ const AddVideo = () => {
 		if (isImdb) {
 			const imdbRegExp = imdbID.match(/tt[0-9]+/);
 			if (!Boolean(imdbRegExp)) {
-				return dispatch(errorMessage("ImdbID IS WRONG!"));
+				return dispatch(
+					setAlert({ message: "ImdbID IS WRONG!", type: "error" })
+				);
 			}
 		}
 
@@ -137,7 +141,9 @@ const AddVideo = () => {
 			socket.emit("queueUpdate", { ...data, nickname });
 			dispatch(changeIsAddVideo(false));
 		} else {
-			dispatch(errorMessage("YOUR LINK IS NOT CORRECT!"));
+			dispatch(
+				setAlert({ message: "YOUR LINK IS NOT CORRECT!", type: "error" })
+			);
 		}
 	};
 

@@ -56,7 +56,6 @@ const useStyles = makeStyles({
 		position: "relative",
 		top: "0",
 		left: "0",
-		pointerEvents: (isTwitch) => isTwitch && "none",
 	},
 	loading: {
 		position: "absolute",
@@ -360,6 +359,7 @@ const PlayerAndChat = () => {
 						url={currentVideoLink}
 						width="100%"
 						height="100%"
+						style={isTwitch ? {} : { pointerEvents: "none" }}
 						controls={false}
 						muted={false}
 						volume={volume}

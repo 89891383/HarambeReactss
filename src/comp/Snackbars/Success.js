@@ -7,7 +7,7 @@ import { changeIsSuccess } from "../../redux/playerState";
 import { Box, Slide } from "@material-ui/core";
 
 function Alert(props) {
-	return <MuiAlert elevation={6} variant="filled" {...props} />;
+	return <MuiAlert elevation={6} variant="standard" {...props} />;
 }
 
 const useStyles = makeStyles((theme) => ({

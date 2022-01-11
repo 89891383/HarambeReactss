@@ -17,6 +17,7 @@ const useStyles = makeStyles({
 	},
 	typography: {
 		fontWeight: "700",
+		width: "max-content",
 	},
 	box: {
 		padding: "5px",
@@ -36,17 +37,12 @@ const useStyles = makeStyles({
 			display: "none",
 		},
 	},
-	live: {
-		color: "#f94144",
-		borderColor: "#f94144",
-	},
 	queueItemDuration: {
 		position: "absolute",
 		backgroundColor: "black",
 		borderRadius: "5px",
-		padding: "5px",
+		padding: "2px 5px",
 		fontSize: "15px",
-		transform: "translate(162px, 100%)",
 		border: "1px solid black",
 		opacity: "0",
 		animation: `$durationFadeIn ease-in 0.3s forwards`,
@@ -56,11 +52,11 @@ const useStyles = makeStyles({
 	"@keyframes durationFadeIn": {
 		from: {
 			opacity: "0",
-			transform: "translate(175px, 100%)",
+			transform: "translate(175px, 110%)",
 		},
 		to: {
 			opacity: 1,
-			transform: "translate(162px, 100%)",
+			transform: "translate(162px, 110%)",
 		},
 	},
 });

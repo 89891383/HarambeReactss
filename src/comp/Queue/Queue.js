@@ -2,14 +2,46 @@ import React from "react";
 import QueueItem from "./QueueItem";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { useSelector } from "react-redux";
+import { makeStyles } from "@material-ui/styles";
+import { Box } from "@material-ui/core";
+
+const useStyles = makeStyles({
+	queue: {
+		display: "flex",
+		color: "white",
+		flexDirection: "column",
+		width: "95%",
+		height: "fit-content",
+		gap: "5px",
+		padding: "0 0 20px 0",
+		alignSelf: "center",
+		"@media(max-width:720px)": {
+			overflow: "scroll",
+			maxHeight: "300px",
+		},
+	},
+	queueList: {
+		display: "flex",
+		color: "white",
+		flexDirection: "column",
+		width: "100%",
+		height: "fit-content",
+		gap: "5px",
+		padding: "0 0 20px 0",
+		alignSelf: "center",
+	},
+});
+
 const Queue = () => {
+	const classes = useStyles();
+
 	const { videoQueue } = useSelector((state) => state.player);
 
 	if (videoQueue.length === 0) {
 		return (
-			<div className="queue">
+			<Box className={classes.queue}>
 				<div className="emptyQueueText">QUEUE IS EMPTY</div>
-			</div>
+			</Box>
 		);
 	}
 
@@ -22,9 +54,11 @@ const Queue = () => {
 	});
 
 	return (
-		<div className="queue">
-			<TransitionGroup className="queue_List">{queueList}</TransitionGroup>
-		</div>
+		<Box className={classes.queue}>
+			<TransitionGroup className={classes.queueList}>
+				{queueList}
+			</TransitionGroup>
+		</Box>
 	);
 };
 

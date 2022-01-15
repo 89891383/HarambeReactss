@@ -9,6 +9,7 @@ import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import "./Queue.css";
 import noImg from "./noImg.jpg";
 import { useSelector } from "react-redux";
+import useTime from "../../Hooks/useTime";
 
 const useStyles = makeStyles({
 	iconButton: {
@@ -46,8 +47,11 @@ const useStyles = makeStyles({
 		border: "1px solid black",
 		opacity: "0",
 		animation: `$durationFadeIn ease-in 0.3s forwards`,
-		color: (isLive) => (isLive ? "#f94144" : "white"),
-		borderColor: (isLive) => (isLive ? "rgba(249, 65, 68, 0.5)" : "black"),
+		color: ({ isLive }) => (isLive ? "#f94144" : "white"),
+		borderColor: ({ isLive }) => (isLive ? "rgba(249, 65, 68, 0.5)" : "black"),
+	},
+	iFrameButton: {
+		color: "red",
 	},
 	"@keyframes durationFadeIn": {
 		from: {
@@ -75,25 +79,7 @@ const QueueItem = ({ item, index }) => {
 	} = item;
 
 	const isLive = duration === "LIVE";
-	const classes = useStyles(isLive);
-
-	const formatTime = (time) => {
-		return time < 10 ? `0${time}` : time;
-	};
-
-	const convertSeconds = (time) => {
-		if (typeof time !== "number") return false;
-
-		let minutes = Math.floor(time / 60);
-		let hours = Math.floor(minutes / 60);
-		let seconds = Math.floor(time - 60 * minutes);
-		minutes = formatTime(minutes % 60);
-		hours = formatTime(hours);
-		seconds = formatTime(seconds);
-		return { seconds, minutes, hours };
-	};
-
-	const { seconds, minutes, hours } = convertSeconds(duration);
+	const classes = useStyles({ isLive, iFrame });
 
 	const { admin } = useSelector((state) => state.player);
 
@@ -140,7 +126,9 @@ const QueueItem = ({ item, index }) => {
 
 	const checkTitle = title || URL;
 
-	const checkDuration = isLive ? "LIVE" : `${hours}:${minutes}:${seconds}`;
+	const time = useTime(duration);
+
+	const checkDuration = isLive ? "LIVE" : time;
 
 	return (
 		<>

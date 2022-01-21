@@ -40,12 +40,13 @@ const AccountInfo = () => {
 	}, [accountRef]);
 
 	const { twitchUserData } = useSelector((state) => state.player);
+	const { image, login } = twitchUserData;
 
 	return (
 		<div className="accountInfo" ref={accountRef}>
 			<Box className={classes.box}>
-				<Avatar className={classes.avatar} src={twitchUserData.image} />
-				<Typography variant="body1">{twitchUserData.login}</Typography>
+				<Avatar className={classes.avatar} src={image} />
+				<Typography variant="body1">{login}</Typography>
 			</Box>
 			<Button2 onClick={handleLogout}>LOGOUT</Button2>
 		</div>

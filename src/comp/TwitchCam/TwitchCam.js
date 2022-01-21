@@ -2,6 +2,7 @@ import { Box, makeStyles } from "@material-ui/core";
 import Draggable from "react-draggable";
 import ControlCameraIcon from "@material-ui/icons/ControlCamera";
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 const useStyles = makeStyles({
 	box: {
@@ -55,15 +56,15 @@ const TwitchCam = () => {
 	const currentPage = window.location.hostname;
 
 	const handleStart = () => {
-		const app = document.querySelector(".app");
-		app.style.pointerEvents = "none";
+		const root = document.querySelector("#root");
+		root.style.pointerEvents = "none";
 	};
 
-	const handleStop = () => {
-		const app = document.querySelector(".app");
-		app.style.pointerEvents = "";
+	const handleStop = (e, data) => {
+		console.log(data);
+		const root = document.querySelector("#root");
+		root.style.pointerEvents = "";
 	};
-
 	// SET POINTER EVENTS TO NONE
 
 	return (

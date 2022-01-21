@@ -60,8 +60,7 @@ const TwitchCam = () => {
 		root.style.pointerEvents = "none";
 	};
 
-	const handleStop = (e, data) => {
-		console.log(data);
+	const handleStop = () => {
 		const root = document.querySelector("#root");
 		root.style.pointerEvents = "";
 	};

@@ -40,7 +40,6 @@ const Queue = () => {
 	const queueList = useMemo(
 		() =>
 			videoQueue.map((item, index) => {
-				console.log("useMemo queue map");
 				return (
 					<CSSTransition key={index} timeout={300} classNames="transition">
 						<QueueItem item={item} index={index} key={item.id} />

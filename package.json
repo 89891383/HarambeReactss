@@ -3,7 +3,7 @@
 	"version": "0.1.0",
 	"proxy": "http://localhost:3001",
 	"private": true,
-	"homepage": "https://boiling-bastion-80662.herokuapp.com",
+	"homepage": ".",
 	"dependencies": {
 		"@material-ui/core": "^4.12.2",
 		"@material-ui/icons": "^4.11.2",
@@ -14,9 +14,6 @@
 		"@testing-library/jest-dom": "^5.14.1",
 		"@testing-library/react": "^11.2.7",
 		"@testing-library/user-event": "^13.1.9",
-		"cheerio": "^1.0.0-rc.10",
-		"express": "^4.17.1",
-		"http2": "^3.3.7",
 		"js-cookie": "^2.2.1",
 		"mongoose": "^5.12.14",
 		"react": "^17.0.2",

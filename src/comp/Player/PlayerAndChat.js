@@ -65,6 +65,40 @@ const useStyles = makeStyles({
 	},
 });
 
+const synchronizeVideo = (player, currentSeconds) => {
+	if (player.current) {
+		const videoDuration = player.current.getDuration();
+		const currentTime = player.current.getCurrentTime();
+		const maxDelayLive = 6;
+		const maxDelay = 3;
+
+		if (!currentTime) return false;
+		// FOR LIVESTREAMS
+		if (videoDuration > currentSeconds) {
+			// STANDARD VIDEO
+			if (
+				!(
+					currentTime - maxDelay < currentSeconds &&
+					currentTime + maxDelay > currentSeconds
+				)
+			) {
+				// MAX 2 SENONDS DIFFERENCE
+				player.current.seekTo(currentSeconds, "seconds");
+			}
+		} else {
+			// HERE IS LIVESTREAM VERSION
+			if (
+				!(
+					currentTime < videoDuration + maxDelayLive &&
+					currentTime > videoDuration - maxDelayLive
+				)
+			) {
+				player.current.seekTo(videoDuration, "seconds");
+			}
+		}
+	}
+};
+
 const PlayerAndChat = () => {
 	const {
 		isPlaying,
@@ -78,7 +112,6 @@ const PlayerAndChat = () => {
 		videoProgress,
 		volume,
 		nickname,
-		maxDelay,
 		isLoading,
 	} = useSelector((state) => state.player);
 
@@ -93,39 +126,7 @@ const PlayerAndChat = () => {
 
 	const playerWrapperRef = useRef(null);
 	const player = useRef(null);
-	const maxDelayLive = 6;
 	// CHAT LINK
-
-	const synchronizeVideo = (player, currentSeconds) => {
-		if (player.current) {
-			const videoDuration = player.current.getDuration();
-			const currentTime = player.current.getCurrentTime();
-			if (!currentTime) return false;
-			// FOR LIVESTREAMS
-			if (videoDuration > currentSeconds) {
-				// STANDARD VIDEO
-				if (
-					!(
-						currentTime - maxDelay < currentSeconds &&
-						currentTime + maxDelay > currentSeconds
-					)
-				) {
-					// MAX 2 SENONDS DIFFERENCE
-					player.current.seekTo(currentSeconds, "seconds");
-				}
-			} else {
-				// HERE IS LIVESTREAM VERSION
-				if (
-					!(
-						currentTime < videoDuration + maxDelayLive &&
-						currentTime > videoDuration - maxDelayLive
-					)
-				) {
-					player.current.seekTo(videoDuration, "seconds");
-				}
-			}
-		}
-	};
 
 	// JOINING TO ROOM
 	useEffect(() => {
@@ -239,7 +240,7 @@ const PlayerAndChat = () => {
 			socket.off("isTwitchCamToggleAnswer");
 		};
 		// eslint-disable-next-line
-	}, [currentRoom, admin, socket, maxDelay, nickname, isPlaying]);
+	}, [currentRoom, admin, socket, nickname, isPlaying]);
 
 	const videoDuration = (duration) => {
 		socket.emit("videoDuration", { duration });

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { DataContext } from "../../App";
 import React from "react";
@@ -81,6 +81,19 @@ const HistoryDialog = () => {
 		};
 	}, [socket, dispatch]);
 
+	const createHistory = useMemo(() => {
+		return history?.map((video, index) => {
+			const { URL, title } = video;
+			return (
+				<HistoryItem key={index} URL={URL}>
+					<a href={URL} target="_blank" rel="noopener noreferrer">
+						<Typography noWrap>{title ? title : URL}</Typography>
+					</a>
+				</HistoryItem>
+			);
+		});
+	}, [history]);
+
 	if (!history.length) {
 		return (
 			<Box className={classes.historyContainer}>
@@ -90,17 +103,6 @@ const HistoryDialog = () => {
 			</Box>
 		);
 	}
-
-	const createHistory = history?.map((video, index) => {
-		const { URL, title } = video;
-		return (
-			<HistoryItem key={index} URL={URL}>
-				<a href={URL} target="_blank" rel="noopener noreferrer">
-					<Typography noWrap>{title ? title : URL}</Typography>
-				</a>
-			</HistoryItem>
-		);
-	});
 
 	const handleClearHistory = () => {
 		if (!admin) return false;

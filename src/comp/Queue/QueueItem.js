@@ -126,7 +126,7 @@ const QueueItem = ({ item, index }) => {
 
 	const checkTitle = title || URL;
 
-	const time = useTime(duration);
+	const time = useTime(duration, true);
 
 	const checkDuration = isLive ? "LIVE" : time;
 

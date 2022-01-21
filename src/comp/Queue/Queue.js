@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import QueueItem from "./QueueItem";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { useSelector } from "react-redux";
@@ -37,6 +37,19 @@ const Queue = () => {
 
 	const { videoQueue } = useSelector((state) => state.player);
 
+	const queueList = useMemo(
+		() =>
+			videoQueue.map((item, index) => {
+				console.log("useMemo queue map");
+				return (
+					<CSSTransition key={index} timeout={300} classNames="transition">
+						<QueueItem item={item} index={index} key={item.id} />
+					</CSSTransition>
+				);
+			}),
+		[videoQueue]
+	);
+
 	if (videoQueue.length === 0) {
 		return (
 			<Box className={classes.queue}>
@@ -44,14 +57,6 @@ const Queue = () => {
 			</Box>
 		);
 	}
-
-	const queueList = videoQueue.map((item, index) => {
-		return (
-			<CSSTransition key={index} timeout={300} classNames="transition">
-				<QueueItem item={item} index={index} key={item.id} />
-			</CSSTransition>
-		);
-	});
 
 	return (
 		<Box className={classes.queue}>

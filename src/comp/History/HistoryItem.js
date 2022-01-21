@@ -1,5 +1,5 @@
 import React from "react";
-const HistoryItem = ({ children, URL }) => {
+const HistoryItem = ({ children }) => {
 	return <div className="historyItem">{children}</div>;
 };
 

@@ -27,6 +27,7 @@ import {
 import Poll from "./comp/Poll/Poll";
 import SetPoll from "./comp/Poll/SetPoll";
 import { setAlert } from "./redux/alertSlice";
+import { getProfile } from "./api";
 export const DataContext = React.createContext();
 
 const socket = io(`/`);
@@ -110,14 +111,16 @@ const App = () => {
 	// APP, ADMINPANEL, PLAYERANDCHAT, PACKAGE.JSON
 
 	useEffect(() => {
-		fetch("/getProfile", { credentials: "include" })
-			.then((res) => res.json())
+		getProfile()
 			.then((res) => {
 				if (res.profile) {
 					dispatch(setTwitchUserData(res.profile));
 					dispatch(changeNickname(res.profile.login.toLowerCase()));
 				}
-			});
+			})
+			.catch((err) =>
+				dispatch(setAlert({ message: "Get profile error", type: "error" }))
+			);
 	}, [dispatch]);
 
 	useEffect(() => {

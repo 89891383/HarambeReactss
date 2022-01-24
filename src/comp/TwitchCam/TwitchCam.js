@@ -2,7 +2,6 @@ import { Box, makeStyles } from "@material-ui/core";
 import Draggable from "react-draggable";
 import ControlCameraIcon from "@material-ui/icons/ControlCamera";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
 
 const useStyles = makeStyles({
 	box: {

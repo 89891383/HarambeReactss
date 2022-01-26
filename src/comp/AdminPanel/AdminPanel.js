@@ -11,6 +11,14 @@ import { changeIsAddVideo } from "../../redux/popoutsSlice";
 import Popout from "../Popout";
 
 const useStyles = makeStyles({
+	bottomBox: {
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "center",
+		alignItems: "center",
+		position: "relative",
+		gap: "10px",
+	},
 	addVideoBtn: {
 		color: "#90be6d",
 		fontWeight: "700",
@@ -71,7 +79,7 @@ const AdminPanel = () => {
 	};
 
 	return (
-		<>
+		<Box className={classes.bottomBox}>
 			<Popout
 				state={isAddVideo}
 				setState={() => dispatch(changeIsAddVideo(false))}
@@ -106,7 +114,7 @@ const AdminPanel = () => {
 				)}
 			</Box>
 			<Queue />
-		</>
+		</Box>
 	);
 };
 

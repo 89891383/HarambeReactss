@@ -56,7 +56,7 @@ const useStyles = makeStyles({
 		position: "relative",
 		width: "400px",
 		height: "100vh",
-		zIndex: "1",
+		// zIndex: 0,
 		"@media (max-width: 720px)": {
 			height: "550px",
 			width: "100%",

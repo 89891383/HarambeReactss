@@ -6,8 +6,6 @@ import AdminPanel from "./comp/AdminPanel/AdminPanel";
 import PlayerAndChat from "./comp/Player/PlayerAndChat";
 import Alert from "./comp/Snackbars/Alert";
 import TwitchChat from "./comp/TwitchChat";
-import OptionsDialog from "./comp/AdminPanel/Options/OptionsDialog";
-import HistoryDialog from "./comp/History/HistoryDialog";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	changeNickname,
@@ -18,16 +16,11 @@ import {
 import ClickToLoad from "./comp/Player/ClickToLoad";
 import { createTheme, ThemeProvider, makeStyles, Box } from "@material-ui/core";
 import TwitchCam from "./comp/TwitchCam/TwitchCam";
-import Popout from "./comp/Popout";
-import {
-	dialogOpenToggle,
-	historyOpenToggle,
-	pollOpenToggle,
-} from "./redux/popoutsSlice";
+
 import Poll from "./comp/Poll/Poll";
-import SetPoll from "./comp/Poll/SetPoll";
 import { setAlert } from "./redux/alertSlice";
 import { getProfile } from "./api";
+import Popouts from "./comp/Popouts";
 export const DataContext = React.createContext();
 
 const socket = io(`/`);
@@ -81,14 +74,6 @@ const useStyles = makeStyles({
 			overflow: "scroll",
 		},
 	},
-	bottomDiv: {
-		display: "flex",
-		flexDirection: "column",
-		justifyContent: "center",
-		alignItems: "center",
-		position: "relative",
-		gap: "10px",
-	},
 });
 
 const App = () => {
@@ -96,10 +81,6 @@ const App = () => {
 
 	const { hiddenChat, firstInteraction, isTwitchCam } = useSelector(
 		(state) => state.player
-	);
-
-	const { isHistoryOpen, isDialogOpen, isPollOpen } = useSelector(
-		(state) => state.popouts
 	);
 
 	const dispatch = useDispatch();
@@ -156,39 +137,15 @@ const App = () => {
 						{firstInteraction ? (
 							<>
 								<PlayerAndChat />
-
-								<Box className={classes.bottomDiv}>
-									<AdminPanel />
-								</Box>
+								<AdminPanel />
 							</>
 						) : (
 							<ClickToLoad />
 						)}
 					</Box>
 
-					<Popout
-						state={isHistoryOpen}
-						setState={() => dispatch(historyOpenToggle(false))}
-					>
-						<HistoryDialog />
-					</Popout>
-
+					<Popouts />
 					{!hiddenChat && <TwitchChat />}
-
-					<Popout
-						state={isDialogOpen}
-						setState={() => dispatch(dialogOpenToggle(false))}
-					>
-						<OptionsDialog />
-					</Popout>
-
-					<Popout
-						state={isPollOpen}
-						setState={() => dispatch(pollOpenToggle(false))}
-					>
-						<SetPoll />
-					</Popout>
-
 					{isTwitchCam && firstInteraction && <TwitchCam />}
 				</Box>
 				<Poll />

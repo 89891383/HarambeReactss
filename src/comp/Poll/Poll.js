@@ -16,6 +16,7 @@ const useStyles = makeStyles({
 		position: "absolute",
 		top: "15px",
 		left: "15px",
+		zIndex: 5,
 		backgroundColor: "#327",
 		padding: "15px",
 		boxShadow: "0px 0px 10px black",
@@ -26,11 +27,11 @@ const useStyles = makeStyles({
 		alignItems: "center",
 		maxWidth: "92%",
 		borderRadius: "5px",
+		overflow: "hidden",
 	},
 	textMessage: {
 		display: "flex",
-		width: "fit-content",
-		minWidth: "100%",
+		width: "100%",
 		justifyContent: "center",
 	},
 	btnBox: {
@@ -40,6 +41,8 @@ const useStyles = makeStyles({
 	progressBar: {
 		height: "4px",
 		width: "100%",
+		position: "absolute",
+		bottom: "0",
 	},
 });
 
@@ -77,7 +80,7 @@ const Vote = () => {
 		<Slide direction="down" in={isPoll} unmountOnExit duration={300}>
 			<Box className={classes.pollBox}>
 				<Box className={classes.textMessage}>
-					<Typography>{pollMessage}</Typography>
+					<Typography noWrap>{pollMessage}</Typography>
 				</Box>
 				<Box className={classes.btnBox}>
 					<Button onClick={() => handleVote(true)} variant="outlined">

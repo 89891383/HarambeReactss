@@ -2,13 +2,13 @@ import { Box, makeStyles } from "@material-ui/core";
 import Draggable from "react-draggable";
 import ControlCameraIcon from "@material-ui/icons/ControlCamera";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 
 const useStyles = makeStyles({
 	box: {
 		position: "absolute",
-		width: "350px",
+		width: "330px",
 		aspectRatio: "16/9",
-		zIndex: 2,
 		borderRadius: "5px",
 		overflow: "hidden",
 		"@media (max-width:600px)": {
@@ -32,18 +32,11 @@ const useStyles = makeStyles({
 		backgroundColor: "#121212",
 		borderRadius: "0 0 0 5px",
 		display: "flex",
-		opacity: "0.2",
 		transition: "300ms opacity",
 		cursor: "grab",
 		"&:hover": {
-			opacity: "1",
+			opacity: "1 !important",
 		},
-	},
-	resize: {
-		position: "absolute",
-		top: "100%",
-		left: "100%",
-		transform: "translate(-100%,-100%)",
 	},
 });
 
@@ -51,8 +44,9 @@ const TwitchCam = () => {
 	const classes = useStyles();
 
 	const { currentChat } = useSelector((state) => state.player);
-
 	const currentPage = window.location.hostname;
+
+	const [isDragIcon, setIsDragIcon] = useState(false);
 
 	const handleStart = () => {
 		const root = document.querySelector("#root");
@@ -72,7 +66,11 @@ const TwitchCam = () => {
 			onStop={handleStop}
 			handle={"#drag"}
 		>
-			<Box className={classes.box}>
+			<Box
+				className={classes.box}
+				onMouseEnter={() => setIsDragIcon(true)}
+				onMouseLeave={() => setIsDragIcon(false)}
+			>
 				<iframe
 					src={`https://player.twitch.tv/?channel=${currentChat}&parent=${currentPage}`}
 					frameBorder="0"
@@ -81,8 +79,11 @@ const TwitchCam = () => {
 					title="twitch cam"
 					className={classes.iframe}
 				></iframe>
-
-				<Box id="drag" className={classes.drag}>
+				<Box
+					id="drag"
+					style={isDragIcon ? { opacity: 0.2 } : { opacity: 0 }}
+					className={classes.drag}
+				>
 					<ControlCameraIcon />
 				</Box>
 			</Box>

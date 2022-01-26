@@ -40,7 +40,7 @@ const useStyles = makeStyles({
 		display: "flex",
 		flexDirection: "column",
 		backgroundColor: "#121212",
-		height: "100%",
+		height: "100vh",
 		zIndex: "0",
 		position: "relative",
 		"@media(max-width:720px)": {

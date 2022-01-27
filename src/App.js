@@ -132,7 +132,7 @@ const App = () => {
 					history,
 				}}
 			>
-				<Box className={classes.app}>
+				<Box id="app" className={classes.app}>
 					<Box className={classes.player}>
 						{firstInteraction ? (
 							<>
@@ -146,8 +146,8 @@ const App = () => {
 
 					<Popouts />
 					{!hiddenChat && <TwitchChat />}
-					{isTwitchCam && firstInteraction && <TwitchCam />}
 				</Box>
+				{isTwitchCam && firstInteraction && <TwitchCam />}
 				<Poll />
 				<Alert />
 			</DataContext.Provider>

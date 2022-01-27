@@ -1,11 +1,11 @@
-import { Box, Fade } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import { useCallback, useRef, useState } from "react";
 import ControlCameraIcon from "@material-ui/icons/ControlCamera";
 
 const classes = {
 	parent: {
 		aspectRatio: "16/9",
-		position: "absolute",
+		position: "fixed",
 		top: "0",
 		zIndex: 1,
 		border: "3px solid transparent",
@@ -28,17 +28,21 @@ const classes = {
 		cursor: "move",
 		display: "flex",
 		padding: "5px",
+		opacity: "0.4",
 		borderRadius: "0 0 0 5px",
 		transition: "300ms ease-in-out opacity",
 	},
-	box: { width: "100%", height: "100%", position: "relative" },
+	box: {
+		width: "100%",
+		height: "100%",
+		position: "relative",
+	},
 };
 
 const ResizeableAndDraggable = ({ children, initWidth = 300 }) => {
 	const [width, setWidth] = useState(initWidth);
 	const [top, setTop] = useState(0);
 	const [left, setLeft] = useState(0);
-	const [isDragIcon, setIsDragIcon] = useState(false);
 
 	const childrenRef = useRef(null);
 
@@ -59,20 +63,26 @@ const ResizeableAndDraggable = ({ children, initWidth = 300 }) => {
 
 	const move = useCallback((e) => {
 		const { width, height } = parentRef.current.getBoundingClientRect();
+
+		// console.log(borderElement.getBoundingClientRect());
 		const maxHeight = window.innerHeight;
 
 		setTop((prev) => {
 			const result = e.clientY - 20;
-			if (result > 0 && result < maxHeight - height) {
+			if (result >= 0 && result < maxHeight - height) {
 				return result;
+			} else if (result < 0) {
+				return 0;
 			} else {
 				return prev;
 			}
 		});
 		setLeft((prev) => {
 			const result = e.clientX + 20 - width;
-			if (result > 0) {
+			if (result >= 0) {
 				return result;
+			} else if (result < 0) {
+				return 0;
 			} else {
 				return prev;
 			}
@@ -111,10 +121,6 @@ const ResizeableAndDraggable = ({ children, initWidth = 300 }) => {
 		window.addEventListener("mouseup", handleMouseUpMove);
 	}, [handleMouseUpMove, move, root, childrenRef]);
 
-	const toggleDragIcon = () => {
-		setIsDragIcon((prev) => !prev);
-	};
-
 	return (
 		<Box
 			id="resizeable_parent"
@@ -123,21 +129,17 @@ const ResizeableAndDraggable = ({ children, initWidth = 300 }) => {
 			style={{ width, transform: `translate(${left}px,${top}px)` }}
 			onMouseDown={handleMouseDownResize}
 			onMouseUp={handleMouseUpResize}
-			onMouseEnter={toggleDragIcon}
-			onMouseLeave={toggleDragIcon}
 		>
 			<Box sx={classes.box} ref={childrenRef}>
 				{children}
-				<Fade in={isDragIcon} unmountOnExit>
-					<Box
-						id="drag"
-						onMouseDown={handleMouseDownMove}
-						onMouseUp={handleMouseUpMove}
-						sx={classes.drag}
-					>
-						<ControlCameraIcon />
-					</Box>
-				</Fade>
+				<Box
+					id="drag"
+					onMouseDown={handleMouseDownMove}
+					onMouseUp={handleMouseUpMove}
+					sx={classes.drag}
+				>
+					<ControlCameraIcon />
+				</Box>
 			</Box>
 		</Box>
 	);

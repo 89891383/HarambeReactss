@@ -76,9 +76,11 @@ const TwitchCam = () => {
 		></iframe>
 	);
 
+	const isMobile = useMobile(1000);
+
 	return (
 		<>
-			{useMobile(1000) ? (
+			{isMobile ? (
 				<Draggable
 					bounds={"parent"}
 					onStart={handleStart}

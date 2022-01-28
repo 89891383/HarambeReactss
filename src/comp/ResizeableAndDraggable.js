@@ -1,5 +1,5 @@
 import { Box } from "@material-ui/core";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import ControlCameraIcon from "@material-ui/icons/ControlCamera";
 
 const classes = {
@@ -25,7 +25,7 @@ const classes = {
 		top: "0px",
 		backgroundColor: "#121212",
 		color: "white",
-		cursor: "move",
+		cursor: "grab",
 		display: "flex",
 		padding: "5px",
 		opacity: "0.4",
@@ -43,11 +43,10 @@ const ResizeableAndDraggable = ({ children, initWidth = 300 }) => {
 	const [width, setWidth] = useState(initWidth);
 	const [top, setTop] = useState(0);
 	const [left, setLeft] = useState(0);
+	const [isDragging, setIsDragging] = useState(false);
 
 	const childrenRef = useRef(null);
-
-	const root = document.querySelector("#root");
-
+	const dragRef = useRef(null);
 	const parentRef = useRef(null);
 
 	const resize = useCallback((e) => {
@@ -63,8 +62,6 @@ const ResizeableAndDraggable = ({ children, initWidth = 300 }) => {
 
 	const move = useCallback((e) => {
 		const { width, height } = parentRef.current.getBoundingClientRect();
-
-		// console.log(borderElement.getBoundingClientRect());
 		const maxHeight = window.innerHeight;
 
 		setTop((prev) => {
@@ -90,58 +87,80 @@ const ResizeableAndDraggable = ({ children, initWidth = 300 }) => {
 	}, []);
 
 	const handleMouseUpResize = useCallback(() => {
+		setIsDragging(false);
 		window.removeEventListener("mousemove", resize);
 		window.removeEventListener("mouseup", handleMouseUpResize);
-		root.style.pointerEvents = "auto";
-		childrenRef.current.style.pointerEvents = "auto";
-	}, [resize, root, childrenRef]);
+		parentRef.current.style.pointerEvents = "auto";
+	}, [resize]);
 
 	const handleMouseDownResize = useCallback(
 		(e) => {
 			if (parentRef.current !== e.target) return;
+			setIsDragging(true);
 			window.addEventListener("mouseup", handleMouseUpResize);
 			window.addEventListener("mousemove", resize);
-			root.style.pointerEvents = "none";
-			childrenRef.current.style.pointerEvents = "none";
+			parentRef.current.style.pointerEvents = "none";
 		},
-		[handleMouseUpResize, resize, root, childrenRef]
+		[handleMouseUpResize, resize]
 	);
 
 	const handleMouseUpMove = useCallback(() => {
+		setIsDragging(false);
 		window.removeEventListener("mousemove", move);
 		window.removeEventListener("mouseup", handleMouseUpMove);
-		root.style.pointerEvents = "auto";
-		childrenRef.current.style.pointerEvents = "auto";
-	}, [move, root, childrenRef]);
+		parentRef.current.style.pointerEvents = "auto";
+	}, [move]);
 
-	const handleMouseDownMove = useCallback(() => {
-		window.addEventListener("mousemove", move);
-		childrenRef.current.style.pointerEvents = "none";
-		root.style.pointerEvents = "none";
-		window.addEventListener("mouseup", handleMouseUpMove);
-	}, [handleMouseUpMove, move, root, childrenRef]);
+	const handleMouseDownMove = useCallback(
+		(e) => {
+			if (e.target !== dragRef.current) return false;
+			setIsDragging(true);
+			window.addEventListener("mousemove", move);
+			window.addEventListener("mouseup", handleMouseUpMove);
+			parentRef.current.style.pointerEvents = "none";
+		},
+		[handleMouseUpMove, move]
+	);
+
+	useEffect(() => {
+		window.addEventListener("mousedown", handleMouseDownMove);
+		window.addEventListener("mousedown", handleMouseDownResize);
+
+		return () => {
+			window.removeEventListener("mousedown", handleMouseDownMove);
+			window.removeEventListener("mousedown", handleMouseDownResize);
+		};
+	}, [handleMouseDownMove, handleMouseDownResize]);
 
 	return (
-		<Box
-			id="resizeable_parent"
-			sx={classes.parent}
-			ref={parentRef}
-			style={{ width, transform: `translate(${left}px,${top}px)` }}
-			onMouseDown={handleMouseDownResize}
-			onMouseUp={handleMouseUpResize}
-		>
-			<Box sx={classes.box} ref={childrenRef}>
-				{children}
+		<>
+			{isDragging && (
 				<Box
-					id="drag"
-					onMouseDown={handleMouseDownMove}
-					onMouseUp={handleMouseUpMove}
-					sx={classes.drag}
-				>
-					<ControlCameraIcon />
+					sx={{
+						width: "100vw",
+						height: "100vh",
+						position: "fixed",
+						top: "0",
+						left: "0",
+						cursor: "grab",
+					}}
+				></Box>
+			)}
+
+			<Box
+				id="resizeable_parent"
+				sx={classes.parent}
+				ref={parentRef}
+				style={{ width, transform: `translate(${left}px,${top}px)` }}
+			>
+				<Box sx={classes.box} ref={childrenRef}>
+					{children}
+					<Box id="drag" sx={classes.drag} ref={dragRef}>
+						<ControlCameraIcon style={{ pointerEvents: "none" }} />
+					</Box>
 				</Box>
 			</Box>
-		</Box>
+		</>
 	);
 };
 

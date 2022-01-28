@@ -13,11 +13,17 @@ const classes = {
 		alignItems: "center",
 		justifyContent: "center",
 		borderRadius: "5px",
-		cursor: "nw-resize",
+		cursor: "e-resize",
+		backgroundColor: "#111",
 		transition: "300ms ease-in-out border",
 		"&:hover": {
 			borderColor: "white",
 		},
+	},
+	children: {
+		width: "100%",
+		height: "100%",
+		position: "relative",
 	},
 	drag: {
 		position: "absolute",
@@ -32,10 +38,14 @@ const classes = {
 		borderRadius: "0 0 0 5px",
 		transition: "300ms ease-in-out opacity",
 	},
-	box: {
-		width: "100%",
-		height: "100%",
-		position: "relative",
+
+	background: {
+		width: "100vw",
+		height: "100vh",
+		position: "fixed",
+		top: "0",
+		left: "0",
+		cursor: "grab",
 	},
 };
 
@@ -134,26 +144,14 @@ const ResizeableAndDraggable = ({ children, initWidth = 300 }) => {
 
 	return (
 		<>
-			{isDragging && (
-				<Box
-					sx={{
-						width: "100vw",
-						height: "100vh",
-						position: "fixed",
-						top: "0",
-						left: "0",
-						cursor: "grab",
-					}}
-				></Box>
-			)}
+			{isDragging && <Box sx={classes.background}></Box>}
 
 			<Box
-				id="resizeable_parent"
 				sx={classes.parent}
 				ref={parentRef}
 				style={{ width, transform: `translate(${left}px,${top}px)` }}
 			>
-				<Box sx={classes.box} ref={childrenRef}>
+				<Box sx={classes.children} ref={childrenRef}>
 					{children}
 					<Box id="drag" sx={classes.drag} ref={dragRef}>
 						<ControlCameraIcon style={{ pointerEvents: "none" }} />

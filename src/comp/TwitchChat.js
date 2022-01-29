@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import { DataContext } from "../App";
 import React from "react";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
@@ -100,7 +100,7 @@ const TwitchChat = () => {
 		};
 	}, [socket, currentChat, dispatch]);
 
-	const handleCheckPing = () => {
+	const handleCheckPing = useCallback(() => {
 		// pingInit -> START TIME
 		// ping -> RESPONSE FROM SERVER TIME
 
@@ -111,7 +111,7 @@ const TwitchChat = () => {
 			pingInit = Date.now();
 			socket.emit("ping");
 		}, 1000);
-	};
+	}, [socket]);
 
 	useEffect(() => {
 		// CHECK PING ON LOADPAGE

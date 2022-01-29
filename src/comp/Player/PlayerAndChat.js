@@ -242,14 +242,17 @@ const PlayerAndChat = () => {
 		// eslint-disable-next-line
 	}, [currentRoom, admin, socket, nickname, isPlaying]);
 
-	const videoDuration = (duration) => {
-		socket.emit("videoDuration", { duration });
-		dispatch(setDuration(duration));
-		if (duration === Infinity && !isLive) {
-			dispatch(isLiveToggle(true));
-			socket.emit("liveVideo");
-		}
-	};
+	const videoDuration = useCallback(
+		(duration) => {
+			socket.emit("videoDuration", { duration });
+			dispatch(setDuration(duration));
+			if (duration === Infinity && !isLive) {
+				dispatch(isLiveToggle(true));
+				socket.emit("liveVideo");
+			}
+		},
+		[dispatch, isLive, socket]
+	);
 
 	const isIdle = useIdle(1000 * 3); // REACT-USE
 
@@ -261,11 +264,10 @@ const PlayerAndChat = () => {
 				customPlayer.style.cursor = "none";
 			}
 		}
-
 		// eslint-disable-next-line
 	}, [isIdle]);
 
-	const handleShowControls = () => {
+	const handleShowControls = useCallback(() => {
 		if (areControls) return false;
 
 		const customPlayer = document.querySelector(".customPlayer");
@@ -273,30 +275,46 @@ const PlayerAndChat = () => {
 			customPlayer.style.cursor = "initial";
 		}
 		dispatch(setAreControls(true));
-	};
-	const handleHideControls = () => {
+	}, [areControls, dispatch]);
+
+	const handleHideControls = useCallback(() => {
 		if (areControls) {
 			dispatch(setAreControls(false));
 		}
-	};
+	}, [areControls, dispatch]);
 
-	const setLiveDuration = (currentProgress) => {
-		if (!currentProgress) return false;
-		const { playedSeconds, played } = currentProgress;
-		if (playedSeconds && played) {
-			const liveDuration = Math.floor(playedSeconds / played);
-			if (liveDuration !== duration) {
-				if (duration - 2 > liveDuration || duration + 2 < liveDuration) {
-					dispatch(setDuration(liveDuration));
-					synchronizeVideo(player, liveDuration - 3);
-					if (!isLive) {
-						dispatch(isLiveToggle(true));
-						socket.emit("liveVideo");
+	const setLiveDuration = useCallback(
+		(currentProgress) => {
+			if (!currentProgress) return false;
+			const { playedSeconds, played } = currentProgress;
+			if (playedSeconds && played) {
+				const liveDuration = Math.floor(playedSeconds / played);
+				if (liveDuration !== duration) {
+					if (duration - 2 > liveDuration || duration + 2 < liveDuration) {
+						dispatch(setDuration(liveDuration));
+						synchronizeVideo(player, liveDuration - 3);
+						if (!isLive) {
+							dispatch(isLiveToggle(true));
+							socket.emit("liveVideo");
+						}
 					}
 				}
 			}
-		}
-	};
+		},
+		[dispatch, duration, isLive, socket]
+	);
+
+	const handleOnProgress = useCallback(
+		(e) => {
+			if (videoProgress !== e && isPlaying) {
+				setLiveDuration(e); // FUNCTION
+			}
+			if (!isLive) {
+				dispatch(onProgress(e));
+			}
+		},
+		[dispatch, isLive, isPlaying, setLiveDuration, videoProgress]
+	);
 
 	const secondsForward = useCallback(
 		(e) => {
@@ -347,14 +365,7 @@ const PlayerAndChat = () => {
 					<ReactPlayer
 						ref={player}
 						onDuration={videoDuration}
-						onProgress={(e) => {
-							if (videoProgress !== e && isPlaying) {
-								setLiveDuration(e); // FUNCTION
-							}
-							if (!isLive) {
-								dispatch(onProgress(e));
-							}
-						}}
+						onProgress={handleOnProgress}
 						playing={isPlaying}
 						className={classes.reactPlayer}
 						url={currentVideoLink}

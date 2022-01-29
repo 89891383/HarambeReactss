@@ -7,7 +7,7 @@ import "./Options.css";
 import AdminList from "./AdminList";
 import ChangeChat from "./ChangeChat";
 import { useSelector } from "react-redux";
-import { Typography } from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
 
 const OptionsDialog = () => {
 	const { socket } = useContext(DataContext);
@@ -46,15 +46,15 @@ const OptionsDialog = () => {
 
 			<ChangeChat />
 
-			<div
-				style={{
+			<Box
+				sx={{
 					display: "flex",
 					alignItems: "center",
 					justifyContent: "center",
 				}}
 			>
 				<AdminList />
-			</div>
+			</Box>
 		</div>
 	);
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useContext } from "react";
 import { DataContext } from "../../App";
 import "./AdminPanel.css";
@@ -86,6 +86,8 @@ const AddVideo = () => {
 
 	const { admin, nickname } = useSelector((state) => state.player);
 
+	const dispatch = useDispatch();
+
 	const { control, handleSubmit, watch } = useForm({
 		defaultValues: {
 			videoLink: "",
@@ -102,50 +104,55 @@ const AddVideo = () => {
 			socket.emit("skipVideo", { nickname });
 		}
 	};
-	const dispatch = useDispatch();
 
-	const handleAddVideo = (data) => {
-		const { videoLink } = data;
+	const handleAddVideo = useCallback(
+		(data) => {
+			const { videoLink } = data;
 
-		const regExpCheck = linkRegExpCheck(videoLink);
+			const regExpCheck = linkRegExpCheck(videoLink);
 
-		if (data.videoLink && Boolean(regExpCheck)) {
-			const { videoLink, videoTitle } = data;
-			socket.emit("videoChange", {
-				videoLink,
-				videoTitle,
-			});
-			dispatch(changeIsAddVideo(false));
-		} else {
-			dispatch(
-				setAlert({ message: "YOUR LINK IS NOT CORRECT!", type: "error" })
-			);
-		}
-	};
-
-	const handleAddVideoToQueue = (data) => {
-		const { isImdb, imdbID, videoLink } = data;
-
-		const regExpCheck = linkRegExpCheck(videoLink);
-
-		if (isImdb) {
-			const imdbRegExp = imdbID.match(/tt[0-9]+/);
-			if (!Boolean(imdbRegExp)) {
-				return dispatch(
-					setAlert({ message: "ImdbID IS WRONG!", type: "error" })
+			if (data.videoLink && Boolean(regExpCheck)) {
+				const { videoLink, videoTitle } = data;
+				socket.emit("videoChange", {
+					videoLink,
+					videoTitle,
+				});
+				dispatch(changeIsAddVideo(false));
+			} else {
+				dispatch(
+					setAlert({ message: "YOUR LINK IS NOT CORRECT!", type: "error" })
 				);
 			}
-		}
+		},
+		[dispatch, socket]
+	);
 
-		if (data.videoLink && Boolean(regExpCheck)) {
-			socket.emit("queueUpdate", { ...data, nickname });
-			dispatch(changeIsAddVideo(false));
-		} else {
-			dispatch(
-				setAlert({ message: "YOUR LINK IS NOT CORRECT!", type: "error" })
-			);
-		}
-	};
+	const handleAddVideoToQueue = useCallback(
+		(data) => {
+			const { isImdb, imdbID, videoLink } = data;
+
+			const regExpCheck = linkRegExpCheck(videoLink);
+
+			if (isImdb) {
+				const imdbRegExp = imdbID.match(/tt[0-9]+/);
+				if (!Boolean(imdbRegExp)) {
+					return dispatch(
+						setAlert({ message: "ImdbID IS WRONG!", type: "error" })
+					);
+				}
+			}
+
+			if (data.videoLink && Boolean(regExpCheck)) {
+				socket.emit("queueUpdate", { ...data, nickname });
+				dispatch(changeIsAddVideo(false));
+			} else {
+				dispatch(
+					setAlert({ message: "YOUR LINK IS NOT CORRECT!", type: "error" })
+				);
+			}
+		},
+		[dispatch, nickname, socket]
+	);
 
 	return (
 		<form

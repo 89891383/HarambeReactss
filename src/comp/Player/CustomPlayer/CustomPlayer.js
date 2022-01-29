@@ -22,6 +22,7 @@ import Quality from "./PlayerSettings/Quality";
 import { isMobile, MobileView } from "react-device-detect";
 import Title from "./Title";
 import TwitchCamToggle from "./TwitchCamToggle";
+import useTime from "../../../Hooks/useTime";
 
 const screenfull = require("screenfull");
 
@@ -128,33 +129,22 @@ const CustomPlayer = ({ playerWrapperRef }) => {
 
 	const [secondsSkip, setSecondsSkip] = useState(false);
 
-	const formatTime = (time) => {
-		return time < 10 ? `0${time}` : time;
-	};
+	const { seconds, minutes, hours } = useTime(duration);
 
-	const convertSeconds = (time) => {
-		let minutes = Math.floor(time / 60);
-		let hours = Math.floor(minutes / 60);
-		let seconds = Math.floor(time - 60 * minutes);
-		minutes = formatTime(minutes % 60);
-		hours = formatTime(hours);
-		seconds = formatTime(seconds);
-		return { seconds, minutes, hours };
-	};
-
-	const { seconds, minutes, hours } = convertSeconds(duration);
-
-	const currentTime = convertSeconds(Math.floor(progress));
+	const currentTime = useTime(Math.floor(progress));
 
 	const controlsRef = useRef(null);
 
-	const handlePlayScreen = (e) => {
-		if (isMobile) return false;
+	const handlePlayScreen = useCallback(
+		(e) => {
+			if (isMobile) return false;
 
-		if ([...e.target.classList].includes("customPlayer")) {
-			socket.emit("canPlay");
-		}
-	};
+			if ([...e.target.classList].includes("customPlayer")) {
+				socket.emit("canPlay");
+			}
+		},
+		[socket]
+	);
 
 	const handlePlayScreenMobile = () => {
 		socket.emit("canPlay");
@@ -189,12 +179,9 @@ const CustomPlayer = ({ playerWrapperRef }) => {
 		screenfull.toggle();
 	};
 
-	const EscCloseFullScreen = useCallback(
-		(e) => {
-			playerWrapperRef.current.classList.toggle("fullscreenPlayer");
-		},
-		[playerWrapperRef]
-	);
+	const EscCloseFullScreen = useCallback(() => {
+		playerWrapperRef.current.classList.toggle("fullscreenPlayer");
+	}, [playerWrapperRef]);
 
 	useEffect(() => {
 		document.addEventListener("fullscreenchange", EscCloseFullScreen);
@@ -286,8 +273,6 @@ const CustomPlayer = ({ playerWrapperRef }) => {
 
 					<Volume />
 
-					{/* <div className="durationBar">
-                    </div>       */}
 					<Typography className={classes.timer}>{timer}</Typography>
 
 					{

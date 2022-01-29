@@ -14,7 +14,6 @@ const classes = {
 		justifyContent: "center",
 		borderRadius: "5px",
 		cursor: "e-resize",
-		backgroundColor: "#111",
 		transition: "300ms ease-in-out border",
 		"&:hover": {
 			borderColor: "white",
@@ -24,6 +23,7 @@ const classes = {
 		width: "100%",
 		height: "100%",
 		position: "relative",
+		overflow: "hidden",
 	},
 	drag: {
 		position: "absolute",
@@ -34,7 +34,7 @@ const classes = {
 		cursor: "grab",
 		display: "flex",
 		padding: "5px",
-		opacity: "0.4",
+		opacity: "0.5",
 		borderRadius: "0 0 0 5px",
 		transition: "300ms ease-in-out opacity",
 	},
@@ -54,6 +54,7 @@ const ResizeableAndDraggable = ({ children, initWidth = 300 }) => {
 	const [top, setTop] = useState(0);
 	const [left, setLeft] = useState(0);
 	const [isDragging, setIsDragging] = useState(false);
+	const [dragIcon, setDragIcon] = useState(false);
 
 	const childrenRef = useRef(null);
 	const dragRef = useRef(null);
@@ -132,6 +133,14 @@ const ResizeableAndDraggable = ({ children, initWidth = 300 }) => {
 		[handleMouseUpMove, move]
 	);
 
+	const parentMouseEnter = () => {
+		setDragIcon(true);
+	};
+
+	const parentMouseLeave = () => {
+		setDragIcon(false);
+	};
+
 	useEffect(() => {
 		window.addEventListener("mousedown", handleMouseDownMove);
 		window.addEventListener("mousedown", handleMouseDownResize);
@@ -149,13 +158,20 @@ const ResizeableAndDraggable = ({ children, initWidth = 300 }) => {
 			<Box
 				sx={classes.parent}
 				ref={parentRef}
-				style={{ width, transform: `translate(${left}px,${top}px)` }}
+				style={{
+					width,
+					transform: `translate(${left}px,${top}px)`,
+				}}
+				onMouseOver={parentMouseEnter}
+				onMouseLeave={parentMouseLeave}
 			>
 				<Box sx={classes.children} ref={childrenRef}>
 					{children}
-					<Box id="drag" sx={classes.drag} ref={dragRef}>
-						<ControlCameraIcon style={{ pointerEvents: "none" }} />
-					</Box>
+					{dragIcon | isDragging && (
+						<Box id="drag" sx={classes.drag} ref={dragRef}>
+							<ControlCameraIcon style={{ pointerEvents: "none" }} />
+						</Box>
+					)}
 				</Box>
 			</Box>
 		</>

@@ -2,8 +2,8 @@ const formatTime = (time) => {
 	return time < 10 ? `0${time}` : time;
 };
 
-const convertSeconds = (time, string) => {
-	if (typeof time !== "number" || !time) return false;
+const convertSeconds = (time = 0, string) => {
+	// if (typeof time !== "number" || !time) return false;
 
 	let minutes = Math.floor(time / 60);
 	let hours = Math.floor(minutes / 60);

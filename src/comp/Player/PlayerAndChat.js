@@ -246,12 +246,12 @@ const PlayerAndChat = () => {
 		(duration) => {
 			socket.emit("videoDuration", { duration });
 			dispatch(setDuration(duration));
-			if (duration === Infinity && !isLive) {
-				dispatch(isLiveToggle(true));
-				socket.emit("liveVideo");
-			}
+			// if (duration === Infinity && !isLive) {
+			// 	dispatch(isLiveToggle(true));
+			// 	socket.emit("liveVideo");
+			// }
 		},
-		[dispatch, isLive, socket]
+		[dispatch, socket]
 	);
 
 	const isIdle = useIdle(1000 * 3); // REACT-USE
@@ -381,7 +381,7 @@ const PlayerAndChat = () => {
 						onBufferEnd={() => dispatch(changeIsLoading(false))}
 					/>
 
-					<Fade in={areControls && !isTwitch} timeout={300}>
+					<Fade in={Boolean(areControls && !isTwitch)} timeout={300}>
 						<Box>
 							<CustomPlayer playerWrapperRef={playerWrapperRef} />
 						</Box>

@@ -1,5 +1,4 @@
 import React from "react";
-import { useRef } from "react";
 import { useContext } from "react";
 import { DataContext } from "../../../App";
 import OneOption from "./OneOption";
@@ -16,8 +15,6 @@ const OptionsDialog = () => {
 		(state) => state.player
 	);
 
-	const optionsRef = useRef(null);
-
 	const serverTimeToggle = () => {
 		socket.emit("serverTimeToggle");
 	};
@@ -31,7 +28,7 @@ const OptionsDialog = () => {
 	};
 
 	return (
-		<div className="optionsDialog" ref={optionsRef}>
+		<div className="optionsDialog">
 			<OneOption checked={isServerTime} onChange={serverTimeToggle}>
 				<Typography>Server time</Typography>
 			</OneOption>

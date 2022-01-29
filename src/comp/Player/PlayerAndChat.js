@@ -301,19 +301,19 @@ const PlayerAndChat = () => {
 				}
 			}
 		},
-		[dispatch, duration, isLive, socket]
+		[dispatch, duration]
 	);
 
 	const handleOnProgress = useCallback(
 		(e) => {
-			if (videoProgress !== e && isPlaying) {
-				setLiveDuration(e); // FUNCTION
-			}
+			// if (videoProgress !== e && isPlaying) {
+			// 	setLiveDuration(e); // FUNCTION
+			// }
 			if (!isLive) {
 				dispatch(onProgress(e));
 			}
 		},
-		[dispatch, isLive, isPlaying, setLiveDuration, videoProgress]
+		[dispatch, isLive]
 	);
 
 	const secondsForward = useCallback(

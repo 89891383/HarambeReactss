@@ -293,10 +293,10 @@ const PlayerAndChat = () => {
 					if (duration - 2 > liveDuration || duration + 2 < liveDuration) {
 						dispatch(setDuration(liveDuration));
 						synchronizeVideo(player, liveDuration - 3);
-						if (!isLive) {
-							dispatch(isLiveToggle(true));
-							socket.emit("liveVideo");
-						}
+						// if (!isLive) {
+						// 	dispatch(isLiveToggle(true));
+						// 	socket.emit("liveVideo");
+						// }
 					}
 				}
 			}

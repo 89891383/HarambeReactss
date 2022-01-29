@@ -3,12 +3,10 @@ import Button2 from "../Button";
 import { Box, Button, Typography } from "@material-ui/core";
 import "./AdminPanel.css";
 import Queue from "../Queue/Queue";
-import AddVideo from "./AddVideo";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/styles";
 import SideOptions from "../SideOptions";
 import { changeIsAddVideo } from "../../redux/popoutsSlice";
-import Popout from "../Popout";
 
 const useStyles = makeStyles({
 	bottomBox: {
@@ -66,8 +64,6 @@ const AdminPanel = () => {
 		(state) => state.player
 	);
 
-	const { isAddVideo } = useSelector((state) => state.popouts);
-
 	const handleTwitchLogin = () => {
 		window.location.href = `/auth/twitch`; //DECLARED IN APP
 	};
@@ -80,13 +76,6 @@ const AdminPanel = () => {
 
 	return (
 		<Box className={classes.bottomBox}>
-			<Popout
-				state={isAddVideo}
-				setState={() => dispatch(changeIsAddVideo(false))}
-			>
-				<AddVideo />
-			</Popout>
-
 			{/* ADDING VIDEO PANEL */}
 			<Box className={classes.adminPanel}>
 				<Box className={classes.queueCounter_Wrapper}>

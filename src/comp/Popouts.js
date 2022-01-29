@@ -1,9 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
+	changeIsAddVideo,
 	dialogOpenToggle,
 	historyOpenToggle,
 	pollOpenToggle,
 } from "../redux/popoutsSlice";
+import AddVideo from "./AdminPanel/AddVideo";
 import OptionsDialog from "./AdminPanel/Options/OptionsDialog";
 import HistoryDialog from "./History/HistoryDialog";
 import SetPoll from "./Poll/SetPoll";
@@ -12,7 +14,7 @@ import Popout from "./Popout";
 const Popouts = () => {
 	const dispatch = useDispatch();
 
-	const { isDialogOpen, isPollOpen, isHistoryOpen } = useSelector(
+	const { isDialogOpen, isPollOpen, isHistoryOpen, isAddVideo } = useSelector(
 		(state) => state.popouts
 	);
 
@@ -25,6 +27,12 @@ const Popouts = () => {
 				<OptionsDialog />
 			</Popout>
 
+			<Popout
+				state={isAddVideo}
+				setState={() => dispatch(changeIsAddVideo(false))}
+			>
+				{isAddVideo && <AddVideo />}
+			</Popout>
 			<Popout
 				state={isPollOpen}
 				setState={() => dispatch(pollOpenToggle(false))}

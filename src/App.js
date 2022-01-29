@@ -99,7 +99,7 @@ const App = () => {
 					dispatch(changeNickname(res.profile.login.toLowerCase()));
 				}
 			})
-			.catch((err) =>
+			.catch(() =>
 				dispatch(setAlert({ message: "Get profile error", type: "error" }))
 			);
 	}, [dispatch]);

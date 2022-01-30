@@ -1,6 +1,6 @@
 import { Box, Fade, makeStyles } from "@material-ui/core";
 import TimerIcon from "@material-ui/icons/Timer";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { DataContext } from "../../../App";
 import { useClickAway } from "react-use";
 import { useSelector } from "react-redux";
@@ -19,6 +19,20 @@ const useStyles = makeStyles({
 			display: "none",
 		},
 	},
+	playbackRate: {
+		position: "relative",
+	},
+	playbackRateOptions: {
+		position: "absolute",
+		top: "0",
+		color: "white",
+		left: "50%",
+		transform: "translate(-50%, -100%)",
+		backgroundColor: "black",
+		borderRadius: "5px",
+		overflow: "hidden",
+		boxShadow: "0 0 2px black",
+	},
 });
 
 const PlaybackRate = () => {
@@ -34,18 +48,21 @@ const PlaybackRate = () => {
 
 	const [isOpen, setIsOpen] = useState(false);
 
-	useClickAway(containerRef, (e) => {
+	useClickAway(containerRef, () => {
 		setIsOpen(false);
 	});
 
-	const handlePlaybackRate = (e) => {
-		const chooseNumber = Number(e.target.textContent);
+	const handlePlaybackRate = useCallback(
+		(e) => {
+			const chooseNumber = Number(e.target.textContent);
 
-		if (!chooseNumber || !admin) return setIsOpen(false);
-		setIsOpen(false);
-		if (playbackRate === chooseNumber) return false;
-		socket.emit("playbackRate", chooseNumber);
-	};
+			if (!chooseNumber || !admin) return setIsOpen(false);
+			setIsOpen(false);
+			if (playbackRate === chooseNumber) return false;
+			socket.emit("playbackRate", chooseNumber);
+		},
+		[admin, playbackRate, socket]
+	);
 
 	useEffect(() => {
 		if (chooseRef.current) {
@@ -58,24 +75,24 @@ const PlaybackRate = () => {
 	}, [chooseRef, isOpen, playbackRate]);
 
 	return (
-		<div className="playbackRate" ref={containerRef}>
+		<Box className={classes.playbackRate} ref={containerRef}>
 			<Box className={classes.box} onClick={() => setIsOpen((prev) => !prev)}>
 				<TimerIcon />
 			</Box>
 
 			<Fade in={isOpen} unmountOnExit timeout={300}>
-				<div
-					className="playbackRateChoose"
+				<Box
+					className={classes.playbackRateOptions}
 					onClick={handlePlaybackRate}
 					ref={chooseRef}
 				>
-					<div className="playbackOption">2</div>
-					<div className="playbackOption">1.5</div>
-					<div className="playbackOption">1</div>
-					<div className="playbackOption">0.5</div>
-				</div>
+					<Box className="playbackOption">2</Box>
+					<Box className="playbackOption">1.5</Box>
+					<Box className="playbackOption">1</Box>
+					<Box className="playbackOption">0.5</Box>
+				</Box>
 			</Fade>
-		</div>
+		</Box>
 	);
 };
 

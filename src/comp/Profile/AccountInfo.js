@@ -18,6 +18,21 @@ const useStyles = makeStyles({
 		alignItems: "center",
 		gap: "10px",
 	},
+	accountInfo: {
+		position: "absolute",
+		color: "white",
+		display: "flex",
+		flexDirection: "column",
+		alignItems: "center",
+		justifyContent: "center",
+		gap: "10px",
+		padding: "10px 10px",
+		borderRadius: "5px",
+		backgroundColor: "#161616",
+		width: "fit-content",
+		transform: "translate(-40%, -132%)",
+		boxShadow: "0 0 5px black",
+	},
 });
 
 const AccountInfo = () => {
@@ -43,13 +58,13 @@ const AccountInfo = () => {
 	const { image, login } = twitchUserData;
 
 	return (
-		<div className="accountInfo" ref={accountRef}>
+		<Box className={classes.accountInfo} ref={accountRef}>
 			<Box className={classes.box}>
 				<Avatar className={classes.avatar} src={image} />
 				<Typography variant="body1">{login}</Typography>
 			</Box>
 			<Button2 onClick={handleLogout}>LOGOUT</Button2>
-		</div>
+		</Box>
 	);
 };
 

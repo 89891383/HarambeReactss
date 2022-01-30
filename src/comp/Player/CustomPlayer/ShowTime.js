@@ -1,22 +1,20 @@
 import { Typography } from "@material-ui/core";
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { useState } from "react";
 const ShowTime = ({ time }) => {
 	const [cursorX, setCursorX] = useState(-1000);
 	const showTimeRef = useRef(null);
 
-	const handleFollowCursor = (e) => {
+	const handleFollowCursor = useCallback((e) => {
 		setCursorX(e.clientX);
-	};
+	}, []);
 
 	useEffect(() => {
 		document.addEventListener("mousemove", handleFollowCursor);
 		return () => {
 			document.removeEventListener("mousemove", handleFollowCursor);
 		};
-	}, []);
-
-	// const maxWidth = document.querySelector('.customPlayer').getBoundingClientRect().width
+	}, [handleFollowCursor]);
 
 	const progressBarRect = document
 		.querySelector(".progressBar")

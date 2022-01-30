@@ -1,6 +1,12 @@
 import { Fade } from "@material-ui/core";
 import ShowTime from "./ShowTime";
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, {
+	useState,
+	useEffect,
+	useRef,
+	useContext,
+	useCallback,
+} from "react";
 import { useSelector } from "react-redux";
 import { DataContext } from "../../../App";
 
@@ -48,24 +54,30 @@ const ProgressBar = () => {
 		setLoadedSeconds((loadedSeconds / duration) * 100);
 	}, [videoProgress, duration]);
 
-	const handleTimeToShow = (e) => {
-		if (!admin) return false;
-		const position = progressRef.current.getBoundingClientRect();
-		const procents = (e.pageX - position.x) / position.width;
-		if (procents >= 0) {
-			setTimeToShow(convertSeconds(Math.floor(procents * duration)));
-		}
-	};
+	const handleTimeToShow = useCallback(
+		(e) => {
+			if (!admin) return false;
+			const position = progressRef.current.getBoundingClientRect();
+			const procents = (e.pageX - position.x) / position.width;
+			if (procents >= 0) {
+				setTimeToShow(convertSeconds(Math.floor(procents * duration)));
+			}
+		},
+		[admin, duration]
+	);
 
-	const handleProgressChange = (e) => {
-		if (!admin || !currentVideoLink || isLive) return false;
-		const position = e.target.getBoundingClientRect();
-		const procents = (e.pageX - position.x) / position.width;
-		const time = convertSeconds(duration * procents);
-		const prettyTime = `${time.hours}:${time.minutes}:${time.seconds}`;
-		// WARTOSC W PROCENTACH
-		socket.emit("changeTime", { procents, nickname, prettyTime });
-	};
+	const handleProgressChange = useCallback(
+		(e) => {
+			if (!admin || !currentVideoLink || isLive) return false;
+			const position = e.target.getBoundingClientRect();
+			const procents = (e.pageX - position.x) / position.width;
+			const time = convertSeconds(duration * procents);
+			const prettyTime = `${time.hours}:${time.minutes}:${time.seconds}`;
+			// WARTOSC W PROCENTACH
+			socket.emit("changeTime", { procents, nickname, prettyTime });
+		},
+		[admin, currentVideoLink, duration, isLive, nickname, socket]
+	);
 
 	const handleToggleShowTimeAbove = () => {
 		setIsTimeShow((prev) => !prev);

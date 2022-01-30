@@ -101,6 +101,12 @@ const useStyles = makeStyles({
 		width: "100%",
 		padding: "15px",
 	},
+	topInfoButtons: {
+		display: "flex",
+		gap: "10px",
+		marginLeft: "auto",
+		width: "fit-content",
+	},
 });
 
 const mobileToggleIconStyles = {
@@ -220,7 +226,7 @@ const CustomPlayer = ({ playerWrapperRef }) => {
 			{/* TOP INFO */}
 			<Box className={classes.topInfo}>
 				<Title />
-				<Box style={{ display: "flex", gap: "10px", marginLeft: "auto" }}>
+				<Box className={classes.topInfoButtons}>
 					{admin && <TwitchCamToggle />}
 					<Box className={classes.box} onClick={handleToggleChat}>
 						{!hiddenChat ? <ShowChat /> : <HideChat />}

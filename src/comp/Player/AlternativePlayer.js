@@ -1,19 +1,35 @@
+import { Box } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
 import Iframe from "react-iframe";
 import { useSelector } from "react-redux";
-import { useCss, useIdle } from "react-use";
+import { useIdle } from "react-use";
+import Title from "./CustomPlayer/Title";
+
+const useStyles = makeStyles({
+	iFrame: {
+		width: "100%",
+		height: "100%",
+	},
+	titleBox: {
+		display: "flex",
+		alignItems: "center",
+		position: "absolute",
+		top: "0",
+		left: "0",
+		width: "100%",
+		padding: "15px",
+	},
+});
 
 const AlternativePlayer = () => {
 	const { videoTitle, currentVideoLink } = useSelector((state) => state.player);
 
-	const iframePlayer = useCss({
-		width: "100%",
-		height: "100%",
-	});
+	const classes = useStyles();
 
 	const isIdle = useIdle(3000);
 
 	return (
-		<div className={iframePlayer}>
+		<Box className={classes.iFrame}>
 			<Iframe
 				url={currentVideoLink}
 				width="100%"
@@ -27,9 +43,11 @@ const AlternativePlayer = () => {
 				position="relative"
 			/>
 			{videoTitle && !isIdle && (
-				<div className="videoTitlePlayer">{videoTitle}</div>
+				<Box className={classes.titleBox}>
+					<Title />
+				</Box>
 			)}
-		</div>
+		</Box>
 	);
 };
 

@@ -1,6 +1,6 @@
 import VolumeUpIcon from "@material-ui/icons/VolumeUp";
 import VolumeOffIcon from "@material-ui/icons/VolumeOff";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Box, Fade, makeStyles, Slider } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { changeVolume } from "../../../redux/playerState";
@@ -17,6 +17,12 @@ const useStyles = makeStyles({
 			backgroundColor: "rgba(255, 255, 255, 0.3);",
 		},
 	},
+	slider: {
+		position: "absolute",
+		width: "34px",
+		transform: "translate(0px, -75% )",
+		height: "100px",
+	},
 });
 
 let beforeMute;
@@ -30,18 +36,21 @@ const Volume = () => {
 
 	const classes = useStyles();
 
-	const handleVolume = (e, value) => {
-		dispatch(changeVolume(value));
-	};
+	const handleVolume = useCallback(
+		(e, value) => {
+			dispatch(changeVolume(value));
+		},
+		[dispatch]
+	);
 
-	const handleMute = () => {
+	const handleMute = useCallback(() => {
 		if (volume) {
 			beforeMute = volume;
 			dispatch(changeVolume(0));
 		} else {
 			dispatch(changeVolume(beforeMute));
 		}
-	};
+	}, [dispatch, volume]);
 
 	const toggleSlider = () => {
 		setIsSlider((prev) => !prev);
@@ -58,14 +67,7 @@ const Volume = () => {
 			</Box>
 
 			<Fade in={isSlider}>
-				<div
-					style={{
-						position: "absolute",
-						width: "34px",
-						transform: "translate(0px, -75% )",
-						height: "100px",
-					}}
-				>
+				<Box className={classes.slider}>
 					<Slider
 						orientation="vertical"
 						min={0}
@@ -74,7 +76,7 @@ const Volume = () => {
 						value={volume}
 						onChange={handleVolume}
 					/>
-				</div>
+				</Box>
 			</Fade>
 		</div>
 	);

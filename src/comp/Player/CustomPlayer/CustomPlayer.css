@@ -164,22 +164,7 @@
 	align-items: center;
 	gap: 5px;
 }
-.playbackRate {
-	position: relative;
-}
-.playbackRateChoose {
-	position: absolute;
-	top: 0;
-	color: white;
-	left: 50%;
-	transform: translate(-50%, -100%);
-	background-color: black;
-	border-radius: 5px;
-	overflow: hidden;
-	box-shadow: 0 0 2px black;
-	/* background-color: transparent; */
-	/* backdrop-filter: blur(10px); */
-}
+
 .playbackOption {
 	width: 100%;
 	padding: 10px 40px;

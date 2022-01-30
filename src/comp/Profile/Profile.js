@@ -1,6 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import "./Profile.css";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import { Box, makeStyles } from "@material-ui/core";
 import AccountInfo from "./AccountInfo";
@@ -24,8 +23,7 @@ const Profile = () => {
 	const [isHover, setIsHover] = useState(false);
 
 	return (
-		<div
-			className="profileIcon"
+		<Box
 			onMouseEnter={() => setIsHover(true)}
 			onMouseLeave={() => setIsHover(false)}
 			onClick={() => setIsHover((prev) => !prev)}
@@ -39,7 +37,7 @@ const Profile = () => {
 					<AccountInfo />
 				</div>
 			</Fade>
-		</div>
+		</Box>
 	);
 };
 

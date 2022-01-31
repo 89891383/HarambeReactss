@@ -31,7 +31,7 @@ const Popouts = () => {
 				state={isAddVideo}
 				setState={() => dispatch(changeIsAddVideo(false))}
 			>
-				{isAddVideo && <AddVideo />}
+				<AddVideo />
 			</Popout>
 			<Popout
 				state={isPollOpen}

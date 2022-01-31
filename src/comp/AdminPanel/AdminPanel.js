@@ -71,7 +71,9 @@ const AdminPanel = () => {
 	const isDisabled = admin ? false : !isPlaylistOpen;
 
 	const handleOpenAddVideo = () => {
-		dispatch(changeIsAddVideo(true));
+		if (!isDisabled) {
+			dispatch(changeIsAddVideo(true));
+		}
 	};
 
 	return (
@@ -89,8 +91,6 @@ const AdminPanel = () => {
 				{nickname && (
 					<Button
 						variant="outlined"
-						color="primary"
-						disabled={isDisabled}
 						className={classes.addVideoBtn}
 						onClick={handleOpenAddVideo}
 					>

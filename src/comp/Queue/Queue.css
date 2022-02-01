@@ -10,6 +10,7 @@
 	background-color: #0f0f0f;
 	font-size: 20px;
 	position: relative;
+	border: 1px solid #2b2b2b;
 }
 .queueItem {
 	min-height: 120px;
@@ -32,10 +33,6 @@
 	text-align: start;
 }
 
-.queueItem:nth-child(2) {
-	border-top: 2px solid #121212;
-	background-color: #121212;
-}
 .queueItemInfo {
 	gap: 10px;
 	height: 25px;

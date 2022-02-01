@@ -10,6 +10,7 @@ import "./Queue.css";
 import noImg from "./noImg.jpg";
 import { useSelector } from "react-redux";
 import useTime from "../../Hooks/useTime";
+import colors from "../../colors";
 
 const useStyles = makeStyles({
 	iconButton: {
@@ -116,7 +117,7 @@ const QueueItem = ({ item, index }) => {
 
 	const iFrameStyles = iFrame
 		? {
-				color: "#90be6d",
+				color: colors.green,
 		  }
 		: {
 				color: "white",

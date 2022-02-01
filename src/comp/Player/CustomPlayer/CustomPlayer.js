@@ -107,6 +107,27 @@ const useStyles = makeStyles({
 		marginLeft: "auto",
 		width: "fit-content",
 	},
+	controls: {
+		width: "100%",
+		margin: "0 auto",
+		height: "50px",
+		display: "flex",
+		flexDirection: "column",
+		alignItems: "center",
+	},
+	lowerControls: {
+		display: "flex",
+		width: "99%",
+		alignItems: "center",
+		gap: "5px",
+		marginTop: "5px",
+	},
+	fullscreen: {
+		marginLeft: "auto",
+		display: "flex",
+		alignItems: "center",
+		gap: "5px;",
+	},
 });
 
 const mobileToggleIconStyles = {
@@ -260,21 +281,21 @@ const CustomPlayer = ({ playerWrapperRef }) => {
 				)}
 			</MobileView>
 
-			<div className="controls" ref={controlsRef}>
-				<div className="lowerControls">
-					<div className="playButton">
+			<Box className={classes.controls} ref={controlsRef}>
+				<Box className={classes.lowerControls}>
+					<Box className="playButton">
 						<Box className={classes.box} onClick={handleTogglePlayServer}>
 							{isPlaying ? <PauseIcon /> : <PlayArrowIcon />}
 						</Box>
-					</div>
+					</Box>
 
 					{/* SKIP ONLY FOR ADMINS */}
 					{admin && (
-						<div className="skipButton">
+						<Box className="skipButton">
 							<Box onClick={handleSkipVideo} className={classes.box}>
 								<SkipNextIcon />
 							</Box>
-						</div>
+						</Box>
 					)}
 
 					<Volume />
@@ -282,8 +303,8 @@ const CustomPlayer = ({ playerWrapperRef }) => {
 					<Typography className={classes.timer}>{timer}</Typography>
 
 					{
-						!isLive && <ProgressBar />
 						// IF LIVE PROGRESS BAR IS OFF
+						!isLive && <ProgressBar />
 					}
 
 					{!isLive && (
@@ -292,7 +313,7 @@ const CustomPlayer = ({ playerWrapperRef }) => {
 						</Typography>
 					)}
 
-					<div className="fullScreen">
+					<Box className={classes.fullscreen}>
 						{!isLive && admin && <LiveButton />}
 
 						{!isLive && ( // IF LIVE PLAYBACKRATE IS OFF
@@ -304,9 +325,9 @@ const CustomPlayer = ({ playerWrapperRef }) => {
 						<Box className={classes.box} onClick={handleFullScreen}>
 							<FullscreenIcon />
 						</Box>
-					</div>
-				</div>
-			</div>
+					</Box>
+				</Box>
+			</Box>
 		</div>
 	);
 };

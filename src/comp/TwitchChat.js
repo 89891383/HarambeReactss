@@ -8,6 +8,7 @@ import { makeStyles, Typography, Zoom, Box } from "@material-ui/core";
 import Tooltip from "@material-ui/core/Tooltip";
 import { useDispatch, useSelector } from "react-redux";
 import { changeCurrentChat } from "../redux/playerState";
+import colors from "../colors";
 
 let pingInterval;
 
@@ -15,10 +16,10 @@ let pingInit;
 
 const useStyles = makeStyles({
 	syncOn: {
-		color: "#90be6d",
+		color: colors.green,
 	},
 	syncOff: {
-		color: "#f9c74f",
+		color: colors.red,
 		animation: "$breatheEffect infinite 3s ease-in-out",
 	},
 	"@keyframes breatheEffect": {
@@ -38,7 +39,7 @@ const useStyles = makeStyles({
 		top: "11px",
 		left: "10px",
 		color: "grey",
-		backgroundColor: "#121212",
+		backgroundColor: colors.backgroundGrey,
 		padding: "6px 10px",
 		borderRadius: "5px",
 		fontWeight: "700",
@@ -56,7 +57,6 @@ const useStyles = makeStyles({
 		position: "relative",
 		width: "400px",
 		height: "100vh",
-		// zIndex: 0,
 		"@media (max-width: 720px)": {
 			height: "550px",
 			width: "100%",
@@ -173,7 +173,7 @@ const TwitchChat = () => {
 			)}
 
 			<iframe
-				style={{ border: "2px solid #121212" }}
+				style={{ border: `2px solid ${colors.backgroundGrey}` }}
 				title="TwitchChat"
 				id="chat_embed"
 				src={`https://www.twitch.tv/embed/${currentChat}/chat?darkpopout&parent=${websiteURL}`}

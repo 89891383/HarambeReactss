@@ -1,33 +1,10 @@
-.playerSettings{
-    position: relative;
-}
-
-.playerSettingsDialog{
-    position: absolute;
-    top: 0%;
-    left:0%;
-    transform:translate(-25%,-100%);
-    background-color: black;
-    display: flex;
-    border-radius: 5px;
-    overflow: hidden;
-    box-shadow: 0 0 5px black;
-    flex-direction: column-reverse;
-}
-.changeDelay{
-    display: flex;
-    gap: 7px;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-.formatOption{
+.formatOption {
 	padding: 15px 20px;
-    cursor: pointer;
+	cursor: pointer;
 }
-.formatOption .current{
-    background-color: red;
+.formatOption .current {
+	background-color: red;
 }
-.formatOption:hover{
+.formatOption:hover {
 	background-color: #121212;
 }

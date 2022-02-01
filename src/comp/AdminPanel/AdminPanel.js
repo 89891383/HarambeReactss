@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/styles";
 import SideOptions from "../SideOptions";
 import { changeIsAddVideo } from "../../redux/popoutsSlice";
+import colors from "../../colors";
 
 const useStyles = makeStyles({
 	bottomBox: {
@@ -18,15 +19,15 @@ const useStyles = makeStyles({
 		gap: "10px",
 	},
 	addVideoBtn: {
-		color: "#90be6d",
+		color: colors.green,
 		fontWeight: "700",
-		borderColor: "#90be6d",
+		borderColor: colors.green,
 		"&:hover": {
-			borderColor: "#90be6d",
+			borderColor: colors.green,
 		},
 		"&:disabled": {
-			color: "#f94144",
-			borderColor: "#f94144",
+			color: colors.red,
+			borderColor: colors.red,
 		},
 		"@media (max-width:460px)": {
 			marginRight: "17px",
@@ -35,7 +36,7 @@ const useStyles = makeStyles({
 	queueCounter: {
 		padding: "7px 12px",
 		fontWeight: "700",
-		backgroundColor: "#121212",
+		backgroundColor: colors.backgroundGrey,
 		borderRadius: "5px",
 	},
 	queueCounter_Wrapper: {

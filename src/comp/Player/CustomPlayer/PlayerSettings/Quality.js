@@ -1,6 +1,6 @@
 import HighQualityIcon from "@material-ui/icons/HighQuality";
 import { Box, Fade, makeStyles } from "@material-ui/core";
-import React, { useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import "./Quality.css";
 import { useClickAway } from "react-use";
 // import Delay from './Delay';
@@ -42,10 +42,26 @@ const useStyles = makeStyles({
 			backgroundColor: "rgba(255, 255, 255, 0.3);",
 		},
 	},
+	playerSettings: {
+		position: "relative",
+	},
+	playerSettingsPopout: {
+		position: "absolute",
+		top: "0%",
+		left: "0%",
+		transform: "translate(-25%, -100%)",
+		backgroundColor: "black",
+		display: "flex",
+		borderRadius: "5px",
+		overflow: "hidden",
+		boxShadow: "0 0 5px black",
+		flexDirection: "column-reverse",
+	},
 });
 
 const Quality = () => {
 	const classes = useStyles();
+	const [isOpen, setIsOpen] = useState(false);
 
 	let { currentAvailableFormats } = useSelector((state) => state.player);
 
@@ -55,28 +71,30 @@ const Quality = () => {
 		setIsOpen(false);
 	});
 
-	const createFormats = currentAvailableFormats?.map((item) => {
-		return <FormatOption item={item} key={item.url} />;
-	});
-
-	const [isOpen, setIsOpen] = useState(false);
+	const createFormats = useMemo(
+		() =>
+			currentAvailableFormats?.map((item) => {
+				return <FormatOption item={item} key={item.url} />;
+			}),
+		[currentAvailableFormats]
+	);
 
 	const handleClose = () => {
 		setIsOpen(false);
 	};
 
 	return (
-		<div className="playerSettings" ref={ref}>
+		<Box className={classes.playerSettings} ref={ref}>
 			<Box className={classes.box} onClick={() => setIsOpen((prev) => !prev)}>
 				<HighQualityIcon />
 			</Box>
 
 			<Fade in={isOpen} unmountOnExit timeout={300}>
-				<div className="playerSettingsDialog" onClick={handleClose}>
+				<Box className={classes.playerSettingsPopout} onClick={handleClose}>
 					{createFormats}
-				</div>
+				</Box>
 			</Fade>
-		</div>
+		</Box>
 	);
 };
 

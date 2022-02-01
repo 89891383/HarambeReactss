@@ -1,15 +1,10 @@
-import {
-	Box,
-	Button,
-	LinearProgress,
-	makeStyles,
-	Slide,
-	Typography,
-} from "@material-ui/core";
+import { Box, Button, makeStyles, Slide, Typography } from "@material-ui/core";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DataContext } from "../../App";
+import colors from "../../colors";
 import { setPoll, setPollTime } from "../../redux/pollSlice";
+import Timer from "./Timer";
 
 const useStyles = makeStyles({
 	pollBox: {
@@ -17,7 +12,7 @@ const useStyles = makeStyles({
 		top: "15px",
 		left: "15px",
 		zIndex: 5,
-		backgroundColor: "#327",
+		backgroundColor: colors.purple,
 		padding: "15px",
 		boxShadow: "0px 0px 10px black",
 		color: "white",
@@ -90,11 +85,7 @@ const Vote = () => {
 						No ({noVotes})
 					</Button>
 				</Box>
-				<LinearProgress
-					className={classes.progressBar}
-					variant="determinate"
-					value={(time / 60) * 100}
-				/>
+				<Timer value={(time / 60) * 100} />
 			</Box>
 		</Slide>
 	);

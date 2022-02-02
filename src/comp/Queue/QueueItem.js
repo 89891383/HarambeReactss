@@ -6,13 +6,50 @@ import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import { Box, makeStyles, Tooltip, Typography, Zoom } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
-import "./Queue.css";
 import noImg from "./noImg.jpg";
 import { useSelector } from "react-redux";
 import useTime from "../../Hooks/useTime";
 import colors from "../../colors";
 
 const useStyles = makeStyles({
+	queueItem: {
+		padding: "5px",
+		display: "flex",
+		width: "100%",
+		borderRadius: "10px",
+		alignItems: "center",
+		justifyContent: "space-between",
+		fontWeight: "bold",
+		backgroundColor: "#0f0f0f",
+		fontSize: "20px",
+		border: "1px solid #2b2b2b",
+		height: "120px",
+		overflow: "hidden",
+	},
+	itemDetails: {
+		display: "flex",
+		// alignItems: "center",
+		gap: "15px",
+		flex: "1",
+		overflow: "hidden",
+	},
+	thumbnail: {
+		width: "150px",
+		height: "auto",
+		"@media(max-width:600px)": {
+			display: "none",
+		},
+	},
+	itemTitle: {
+		display: "flex",
+		overflowX: "hidden",
+		position: "relative",
+		height: "auto",
+		alignItems: "center",
+		"@media(max-width:600px)": {
+			marginLeft: "10px",
+		},
+	},
 	iconButton: {
 		color: "white",
 		transition: "0.3s",
@@ -41,6 +78,8 @@ const useStyles = makeStyles({
 	},
 	queueItemDuration: {
 		position: "absolute",
+		left: 0,
+		top: "75px",
 		backgroundColor: "black",
 		borderRadius: "5px",
 		padding: "2px 5px",
@@ -51,18 +90,22 @@ const useStyles = makeStyles({
 		color: ({ isLive }) => (isLive ? colors.red : "white"),
 		borderColor: ({ isLive }) => (isLive ? colors.red : "black"),
 	},
-	iFrameButton: {
-		color: "red",
-	},
 	"@keyframes durationFadeIn": {
 		from: {
 			opacity: "0",
-			transform: "translate(175px, 110%)",
+			transform: "translateX(20px)",
 		},
 		to: {
 			opacity: 1,
-			transform: "translate(162px, 110%)",
+			transform: "translateX(0)",
 		},
+	},
+	queueItemButtons: {
+		display: "flex",
+		width: "fit-content",
+		padding: "15px",
+		gap: "10px",
+		marginLeft: "auto",
 	},
 });
 
@@ -85,11 +128,6 @@ const QueueItem = ({ item, index }) => {
 	const { admin } = useSelector((state) => state.player);
 
 	const { socket } = useContext(DataContext);
-
-	// STYLES FOR TEXT OVERFLOW EMPHASIS
-	const queueItemStyle = admin
-		? { width: "calc(100% - 225px)" }
-		: { width: "95%" };
 
 	const handleDeleteItemFromQueue = () => {
 		if (admin) {
@@ -133,41 +171,51 @@ const QueueItem = ({ item, index }) => {
 
 	return (
 		<>
-			<Box className="queueItem">
-				<div className="videoImgAndInfo_Container" style={queueItemStyle}>
-					<div className="videoImg">
-						<img src={checkThumbnail} alt="" srcSet="" />
-					</div>
+			<Box className={classes.queueItem}>
+				<Box className={classes.itemDetails}>
+					{/* <div className="videoImg"> */}
+					<img
+						className={classes.thumbnail}
+						src={checkThumbnail}
+						alt="Video Thumbnail"
+					/>
+					{/* </div> */}
+					<Box className={classes.itemTitle}>
+						<Tooltip
+							title={`Added by: ${addedBy}`}
+							placement="bottom"
+							TransitionComponent={Zoom}
+						>
+							<Typography variant="h5" noWrap className={classes.typography}>
+								<a
+									style={{ color: "inherit", textDecoration: "none" }}
+									href={URL}
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									{checkTitle}
+								</a>
+							</Typography>
+						</Tooltip>
 
-					<Tooltip
-						title={`Added by: ${addedBy}`}
-						placement="bottom"
-						TransitionComponent={Zoom}
-					>
-						<Typography variant="h5" noWrap className={classes.typography}>
-							<a href={URL} target="_blank" rel="noopener noreferrer">
-								{checkTitle}
-							</a>
-						</Typography>
-					</Tooltip>
+						{duration && (
+							<Box className={classes.queueItemDuration}>{checkDuration}</Box>
+						)}
 
-					{duration && (
-						<Box className={classes.queueItemDuration}>{checkDuration}</Box>
-					)}
+						{noData && !rating && (
+							<Box className={classes.queueItemDuration}>No data</Box>
+						)}
 
-					{noData && !rating && (
-						<Box className={classes.queueItemDuration}>No data</Box>
-					)}
-
-					{rating && (
-						<Box className={classes.imdbInfoBox}>
-							<Rating readOnly value={Math.floor(rating / 2)} />
-						</Box>
-					)}
-				</div>
+						{rating && (
+							<Box className={classes.imdbInfoBox}>
+								<Rating readOnly value={Math.floor(rating / 2)} />
+							</Box>
+						)}
+					</Box>
+				</Box>
 
 				{admin && (
-					<div className="queueItemButtons">
+					<Box className={classes.queueItemButtons}>
 						<Box onClick={handlePlayNow} className={classes.box}>
 							<Tooltip
 								title="Play now"
@@ -178,7 +226,7 @@ const QueueItem = ({ item, index }) => {
 							</Tooltip>
 						</Box>
 
-						{index ? (
+						{Boolean(index) && (
 							<Box className={classes.box} onClick={handleMoveUp}>
 								<Tooltip
 									title={"Move up"}
@@ -188,8 +236,6 @@ const QueueItem = ({ item, index }) => {
 									<ArrowUpwardIcon />
 								</Tooltip>
 							</Box>
-						) : (
-							false
 						)}
 
 						<Box
@@ -211,7 +257,7 @@ const QueueItem = ({ item, index }) => {
 								<DeleteForeverIcon />
 							</Tooltip>
 						</Box>
-					</div>
+					</Box>
 				)}
 			</Box>
 		</>

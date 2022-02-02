@@ -45,11 +45,11 @@ const useStyles = makeStyles({
 		borderRadius: "5px",
 		padding: "2px 5px",
 		fontSize: "15px",
-		border: "1px solid black",
+		border: "1px solid",
 		opacity: "0",
 		animation: `$durationFadeIn ease-in 0.3s forwards`,
-		color: ({ isLive }) => (isLive ? "#f94144" : "white"),
-		borderColor: ({ isLive }) => (isLive ? "rgba(249, 65, 68, 0.5)" : "black"),
+		color: ({ isLive }) => (isLive ? colors.red : "white"),
+		borderColor: ({ isLive }) => (isLive ? colors.red : "black"),
 	},
 	iFrameButton: {
 		color: "red",
@@ -158,9 +158,12 @@ const QueueItem = ({ item, index }) => {
 					{noData && !rating && (
 						<Box className={classes.queueItemDuration}>No data</Box>
 					)}
-					<Box className={classes.imdbInfoBox}>
-						{rating && <Rating readOnly value={Math.floor(rating / 2)} />}
-					</Box>
+
+					{rating && (
+						<Box className={classes.imdbInfoBox}>
+							<Rating readOnly value={Math.floor(rating / 2)} />
+						</Box>
+					)}
 				</div>
 
 				{admin && (

@@ -90,8 +90,4 @@
 	.queueItem {
 		padding: 20px;
 	}
-	.queueItemDuration {
-		transform: translate(0, 100%);
-		left: -145px;
-	}
 }

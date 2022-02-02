@@ -34,10 +34,11 @@ const useStyles = makeStyles({
 		},
 	},
 	queueCounter: {
-		padding: "7px 12px",
+		padding: "6px 12px",
 		fontWeight: "700",
 		backgroundColor: colors.backgroundGrey,
 		borderRadius: "5px",
+		border: `1px solid ${colors.borderGrey}`,
 	},
 	queueCounter_Wrapper: {
 		width: "fit-content",

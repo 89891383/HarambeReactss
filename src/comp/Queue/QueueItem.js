@@ -20,15 +20,14 @@ const useStyles = makeStyles({
 		alignItems: "center",
 		justifyContent: "space-between",
 		fontWeight: "bold",
-		backgroundColor: "#0f0f0f",
+		backgroundColor: colors.queueItemBg,
 		fontSize: "20px",
-		border: "1px solid #2b2b2b",
+		border: `1px solid ${colors.borderGrey}`,
 		height: "120px",
 		overflow: "hidden",
 	},
 	itemDetails: {
 		display: "flex",
-		// alignItems: "center",
 		gap: "15px",
 		flex: "1",
 		overflow: "hidden",
@@ -65,7 +64,7 @@ const useStyles = makeStyles({
 		transition: "300ms",
 		cursor: "pointer",
 		"&:hover": {
-			backgroundColor: "rgba(255, 255, 255, 0.3)",
+			backgroundColor: colors.boxHoverWhite,
 		},
 	},
 	imdbInfoBox: {
@@ -92,7 +91,7 @@ const useStyles = makeStyles({
 	},
 	"@keyframes durationFadeIn": {
 		from: {
-			opacity: "0",
+			opacity: 0,
 			transform: "translateX(20px)",
 		},
 		to: {

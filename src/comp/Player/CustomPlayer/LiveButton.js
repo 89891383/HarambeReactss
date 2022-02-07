@@ -2,15 +2,13 @@ import { Box, makeStyles } from "@material-ui/core";
 import { useContext } from "react";
 import { useSelector } from "react-redux";
 import { DataContext } from "../../../App";
+import { sharedStyles } from "../../../shared/styles";
 
 const useStyles = makeStyles({
 	box: {
-		padding: "5px",
-		borderRadius: "5px",
-		display: "flex",
-		transition: "300ms",
+		...sharedStyles.box,
 		fontWeight: "700",
-		cursor: "pointer",
+		transition: "300ms ease",
 		"&:hover": {
 			backgroundColor: "rgba(255, 255, 255, 0.3);",
 			color: "#f94144",

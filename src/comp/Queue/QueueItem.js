@@ -10,6 +10,7 @@ import noImg from "./noImg.jpg";
 import { useSelector } from "react-redux";
 import useTime from "../../Hooks/useTime";
 import colors from "../../colors";
+import { sharedStyles } from "../../shared/styles";
 
 const useStyles = makeStyles({
 	queueItem: {
@@ -31,10 +32,12 @@ const useStyles = makeStyles({
 		gap: "15px",
 		flex: "1",
 		overflow: "hidden",
+		height: "100%",
 	},
 	thumbnail: {
 		width: "150px",
 		height: "auto",
+		objectFit: "cover",
 		"@media(max-width:600px)": {
 			display: "none",
 		},
@@ -43,7 +46,6 @@ const useStyles = makeStyles({
 		display: "flex",
 		overflowX: "hidden",
 		position: "relative",
-		height: "auto",
 		alignItems: "center",
 		"@media(max-width:600px)": {
 			marginLeft: "10px",
@@ -57,16 +59,6 @@ const useStyles = makeStyles({
 		fontWeight: "700",
 		width: "max-content",
 	},
-	box: {
-		padding: "5px",
-		borderRadius: "5px",
-		display: "flex",
-		transition: "300ms",
-		cursor: "pointer",
-		"&:hover": {
-			backgroundColor: colors.boxHoverWhite,
-		},
-	},
 	imdbInfoBox: {
 		display: "flex",
 		alignItems: "center",
@@ -78,8 +70,10 @@ const useStyles = makeStyles({
 	queueItemDuration: {
 		position: "absolute",
 		left: 0,
-		top: "75px",
+		// top: "75px",
+		transform: "translateY(120px)",
 		backgroundColor: "black",
+		width: "min-content",
 		borderRadius: "5px",
 		padding: "2px 5px",
 		fontSize: "15px",
@@ -92,11 +86,11 @@ const useStyles = makeStyles({
 	"@keyframes durationFadeIn": {
 		from: {
 			opacity: 0,
-			transform: "translateX(20px)",
+			transform: "translate(20px,30px)",
 		},
 		to: {
 			opacity: 1,
-			transform: "translateX(0)",
+			transform: "translate(0,30px)",
 		},
 	},
 	queueItemButtons: {
@@ -215,7 +209,7 @@ const QueueItem = ({ item, index }) => {
 
 				{admin && (
 					<Box className={classes.queueItemButtons}>
-						<Box onClick={handlePlayNow} className={classes.box}>
+						<Box onClick={handlePlayNow} sx={sharedStyles.box}>
 							<Tooltip
 								title="Play now"
 								enterDelay={0}
@@ -226,7 +220,7 @@ const QueueItem = ({ item, index }) => {
 						</Box>
 
 						{Boolean(index) && (
-							<Box className={classes.box} onClick={handleMoveUp}>
+							<Box sx={sharedStyles.box} onClick={handleMoveUp}>
 								<Tooltip
 									title={"Move up"}
 									enterDelay={0}
@@ -238,7 +232,7 @@ const QueueItem = ({ item, index }) => {
 						)}
 
 						<Box
-							className={classes.box}
+							sx={sharedStyles.box}
 							onClick={handleiFrame}
 							style={iFrameStyles}
 						>
@@ -247,7 +241,7 @@ const QueueItem = ({ item, index }) => {
 							</Tooltip>
 						</Box>
 
-						<Box className={classes.box} onClick={handleDeleteItemFromQueue}>
+						<Box sx={sharedStyles.box} onClick={handleDeleteItemFromQueue}>
 							<Tooltip
 								enterDelay={0}
 								title="Delete from queue"

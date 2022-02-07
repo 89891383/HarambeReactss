@@ -97,6 +97,7 @@ export const counterSlice = createSlice({
 				isLive,
 				currentAvailableFormats,
 				isTwitchCam,
+				history,
 			} = action.payload;
 			state.iFrame = iFrame;
 			state.currentVideoLink = currentVideo;
@@ -110,6 +111,7 @@ export const counterSlice = createSlice({
 			state.isLive = isLive;
 			state.currentAvailableFormats = currentAvailableFormats;
 			state.isTwitchCam = isTwitchCam;
+			state.history = history;
 		},
 
 		changeOnlineUsers: (state, action) => {
@@ -152,6 +154,7 @@ export const counterSlice = createSlice({
 			state.currentAvailableFormats = formats;
 			state.currentVideoID = id;
 			state.iFrame = iFrame;
+			state.history.push({ URL: currentVideoLink, title });
 			if (title) {
 				state.videoTitle = title;
 			} else {

@@ -1,22 +1,10 @@
 import React from "react";
 import "./Options.css";
 import SettingsIcon from "@material-ui/icons/Settings";
-import { Box, makeStyles, Tooltip, Zoom } from "@material-ui/core";
+import { Box, Tooltip, Zoom } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { dialogOpenToggle } from "../../../redux/popoutsSlice";
-
-const useStyles = makeStyles({
-	box: {
-		padding: "5px",
-		borderRadius: "5px",
-		display: "flex",
-		transition: "300ms",
-		cursor: "pointer",
-		"&:hover": {
-			backgroundColor: "rgba(255, 255, 255, 0.3)",
-		},
-	},
-});
+import { sharedStyles } from "../../../shared/styles";
 
 const Options = () => {
 	const dispatch = useDispatch();
@@ -25,11 +13,9 @@ const Options = () => {
 		dispatch(dialogOpenToggle(true));
 	};
 
-	const classes = useStyles();
-
 	return (
 		<div className="options">
-			<Box className={classes.box} onClick={handleToggleDialog}>
+			<Box sx={sharedStyles.box} onClick={handleToggleDialog}>
 				<Tooltip
 					title="Settings"
 					placement="bottom"

@@ -1,25 +1,12 @@
 import React from "react";
 import { useState } from "react";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
-import { Box, makeStyles } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import AccountInfo from "./AccountInfo";
 import { Fade } from "@material-ui/core";
-
-const useStyles = makeStyles({
-	box: {
-		padding: "5px",
-		borderRadius: "5px",
-		display: "flex",
-		transition: "300ms",
-		cursor: "pointer",
-		"&:hover": {
-			backgroundColor: "rgba(255, 255, 255, 0.3)",
-		},
-	},
-});
+import { sharedStyles } from "../../shared/styles";
 
 const Profile = () => {
-	const classes = useStyles();
 	const [isHover, setIsHover] = useState(false);
 
 	return (
@@ -28,7 +15,7 @@ const Profile = () => {
 			onMouseLeave={() => setIsHover(false)}
 			onClick={() => setIsHover((prev) => !prev)}
 		>
-			<Box className={classes.box}>
+			<Box sx={sharedStyles.box}>
 				<AccountBoxIcon />
 			</Box>
 

@@ -99,14 +99,6 @@
 	border-radius: 5px;
 }
 
-.volumeBar {
-	display: flex;
-	gap: 10px;
-	display: flex;
-	align-items: center;
-	transition: 0.3s width;
-}
-
 .durationBar {
 	display: flex;
 	align-items: center;

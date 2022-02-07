@@ -4,6 +4,7 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/styles";
 import { Box } from "@material-ui/core";
+import colors from "../../colors";
 
 const useStyles = makeStyles({
 	queue: {
@@ -30,6 +31,22 @@ const useStyles = makeStyles({
 		padding: "0 0 20px 0",
 		alignSelf: "center",
 	},
+	emptyQueue: {
+		fontSize: "40px",
+		fontWeight: "700",
+		display: "flex",
+		justifyContent: "center",
+		color: "#242424",
+		pointerEvents: "none",
+		webkitUserSelect: "none",
+		msUserSelect: "none",
+		userSelect: "none",
+		padding: "20px",
+		letterSpacing: "1px",
+		background: colors.queueItemBg,
+		border: `1px solid ${colors.borderGrey}`,
+		borderRadius: "5px",
+	},
 });
 
 const Queue = () => {
@@ -52,7 +69,7 @@ const Queue = () => {
 	if (videoQueue.length === 0) {
 		return (
 			<Box className={classes.queue}>
-				<div className="emptyQueueText">QUEUE IS EMPTY</div>
+				<Box className={classes.emptyQueue}>QUEUE IS EMPTY</Box>
 			</Box>
 		);
 	}

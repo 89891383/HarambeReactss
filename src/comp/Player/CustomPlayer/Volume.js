@@ -4,23 +4,21 @@ import React, { useCallback, useState } from "react";
 import { Box, Fade, makeStyles, Slider } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { changeVolume } from "../../../redux/playerState";
+import { sharedStyles } from "../../../shared/styles";
 
 const useStyles = makeStyles({
-	box: {
-		padding: "5px",
-		borderRadius: "5px",
+	volumeBar: {
 		display: "flex",
-		transition: "300ms",
-		width: "fit-content",
-		cursor: "pointer",
-		"&:hover": {
-			backgroundColor: "rgba(255, 255, 255, 0.3);",
-		},
+		gap: "10px",
+		alignItems: "center",
+		transition: "300ms width",
+		position: "relative",
 	},
 	slider: {
 		position: "absolute",
-		width: "34px",
-		transform: "translate(0px, -75% )",
+		width: "100%",
+		left: "0",
+		transform: "translate(0px, -75%)",
 		height: "100px",
 	},
 });
@@ -57,12 +55,12 @@ const Volume = () => {
 	};
 
 	return (
-		<div
-			className="volumeBar"
+		<Box
+			className={classes.volumeBar}
 			onMouseEnter={toggleSlider}
 			onMouseLeave={toggleSlider}
 		>
-			<Box onClick={handleMute} className={classes.box}>
+			<Box onClick={handleMute} sx={sharedStyles.box}>
 				{volume ? <VolumeUpIcon /> : <VolumeOffIcon />}
 			</Box>
 
@@ -78,7 +76,7 @@ const Volume = () => {
 					/>
 				</Box>
 			</Fade>
-		</div>
+		</Box>
 	);
 };
 

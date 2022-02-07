@@ -23,6 +23,7 @@ import { isMobile, MobileView } from "react-device-detect";
 import Title from "./Title";
 import TwitchCamToggle from "./TwitchCamToggle";
 import useTime from "../../../Hooks/useTime";
+import { sharedStyles } from "../../../shared/styles";
 
 const screenfull = require("screenfull");
 
@@ -74,16 +75,6 @@ const useStyles = makeStyles({
 		transition: "300ms",
 		"&:hover": {
 			backgroundColor: "rgba(255, 255, 255, 0.3);",
-		},
-	},
-	box: {
-		padding: "5px",
-		borderRadius: "5px",
-		display: "flex",
-		transition: "300ms",
-		cursor: "pointer",
-		"&:hover": {
-			backgroundColor: "rgba(255, 255, 255, 0.3)",
 		},
 	},
 	timer: {
@@ -249,7 +240,7 @@ const CustomPlayer = ({ playerWrapperRef }) => {
 				<Title />
 				<Box className={classes.topInfoButtons}>
 					{admin && <TwitchCamToggle />}
-					<Box className={classes.box} onClick={handleToggleChat}>
+					<Box sx={sharedStyles.box} onClick={handleToggleChat}>
 						{!hiddenChat ? <ShowChat /> : <HideChat />}
 					</Box>
 				</Box>
@@ -284,7 +275,7 @@ const CustomPlayer = ({ playerWrapperRef }) => {
 			<Box className={classes.controls} ref={controlsRef}>
 				<Box className={classes.lowerControls}>
 					<Box className="playButton">
-						<Box className={classes.box} onClick={handleTogglePlayServer}>
+						<Box sx={sharedStyles.box} onClick={handleTogglePlayServer}>
 							{isPlaying ? <PauseIcon /> : <PlayArrowIcon />}
 						</Box>
 					</Box>
@@ -292,7 +283,7 @@ const CustomPlayer = ({ playerWrapperRef }) => {
 					{/* SKIP ONLY FOR ADMINS */}
 					{admin && (
 						<Box className="skipButton">
-							<Box onClick={handleSkipVideo} className={classes.box}>
+							<Box onClick={handleSkipVideo} sx={sharedStyles.box}>
 								<SkipNextIcon />
 							</Box>
 						</Box>
@@ -322,7 +313,7 @@ const CustomPlayer = ({ playerWrapperRef }) => {
 
 						{currentAvailableFormats && <Quality />}
 
-						<Box className={classes.box} onClick={handleFullScreen}>
+						<Box sx={sharedStyles.box} onClick={handleFullScreen}>
 							<FullscreenIcon />
 						</Box>
 					</Box>

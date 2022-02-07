@@ -1,12 +1,11 @@
-import { useContext, useEffect, useMemo } from "react";
-import { useDispatch } from "react-redux";
+import { useContext, useMemo } from "react";
 import { DataContext } from "../../App";
 import React from "react";
-import { changeHistory } from "../../redux/playerState";
 import HistoryItem from "./HistoryItem";
 import { Box, makeStyles, Tooltip, Typography, Zoom } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useSelector } from "react-redux";
+import { sharedStyles } from "../../shared/styles";
 
 const useStyles = makeStyles({
 	box: {
@@ -17,20 +16,9 @@ const useStyles = makeStyles({
 		position: "relative",
 	},
 	deleteIcon: {
-		padding: "5px",
-		borderRadius: "5px",
-		display: "flex",
-		transition: "300ms",
-		height: "fit-content",
-		cursor: "pointer",
-		color: "white",
-		marginRight: "auto",
+		...sharedStyles.box,
 		position: "absolute",
 		left: "0",
-		top: "0",
-		"&:hover": {
-			backgroundColor: "rgba(255, 255, 255, 0.3)",
-		},
 	},
 	historyContainer: {
 		width: "98vw",
@@ -68,18 +56,6 @@ const HistoryDialog = () => {
 	const { admin, history } = useSelector((state) => state.player);
 
 	const { socket } = useContext(DataContext);
-
-	const dispatch = useDispatch();
-
-	useEffect(() => {
-		socket.emit("getPlaylistHistory");
-		socket.on("getPlaylistHistoryAnswer", ({ history }) => {
-			dispatch(changeHistory(history.reverse()));
-		});
-		return () => {
-			socket.off("getPlaylistHistoryAnswer");
-		};
-	}, [socket, dispatch]);
 
 	const createHistory = useMemo(() => {
 		return history?.map((video, index) => {

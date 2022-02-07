@@ -30,16 +30,18 @@ import {
 	updateCurrentVideo,
 	iFrameVideoToggle,
 	changeTwitchCam,
+	changeHistory,
 } from "../../redux/playerState";
 import CenterPlayButton from "./CustomPlayer/CenterPlayButton";
 import { isMobile } from "react-device-detect";
 import { makeStyles } from "@material-ui/styles";
+import colors from "../../colors";
 
 const useStyles = makeStyles({
 	player: {
 		display: "flex",
 		flexDirection: "column",
-		backgroundColor: "#121212",
+		backgroundColor: `${colors.backgroundGrey}`,
 		height: "100vh",
 		zIndex: "0",
 		position: "relative",
@@ -216,6 +218,10 @@ const PlayerAndChat = () => {
 			dispatch(iFrameVideoToggle(answer));
 		});
 
+		socket.on("getPlaylistHistoryAnswer", ({ history }) => {
+			dispatch(changeHistory(history.reverse()));
+		});
+
 		return () => {
 			socket.off(`joinRoomAnswer`);
 			socket.off(`videoChangeAnswer`);
@@ -236,6 +242,7 @@ const PlayerAndChat = () => {
 			socket.off("updateCurrentVideoYoutubeDL");
 			socket.off("iFrameVideoToggleAnswer");
 			socket.off("isTwitchCamToggleAnswer");
+			socket.off("getPlaylistHistoryAnswer");
 		};
 		// eslint-disable-next-line
 	}, [currentRoom, admin, socket, nickname, isPlaying]);
@@ -369,7 +376,7 @@ const PlayerAndChat = () => {
 						url={currentVideoLink}
 						width="100%"
 						height="100%"
-						style={isTwitch ? {} : { pointerEvents: "none" }}
+						style={{ pointerEvents: `${isTwitch ? "auto" : "none"}` }}
 						controls={false}
 						muted={false}
 						volume={volume}

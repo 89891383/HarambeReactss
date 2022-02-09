@@ -164,9 +164,9 @@ const CustomPlayer = ({ playerWrapperRef }) => {
 		[socket]
 	);
 
-	const handlePlayScreenMobile = () => {
+	const handlePlayScreenMobile = useCallback(() => {
 		socket.emit("canPlay");
-	};
+	}, [socket]);
 
 	useEffect(() => {
 		socket.on("secondsSkipAnswer", ({ type }) => {
@@ -209,23 +209,23 @@ const CustomPlayer = ({ playerWrapperRef }) => {
 		};
 	}, [EscCloseFullScreen]);
 
-	const handleTogglePlayServer = () => {
+	const handleTogglePlayServer = useCallback(() => {
 		if (!admin) {
 			return socket.emit("canPlay");
 		}
 
 		socket.emit("togglePlay", nickname);
-	};
+	}, [admin, nickname, socket]);
 
-	const handleToggleChat = () => {
+	const handleToggleChat = useCallback(() => {
 		dispatch(hiddenChatToggle());
-	};
+	}, [dispatch]);
 
-	const handleSkipVideo = () => {
+	const handleSkipVideo = useCallback(() => {
 		if (admin) {
 			socket.emit("skipVideo", { nickname });
 		}
-	};
+	}, [admin, nickname, socket]);
 
 	const timer = isLive ? (
 		<span className="live">LIVE</span>

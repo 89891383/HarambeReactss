@@ -21,6 +21,7 @@ import Poll from "./comp/Poll/Poll";
 import { setAlert } from "./redux/alertSlice";
 import { getProfile } from "./api";
 import Popouts from "./comp/Popouts";
+
 export const DataContext = React.createContext();
 
 const socket = io(`/`);

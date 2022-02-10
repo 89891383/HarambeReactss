@@ -46,7 +46,7 @@ const classes = {
 		position: "fixed",
 		top: "0",
 		left: "0",
-		cursor: "grab",
+		cursor: "grabbing",
 	},
 };
 

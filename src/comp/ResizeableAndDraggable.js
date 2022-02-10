@@ -1,6 +1,7 @@
 import { Box } from "@material-ui/core";
 import { useCallback, useEffect, useRef, useState } from "react";
 import ControlCameraIcon from "@material-ui/icons/ControlCamera";
+import colors from "../colors";
 
 const classes = {
 	parent: {
@@ -29,7 +30,7 @@ const classes = {
 		position: "absolute",
 		right: "0px",
 		top: "0px",
-		backgroundColor: "#121212",
+		backgroundColor: colors.backgroundGrey,
 		color: "white",
 		cursor: "grab",
 		display: "flex",

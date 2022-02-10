@@ -51,7 +51,9 @@ const useStyles = makeStyles({
 const TwitchCam = () => {
 	const classes = useStyles();
 
-	const { currentChat } = useSelector((state) => state.player);
+	const { currentChat, isTwitchCam, firstInteraction } = useSelector(
+		(state) => state.player
+	);
 	const currentPage = window.location.hostname;
 	const twitchCamRef = useRef(null);
 
@@ -78,8 +80,10 @@ const TwitchCam = () => {
 
 	const isMobile = useMobile(1000);
 
+	if (!isTwitchCam || !firstInteraction) return false;
+
 	return (
-		<>
+		<Box>
 			{isMobile ? (
 				<Draggable
 					bounds={"parent"}
@@ -101,7 +105,7 @@ const TwitchCam = () => {
 					</Box>
 				</ResizeableAndDraggable>
 			)}
-		</>
+		</Box>
 	);
 };
 

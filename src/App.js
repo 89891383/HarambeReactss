@@ -80,9 +80,7 @@ const useStyles = makeStyles({
 const App = () => {
 	const history = useHistory();
 
-	const { hiddenChat, firstInteraction, isTwitchCam } = useSelector(
-		(state) => state.player
-	);
+	const { firstInteraction } = useSelector((state) => state.player);
 
 	const dispatch = useDispatch();
 
@@ -146,9 +144,9 @@ const App = () => {
 					</Box>
 
 					<Popouts />
-					{!hiddenChat && <TwitchChat />}
+					<TwitchChat />
 				</Box>
-				{isTwitchCam && firstInteraction && <TwitchCam />}
+				<TwitchCam />
 				<Poll />
 				<Alert />
 			</DataContext.Provider>

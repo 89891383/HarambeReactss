@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { loadPlayer } from "../../redux/playerState";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import { Box, Container, makeStyles, Typography } from "@material-ui/core";
+import { Box, Container, makeStyles } from "@material-ui/core";
 import { sharedStyles } from "../../shared/styles";
 
 const useStyles = makeStyles({
@@ -19,9 +19,6 @@ const useStyles = makeStyles({
 		fontWeight: "700",
 		zIndex: 2,
 		backgroundColor: "rgba(255, 255, 255, 0.15)",
-		"&:hover": {
-			backgroundColor: "rgba(255, 255, 255, 0.3);",
-		},
 	},
 	container: {
 		backgroundColor: "black",
@@ -50,7 +47,7 @@ const ClickToLoad = () => {
 			<Box className={classes.box} onClick={handleClick}>
 				<PlayArrowIcon className={classes.playIcon} />
 			</Box>
-			<Typography variant="h4">Click to start</Typography>
+			{/* <Typography variant="h4">CLICK TO START</Typography> */}
 		</Container>
 	);
 };

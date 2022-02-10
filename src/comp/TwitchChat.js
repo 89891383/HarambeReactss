@@ -45,7 +45,7 @@ const useStyles = makeStyles({
 		fontWeight: "700",
 	},
 	disconnected: {
-		color: "#f94144",
+		color: colors.red,
 	},
 	syncStatus: {
 		position: "absolute",
@@ -80,6 +80,7 @@ const TwitchChat = () => {
 		currentChat,
 		firstInteraction,
 		disconnected,
+		hiddenChat,
 	} = useSelector((state) => state.player);
 
 	const { socket } = useContext(DataContext);
@@ -153,6 +154,8 @@ const TwitchChat = () => {
 			</Tooltip>
 		);
 	};
+
+	if (hiddenChat) return false;
 
 	return (
 		<Box className={classes.twitchChat}>

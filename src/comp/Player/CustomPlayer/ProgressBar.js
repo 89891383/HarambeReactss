@@ -96,7 +96,7 @@ const ProgressBar = () => {
 					className="currentProgress"
 					style={{
 						transform: `translateX(${
-							currentProgress < 100 ? -100 + currentProgress : 0
+							currentProgress < 100 ? currentProgress : 0
 						}%)`,
 					}}
 				></div>
@@ -105,7 +105,7 @@ const ProgressBar = () => {
 					className="loadedProgress"
 					style={{
 						transform: `translateX(${
-							loadedSeconds < 100 ? -100 + loadedSeconds : 0
+							loadedSeconds < 100 ? loadedSeconds : 0
 						}%)`,
 					}}
 				></div>
@@ -115,6 +115,7 @@ const ProgressBar = () => {
 					onMouseOver={handleToggleShowTimeAbove}
 					onMouseLeave={handleToggleShowTimeAbove}
 					onMouseMove={handleTimeToShow}
+					style={admin ? { cursor: "pointer" } : {}}
 				></div>
 			</div>
 		</div>

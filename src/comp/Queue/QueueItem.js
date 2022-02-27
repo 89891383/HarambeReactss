@@ -44,6 +44,7 @@ const useStyles = makeStyles({
 	},
 	itemTitle: {
 		display: "flex",
+		flex: 1,
 		overflowX: "hidden",
 		position: "relative",
 		alignItems: "center",
@@ -70,7 +71,6 @@ const useStyles = makeStyles({
 	queueItemDuration: {
 		position: "absolute",
 		left: 0,
-		// top: "75px",
 		transform: "translateY(120px)",
 		backgroundColor: "black",
 		width: "min-content",

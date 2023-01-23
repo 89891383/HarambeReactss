@@ -83,6 +83,10 @@ export const counterSlice = createSlice({
 			state.isPlaylistOpen = action.payload;
 		},
 
+		changeKiepy: (state, action) => {
+			state.kiepyON = action.payload;
+		},
+
 		joinRoomAnswer: (state, action) => {
 			const {
 				iFrame,
@@ -357,6 +361,7 @@ export const {
 	changeTwitchCam,
 	handleDisconnect,
 	handleReconnect,
+	changeKiepy,
 } = counterSlice.actions;
 
 export default counterSlice.reducer;

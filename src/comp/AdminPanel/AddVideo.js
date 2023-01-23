@@ -18,7 +18,7 @@ import {
 	TextField,
 	Typography,
 } from "@material-ui/core";
-import { changeIsAddVideo } from "../../redux/popoutsSlice";
+import { changeIsAddVideo, changeKiepy } from "../../redux/popoutsSlice";
 import { setAlert } from "../../redux/alertSlice";
 
 const useStyles = makeStyles({
@@ -73,6 +73,10 @@ const useStyles = makeStyles({
 		flexDirection: "column",
 		gap: "5px",
 	},
+	kiepyBox: {
+		display: "flex",
+		alignItems: "center",
+	},
 });
 
 const linkRegExpCheck = (link) => {
@@ -86,6 +90,7 @@ const AddVideo = () => {
 	const classes = useStyles();
 
 	const { admin, nickname } = useSelector((state) => state.player);
+	const { kiepy } = useSelector((state) => state.popouts);
 
 	const dispatch = useDispatch();
 
@@ -155,9 +160,13 @@ const AddVideo = () => {
 		[dispatch, nickname, socket]
 	);
 
-	const handleAddKiepy = useCallback(() => {
-		socket.emit("addKiepy");
-	}, [socket]);
+	const handleToggleKiepy = useCallback(
+		(_, checked) => {
+			socket.emit("toggleKiepy", checked);
+			dispatch(changeKiepy(checked));
+		},
+		[dispatch, socket]
+	);
 
 	return (
 		<form
@@ -210,6 +219,16 @@ const AddVideo = () => {
 								/>
 							)}
 						/>
+
+						<Box className={classes.kiepyBox}>
+							<Checkbox
+								color="primary"
+								checked={kiepy}
+								onChange={handleToggleKiepy}
+							/>
+							<Typography>Kiepy</Typography>
+						</Box>
+
 						<Fade in={watch("isImdb")} unmountOnExit timeout={300}>
 							<Box style={{ marginLeft: "auto" }}>
 								<Controller
@@ -259,15 +278,6 @@ const AddVideo = () => {
 						className={classes.button}
 					>
 						SKIP VIDEO
-					</Button>
-				)}
-				{admin && (
-					<Button
-						onClick={handleAddKiepy}
-						startIcon={<QueueIcon />}
-						className={classes.button}
-					>
-						ADD KIEPY
 					</Button>
 				)}
 			</ButtonGroup>

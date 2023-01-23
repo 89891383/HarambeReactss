@@ -8,7 +8,7 @@ import HideChat from "@material-ui/icons/Chat";
 import FullscreenIcon from "@material-ui/icons/Fullscreen";
 import { useContext } from "react";
 import { DataContext } from "../../../App";
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Volume from "./Volume";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
 import PlaybackRate from "./PlaybackRate";

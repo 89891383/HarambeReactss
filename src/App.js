@@ -25,6 +25,7 @@ import Popouts from "./comp/Popouts";
 export const DataContext = React.createContext();
 
 const socket = io(`/`);
+// const socket = io(`https://server.legga.eu/`);
 
 const theme = createTheme({
 	palette: {

@@ -76,9 +76,10 @@ const useStyles = makeStyles({
 });
 
 const linkRegExpCheck = (link) => {
-	return link.match(
+	return true;
+	```	return link.match(
 		/(https?:\/\/)?(www\.)?[a-zA-Z]+\.[a-zA-Z]+\/?[a-zA-Z0-9?=-]*/
-	);
+	);```;
 };
 
 const AddVideo = () => {
@@ -153,6 +154,10 @@ const AddVideo = () => {
 		},
 		[dispatch, nickname, socket]
 	);
+
+	const handleAddKiepy = useCallback(() => {
+		socket.emit("addKiepy");
+	}, [socket]);
 
 	return (
 		<form
@@ -254,6 +259,15 @@ const AddVideo = () => {
 						className={classes.button}
 					>
 						SKIP VIDEO
+					</Button>
+				)}
+				{admin && (
+					<Button
+						onClick={handleAddKiepy}
+						startIcon={<QueueIcon />}
+						className={classes.button}
+					>
+						ADD KIEPY
 					</Button>
 				)}
 			</ButtonGroup>

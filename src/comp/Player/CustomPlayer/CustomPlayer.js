@@ -151,8 +151,6 @@ const CustomPlayer = ({ playerWrapperRef }) => {
 
 	const currentTime = useTime(Math.floor(progress));
 
-	const controlsRef = useRef(null);
-
 	const handlePlayScreen = useCallback(
 		(e) => {
 			if (isMobile) return false;
@@ -272,7 +270,7 @@ const CustomPlayer = ({ playerWrapperRef }) => {
 				)}
 			</MobileView>
 
-			<Box className={classes.controls} ref={controlsRef}>
+			<Box className={classes.controls}>
 				<Box className={classes.lowerControls}>
 					<Box className="playButton">
 						<Box sx={sharedStyles.box} onClick={handleTogglePlayServer}>

@@ -18,8 +18,9 @@ import {
 	TextField,
 	Typography,
 } from "@material-ui/core";
-import { changeIsAddVideo, changeKiepy } from "../../redux/popoutsSlice";
+import { changeIsAddVideo } from "../../redux/popoutsSlice";
 import { setAlert } from "../../redux/alertSlice";
+import { changeKiepy } from "../../redux/playerState";
 
 const useStyles = makeStyles({
 	textField: {
@@ -90,7 +91,7 @@ const AddVideo = () => {
 	const classes = useStyles();
 
 	const { admin, nickname } = useSelector((state) => state.player);
-	const { kiepy } = useSelector((state) => state.popouts);
+	const { kiepy } = useSelector((state) => state.player);
 
 	const dispatch = useDispatch();
 

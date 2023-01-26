@@ -5,7 +5,6 @@ const initialState = {
 	isHistoryOpen: false,
 	isDialogOpen: false,
 	isPollOpen: false,
-	kiepy: false,
 };
 
 const popoutsSlice = createSlice({
@@ -26,9 +25,6 @@ const popoutsSlice = createSlice({
 		pollOpenToggle: (state, action) => {
 			state.isPollOpen = action.payload;
 		},
-		changeKiepy: (state, action) => {
-			state.kiepy = action.payload;
-		},
 	},
 });
 
@@ -37,6 +33,5 @@ export const {
 	historyOpenToggle,
 	dialogOpenToggle,
 	pollOpenToggle,
-	changeKiepy,
 } = popoutsSlice.actions;
 export default popoutsSlice.reducer;

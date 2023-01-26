@@ -31,6 +31,7 @@ const initialState = {
 	twitchCam: false,
 	disconnected: false,
 	history: [],
+	kiepy: false,
 };
 
 export const counterSlice = createSlice({
@@ -83,10 +84,6 @@ export const counterSlice = createSlice({
 			state.isPlaylistOpen = action.payload;
 		},
 
-		changeKiepy: (state, action) => {
-			state.kiepyON = action.payload;
-		},
-
 		joinRoomAnswer: (state, action) => {
 			const {
 				iFrame,
@@ -102,6 +99,7 @@ export const counterSlice = createSlice({
 				currentAvailableFormats,
 				isTwitchCam,
 				history,
+				kiepy,
 			} = action.payload;
 			state.iFrame = iFrame;
 			state.currentVideoLink = currentVideo;
@@ -116,6 +114,7 @@ export const counterSlice = createSlice({
 			state.currentAvailableFormats = currentAvailableFormats;
 			state.isTwitchCam = isTwitchCam;
 			state.history = history;
+			state.kiepy = kiepy;
 		},
 
 		changeOnlineUsers: (state, action) => {
@@ -310,6 +309,9 @@ export const counterSlice = createSlice({
 		},
 		changeHistory: (state, action) => {
 			state.history = action.payload;
+		},
+		changeKiepy: (state, action) => {
+			state.kiepy = action.payload;
 		},
 	},
 });
